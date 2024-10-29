@@ -315,7 +315,8 @@ namespace disk_hivf {
 
             Int read_matrix(Int file_id, Int offset, Uint len, Int item_size,
                 Int item_num, Int dim,
-                std::vector<float> & matrix_data, std::vector<Int> & block_item_ids);
+                std::vector<float> & matrix_data, std::vector<Int> & block_item_ids, 
+                std::vector<Int> & time_stat);
 
         private:
             std::string file_dir_;

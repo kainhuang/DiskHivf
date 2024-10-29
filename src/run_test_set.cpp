@@ -22,7 +22,7 @@ void run_test_set(HierachicalCluster &hc, Eigen::Map<RMatrixDf> & querys,
         hc.search(querys.row(i), recall_topk, result);
         results[i] = result;
     }
-    for (Int i = 0; i < 10; i++) {
+    for (Int i = 0; i < 14; i++) {
         std::cout << i << " " << hc.m_time_stat[i] * 1.0 / querys.rows() << std::endl;
     }
     /*

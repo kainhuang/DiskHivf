@@ -12,7 +12,7 @@
 #include <algorithm>
 
 namespace disk_hivf {
-    HierachicalCluster::HierachicalCluster(Conf & conf): m_time_stat(10, 0), m_conf(conf),
+    HierachicalCluster::HierachicalCluster(Conf & conf): m_time_stat(15, 0), m_conf(conf),
         m_first_centers_data(conf.m_first_cluster_num * conf.m_dim),
         m_second_centers_data(conf.m_second_cluster_num * conf.m_dim),
         m_first_centers(m_first_centers_data.data(), conf.m_first_cluster_num, conf.m_dim),
@@ -612,7 +612,7 @@ namespace disk_hivf {
             Int item_num = read_len / item_size;
 
             ret = m_file_read_writer.read_matrix(block.m_file_id, block.m_offset, read_len, 
-                item_size, item_num, m_conf.m_dim, block_features_data, block_item_ids);
+                item_size, item_num, m_conf.m_dim, block_features_data, block_item_ids, m_time_stat);
             Eigen::Map<CMatrixDf> block_features(block_features_data.data(), m_conf.m_dim, item_num);
             m_time_stat[7] += ts2.TimeCost();
 
