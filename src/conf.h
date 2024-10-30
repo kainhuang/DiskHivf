@@ -22,11 +22,13 @@ namespace disk_hivf {
             Int m_second_cluster_num;
             Int m_hierachical_cluster_epoch;
             Int m_read_file_batch_size;
+            Int m_build_index_search_first_center_num;
             Int m_search_first_center_num;
             Int m_search_second_center_num;
             Int m_is_disk;
             Int m_search_neighbors;
             Int m_search_block_num;
             float m_search_top_cut;
+            Int m_hs_mode;
     };
 }

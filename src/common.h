@@ -9,4 +9,5 @@ namespace disk_hivf {
     typedef Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> RMatrixDi;
     typedef Eigen::MatrixXf CMatrixDf;
     typedef int64_t Int;
+    typedef uint32_t FeatureId;
 }

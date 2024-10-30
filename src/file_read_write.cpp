@@ -137,7 +137,7 @@ namespace disk_hivf {
 
     Int FileReadWriter::read_matrix(Int file_id, Int offset, Uint len, 
                 Int item_size, Int item_num, Int dim,
-                std::vector<float> & matrix_data, std::vector<Int> & block_item_ids, 
+                std::vector<float> & matrix_data, std::vector<FeatureId> & block_item_ids, 
                 std::vector<Int> & time_stat) {
         /*
         std::cout << "file_id=" << file_id
@@ -167,9 +167,9 @@ namespace disk_hivf {
         time_stat[12] += ts.TimeCost();
         float * dest = matrix_data.data();
         for (Int i = 0; i < item_num; i++) {
-                Int item_id = *(reinterpret_cast<Int*>(ptr + (i * item_size)));
+                FeatureId item_id = *(reinterpret_cast<FeatureId*>(ptr + (i * item_size)));
                 block_item_ids[i] = item_id;
-                memcpy(dest + i * dim, reinterpret_cast<float *>(ptr + (i * item_size) + sizeof(Int)), dim * sizeof(float));
+                memcpy(dest + i * dim, reinterpret_cast<float *>(ptr + (i * item_size) + sizeof(FeatureId)), dim * sizeof(float));
         }
         time_stat[13] += ts.TimeCost();
         //Eigen::Map<RMatrixXf> block_map(reinterpret_cast<float*>(ptr),

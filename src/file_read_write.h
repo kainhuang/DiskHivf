@@ -309,13 +309,17 @@ namespace disk_hivf {
 
             Int clear();
 
-            inline Int get_file_num() {
+            inline Int get_file_num() const {
                 return file_num_;
             }
-
+            
+            inline char * get_mem_ptr(Int file_id, Int offset) {
+                return mem_datas_[file_id].data() + offset;
+            }
+            
             Int read_matrix(Int file_id, Int offset, Uint len, Int item_size,
                 Int item_num, Int dim,
-                std::vector<float> & matrix_data, std::vector<Int> & block_item_ids, 
+                std::vector<float> & matrix_data, std::vector<FeatureId> & block_item_ids, 
                 std::vector<Int> & time_stat);
 
         private:

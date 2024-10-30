@@ -17,12 +17,14 @@ namespace disk_hivf {
         m_second_cluster_num = 300;
         m_hierachical_cluster_epoch = 40;
         m_read_file_batch_size = 10000;
+        m_build_index_search_first_center_num = 60;
         m_search_first_center_num = 20;
         m_search_second_center_num = 20;
         m_is_disk = 0;
         m_search_neighbors = 1000;
         m_search_block_num = 20;
         m_search_top_cut = 1.5;
+        m_hs_mode = 0;
     }
     int Conf::Init(const char * configFile) {
         Int ret = makePool(configFile);
@@ -44,12 +46,14 @@ namespace disk_hivf {
             m_second_cluster_num = str2num<Int>(pool["second_cluster_num"]);
             m_hierachical_cluster_epoch = str2num<Int>(pool["hierachical_cluster_epoch"]);
             m_read_file_batch_size = str2num<Int>(pool["read_file_batch_size"]);
+            m_build_index_search_first_center_num = str2num<Int>(pool["build_index_search_first_center_num"]);
             m_search_first_center_num = str2num<Int>(pool["search_first_center_num"]);
             m_search_second_center_num = str2num<Int>(pool["search_second_center_num"]);
             m_is_disk = str2num<Int>(pool["is_disk"]);
             m_search_neighbors = str2num<Int>(pool["search_neighbors"]);
             m_search_block_num = str2num<Int>(pool["search_block_num"]);
             m_search_top_cut = str2num<float>(pool["search_top_cut"]);
+            m_hs_mode = str2num<float>(pool["hs_mode"]);
         } catch (...) {
             fprintf(stderr, "Init conf fail!!!!!!!!");
             return -1;

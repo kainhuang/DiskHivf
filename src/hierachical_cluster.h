@@ -30,13 +30,13 @@ namespace disk_hivf {
 
     struct FeatureAssign {
         FeatureAssign() {}
-        FeatureAssign(Uint feature_id, Uint first_center_id, Uint second_center_id, float distance):
+        FeatureAssign(FeatureId feature_id, Uint first_center_id, Uint second_center_id, float distance):
             m_feature_id(feature_id), m_first_center_id(first_center_id),
             m_second_center_id(second_center_id), m_distance(distance) {}
         bool operator < (const FeatureAssign & other) const {
             return m_distance < other.m_distance;
         }
-        Uint m_feature_id;
+        FeatureId m_feature_id;
         Uint m_first_center_id;
         Uint m_second_center_id;
         float m_distance;
@@ -178,24 +178,28 @@ namespace disk_hivf {
             Int save_index();
             Int load_index();
             Int search(const Eigen::Ref<const Eigen::RowVectorXf> & feature, Int topk,
-                std::vector<std::pair<Int, float>> & result);
+                std::vector<std::pair<FeatureId, float>> & result);
             Int search(const Eigen::Ref<const Eigen::RowVectorXf> & feature, Int topk,
-                std::vector<Int> & result);
+                std::vector<FeatureId> & result);
             Int search(std::vector<float> & feature_data, Int topk,
-                std::vector<std::pair<Int, float>> & result);
+                std::vector<std::pair<FeatureId, float>> & result);
             Int search(std::vector<float> & feature_data, Int topk,
-                std::vector<Int> & result);
+                std::vector<FeatureId> & result);
         public:
             std::vector<Int> m_time_stat;    
 
         private:
+            inline Int get_tot_offset(Int file_id, Int offset, Int item_size) const {
+                return m_file_tot_offset[file_id] + offset / item_size;
+            }
+
             Int init_edge_info();
             std::vector<Int> make_second_centers_disk_order();
             Int rerank_disk_order(const std::vector<FeatureAssign>& features_assign,
                 const std::vector<Int>& disk_order);
 
             void make_search_block(std::vector<SearchingCell> & search_cells,
-                std::vector<SearchingBlock> & search_blocks);
+                std::vector<SearchingBlock> & search_blocks, Int item_size);
 
             template <typename Derived>
                 Int findTopkSecondCenters(const Eigen::MatrixBase<Derived>& batch_features,
@@ -268,5 +272,9 @@ namespace disk_hivf {
             std::vector<DataIndex> m_first2second_cells;
             
             FileReadWriter m_file_read_writer;
+
+            std::vector<Int> m_file_tot_offset;
+
+            std::vector<FeatureId> m_feature_ids;
     };
 }
