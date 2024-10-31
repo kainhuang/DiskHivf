@@ -180,7 +180,7 @@ namespace disk_hivf
 		}
 		pool.clear();
 		std::string line;
-		while( getline(fpconfig , line) != NULL )
+		while(getline(fpconfig , line))
 		{
 			if('#'==line[0])continue;
 			std::vector<std::string> col;
