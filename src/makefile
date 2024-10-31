@@ -7,8 +7,8 @@ INCLUDE = -Ieigen-3.4.0/
 
 run_test_set: run_test_set.cpp common.h hierachical_cluster.o kmeans.o random.o unity.o Log.o file_read_write.o conf.o common.h
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/run_test_set run_test_set.cpp hierachical_cluster.o kmeans.o random.o unity.o Log.o file_read_write.o conf.o ../env/tcmalloc/lib/libtcmalloc.a $(FFLAGS)
-convert_vecs2dim_vecs:convert_vecs2dim_vecs.cpp file_read_write.h common.h
-	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/convert_vecs2dim_vecs convert_vecs2dim_vecs.cpp
+convert_vecs2dim_vecs:convert_vecs2dim_vecs.cpp file_read_write.h common.h file_read_write.o
+	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/convert_vecs2dim_vecs convert_vecs2dim_vecs.cpp file_read_write.o
 disk_hivf_train_and_build: disk_hivf_train_and_build.cpp common.h hierachical_cluster.o kmeans.o random.o unity.o Log.o file_read_write.o conf.o common.h
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/disk_hivf_train_and_build disk_hivf_train_and_build.cpp hierachical_cluster.o kmeans.o random.o unity.o Log.o file_read_write.o conf.o ../env/tcmalloc/lib/libtcmalloc.a $(FFLAGS)
 test_hierachical_cluster: disk_hivf_train_and_build.cpp common.h hierachical_cluster.o kmeans.o random.o unity.o Log.o file_read_write.o conf.o common.h
