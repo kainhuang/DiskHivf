@@ -3,13 +3,6 @@ using namespace disk_hivf;
 
 int main(int argc, char* argv[]) {
 
-    FileReadWriter file = FileReadWriter("index/", 1, 1);
-    file.Init();
-    std::vector<char> data;
-    file.read(0, data);
-    Int id = *(reinterpret_cast<Int *>(data.data()));
-    std::cout << "id = " << id << std::endl;
-    /*
     if (argc != 4) {
         std::cerr << "Usage: " << argv[0] << " <input_filename> <output_filename> <batch_size>" << std::endl;
         return 1;
@@ -62,7 +55,6 @@ int main(int argc, char* argv[]) {
         std::cerr << "Error: " << e.what() << std::endl;
         return 1;
     }
-    */
 
     return 0;
 }

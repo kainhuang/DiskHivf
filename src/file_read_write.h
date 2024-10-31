@@ -161,7 +161,7 @@ namespace disk_hivf {
             size_t read_size = currentBatchSize * (4 + dim * sizeof(T));
             // Read a batch of vectors
             inputFile.read(buffer.get(), read_size);
-            if (inputFile.gcount() != read_size) {
+            if (inputFile.gcount() != (std::streamsize)read_size) {
                 std::cerr << "Error reading vector data from input file: " << inputFilename << std::endl;
                 return -1;
             }
