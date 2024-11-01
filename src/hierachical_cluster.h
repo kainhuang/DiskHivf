@@ -211,7 +211,7 @@ namespace disk_hivf {
                         std::vector<std::pair<float, Int>> & first_center_dists
                             = topkfirst_center[features_id];
                         LimitedMaxHeap<FeatureAssign> & heap = heap_vecs[features_id];
-                        for (Int i = 0; i < first_center_dists.size(); i++) {
+                        for (size_t i = 0; i < first_center_dists.size(); i++) {
                             float first_center_dist = first_center_dists[i].first;
                             Int first_center_id = first_center_dists[i].second;
                             

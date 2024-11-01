@@ -1,6 +1,6 @@
 CXX = g++
 OUT_PATH = ./
-CFLAGS = -g -std=c++11 -Wall -O3 -march=native -ggdb -pipe -W -fPIC -std=c++11 -ffast-math -mavx -mfma
+CFLAGS = -g -std=c++11 -Wall -O3 -march=native -mtune=native -ggdb -pipe -W -fPIC -std=c++11 -ffast-math -mavx -mfma
 FFLAGS = -lpthread -fopenmp -lssl -lrt -lz
 INCLUDE = -Ieigen-3.4.0/
 
