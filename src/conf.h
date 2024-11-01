@@ -30,5 +30,6 @@ namespace disk_hivf {
             Int m_search_block_num;
             float m_search_top_cut;
             Int m_hs_mode;
+            Int m_thread_num;
     };
 }

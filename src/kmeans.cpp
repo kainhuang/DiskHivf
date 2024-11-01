@@ -142,7 +142,7 @@ namespace disk_hivf {
                 for (Int j = 0; j < curr_batch_size; j++) {
                     Int idx = i + j;
                     training_assign[idx] = tmp_assign[j];
-                    #pragma omp critical
+                    //#pragma omp critical
                     {
                         tmp_centers.row(training_assign[idx]) += features.row(idx);
                         nassign[training_assign[idx]]++;

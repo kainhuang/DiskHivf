@@ -25,6 +25,7 @@ namespace disk_hivf {
         m_search_block_num = 20;
         m_search_top_cut = 1.5;
         m_hs_mode = 0;
+        m_thread_num = 1;
     }
     int Conf::Init(const char * configFile) {
         Int ret = makePool(configFile);
@@ -54,6 +55,7 @@ namespace disk_hivf {
             m_search_block_num = str2num<Int>(pool["search_block_num"]);
             m_search_top_cut = str2num<float>(pool["search_top_cut"]);
             m_hs_mode = str2num<float>(pool["hs_mode"]);
+            m_thread_num = str2num<float>(pool["thread_num"]);
         } catch (...) {
             fprintf(stderr, "Init conf fail!!!!!!!!");
             return -1;

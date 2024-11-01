@@ -10,6 +10,7 @@
 #include "matrix.h"
 #include "heap.h"
 #include <algorithm>
+#include <omp.h>
 
 namespace disk_hivf {
     HierachicalCluster::HierachicalCluster(Conf & conf): m_time_stat(20, 0), m_conf(conf),
@@ -26,6 +27,93 @@ namespace disk_hivf {
         m_first2second_cells(conf.m_first_cluster_num * conf.m_second_cluster_num),
         m_file_read_writer(conf.m_index_dir, conf.m_index_file_num, conf.m_is_disk),
         m_file_tot_offset(m_conf.m_index_file_num + 1, 0) {
+        
+        std::cout << "Eigen version: " << EIGEN_WORLD_VERSION << "."
+              << EIGEN_MAJOR_VERSION << "."
+              << EIGEN_MINOR_VERSION << std::endl;
+
+        // 检查向量化优化
+        #ifdef EIGEN_VECTORIZE
+            std::cout << "Vectorization is enabled." << std::endl;
+        #else
+            std::cout << "Vectorization is not enabled." << std::endl;
+        #endif
+
+        #ifdef EIGEN_VECTORIZE_SSE
+            std::cout << "SSE vectorization is enabled." << std::endl;
+        #endif
+
+        #ifdef EIGEN_VECTORIZE_AVX
+            std::cout << "AVX vectorization is enabled." << std::endl;
+        #endif
+
+        #ifdef EIGEN_VECTORIZE_NEON
+            std::cout << "NEON vectorization is enabled." << std::endl;
+        #endif
+
+            // 检查多线程优化
+        #ifdef EIGEN_DONT_PARALLELIZE
+            std::cout << "Parallelization is disabled." << std::endl;
+        #else
+            std::cout << "Parallelization is enabled." << std::endl;
+        #endif
+
+        #ifdef EIGEN_HAS_OPENMP
+            std::cout << "OpenMP support is enabled." << std::endl;
+        #endif
+
+        #ifdef EIGEN_HAS_CXX11_THREAD
+            std::cout << "C++11 thread support is enabled." << std::endl;
+        #endif
+
+            // 检查断言和调试
+        #ifdef EIGEN_NO_DEBUG
+            std::cout << "Debugging is disabled." << std::endl;
+        #else
+            std::cout << "Debugging is enabled." << std::endl;
+        #endif
+
+        #ifdef EIGEN_NO_STATIC_ASSERT
+            std::cout << "Static assertions are disabled." << std::endl;
+        #endif
+
+        #ifdef EIGEN_NO_MALLOC
+            std::cout << "Dynamic memory allocation is disabled." << std::endl;
+        #endif
+
+        // 检查其他优化选项
+        #ifdef EIGEN_UNROLLING_LIMIT
+            std::cout << "Unrolling limit is set to " << EIGEN_UNROLLING_LIMIT << "." << std::endl;
+        #else
+            std::cout << "Unrolling limit is not set." << std::endl;
+        #endif
+
+        #ifdef EIGEN_MAX_STATIC_ALIGN_BYTES
+            std::cout << "Max static align bytes is set to " << EIGEN_MAX_STATIC_ALIGN_BYTES << "." << std::endl;
+        #else
+            std::cout << "Max static align bytes is not set." << std::endl;
+        #endif
+
+        #ifdef EIGEN_USE_MKL_ALL
+            std::cout << "MKL support is enabled." << std::endl;
+        #else
+            std::cout << "MKL support is not enabled." << std::endl;
+        #endif
+
+        #ifdef EIGEN_USE_BLAS
+            std::cout << "BLAS support is enabled." << std::endl;
+        #endif
+
+        #ifdef EIGEN_USE_LAPACKE
+            std::cout << "LAPACKE support is enabled." << std::endl;
+        #endif
+
+        #ifdef EIGEN_USE_ACCELERATE
+            std::cout << "Accelerate support is enabled." << std::endl;
+        #endif
+
+        std::cout << "SIMD instruction sets in use: "
+              << Eigen::SimdInstructionSetsInUse() << std::endl;
     }
 
     Int HierachicalCluster::init() {
@@ -34,6 +122,7 @@ namespace disk_hivf {
             //LOG
             return -1;
         }
+        omp_set_num_threads(m_conf.m_thread_num);
         return 0;
     }
 
@@ -613,7 +702,7 @@ namespace disk_hivf {
         //std::vector<char> tmp_data;
         
         //RMatrixXf block_features;
-        std::vector<float> block_features_data;
+        std::vector<char> block_features_data;
         std::vector<FeatureId> block_item_ids;
         Int cut = 0;
         Int searched_num = 0;
@@ -684,31 +773,52 @@ namespace disk_hivf {
             }
             //std::cout << "read_len " << read_len << std::endl;
             Int item_num = read_len / item_size;
-            float * block_features_data_ptr = NULL;
-            if (m_conf.m_hs_mode) {
-                if (m_conf.m_is_disk) {
-                    ret = m_file_read_writer.read(block.m_file_id, block.m_offset, read_len, block_features_data);
-                    block_features_data_ptr = block_features_data.data();
+            char * block_features_data_ptr = NULL;
+            block_item_ids.resize(item_num);
+            m_time_stat[7] += ts2.TimeCost();
+            if (m_conf.m_is_disk) {
+                ret = m_file_read_writer.read(block.m_file_id, block.m_offset, read_len, block_features_data);
+                block_features_data_ptr = block_features_data.data();
+            } else {
+                char * tmp_ptr = 
+                    m_file_read_writer.get_mem_ptr(block.m_file_id, block.m_offset);
+                if (m_conf.m_hs_mode) {
+                    block_features_data_ptr = tmp_ptr;
                 } else {
-                    block_features_data_ptr = reinterpret_cast<float *>(
-                        m_file_read_writer.get_mem_ptr(block.m_file_id, block.m_offset));
+                    block_features_data.resize(read_len);
+                    block_features_data_ptr = tmp_ptr;
                 }
+            }
+            m_time_stat[8] += ts2.TimeCost();
+            if (m_conf.m_hs_mode) {
                 Int tot_offset = get_tot_offset(block.m_file_id, block.m_offset, item_size);
-                block_item_ids.resize(item_num);
                 memcpy(block_item_ids.data(),
                     m_feature_ids.data() + tot_offset,
                     item_num * sizeof(FeatureId));
             } else {
-                ret = m_file_read_writer.read_matrix(block.m_file_id, block.m_offset, read_len, 
-                    item_size, item_num, m_conf.m_dim, block_features_data, block_item_ids, m_time_stat);
+                for (Int i = 0; i < item_num; i++) {
+                    FeatureId item_id = 
+                        *(reinterpret_cast<FeatureId*>(block_features_data_ptr + (i * item_size)));
+                    block_item_ids[i] = item_id;
+                    if (m_conf.m_is_disk) {
+                        memmove(block_features_data_ptr + (i * m_conf.m_dim * sizeof(float)),
+                            block_features_data_ptr + (i * item_size) + sizeof(FeatureId),
+                            m_conf.m_dim * sizeof(float));
+                    } else {
+                        memcpy(block_features_data.data() + (i * m_conf.m_dim * sizeof(float)),
+                            block_features_data_ptr + (i * item_size) + sizeof(FeatureId),
+                            m_conf.m_dim * sizeof(float));        
+                    }
+                }
                 block_features_data_ptr = block_features_data.data();
             }
-            Eigen::Map<CMatrixDf> block_features(block_features_data_ptr, m_conf.m_dim, item_num);
-            m_time_stat[7] += ts2.TimeCost();
-
-            Eigen::RowVectorXf query2block_features_dist = computeDistanceMatrix(feature, block_features, true);
-            m_time_stat[8] += ts2.TimeCost();
-            //ts.TimeMark("computeDistanceMatrix end");
+            m_time_stat[9] += ts2.TimeCost();
+            Eigen::Map<CMatrixDf> block_features(
+                reinterpret_cast<float *> (block_features_data_ptr),
+                m_conf.m_dim, item_num);
+            Eigen::RowVectorXf query2block_features_dist = 
+                computeDistanceMatrix(feature, block_features, true);
+            m_time_stat[10] += ts2.TimeCost();
             /*
             std::cout << block_features << std::endl;
             for (auto a: block_item_ids) {
@@ -722,7 +832,6 @@ namespace disk_hivf {
             }
             searched_num += item_num;
             searched_block_num++;
-            //ts.TimeMark("search block item_num=" + num2str(item_num));
             /*
             printf ("top[%f] block_distance[%f] block_min_distance[%f] cut[%ld] searched_num[%ld] searched_block_num[%ld]\n",
                 result_heap.top().m_distance,
@@ -731,7 +840,7 @@ namespace disk_hivf {
                 cut,
                 searched_num, searched_block_num);
             */
-            m_time_stat[9] += ts2.TimeCost();
+            m_time_stat[11] += ts2.TimeCost();
         }
         m_time_stat[4] += ts.TimeCost();
         //std::cout << "CUT\t" << cut << "\tsearched_num\t" << searched_num << std::endl;

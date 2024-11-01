@@ -330,11 +330,6 @@ namespace disk_hivf {
                 return mem_datas_[file_id].data() + offset;
             }
             
-            Int read_matrix(Int file_id, Int offset, Uint len, Int item_size,
-                Int item_num, Int dim,
-                std::vector<float> & matrix_data, std::vector<FeatureId> & block_item_ids, 
-                std::vector<Int> & time_stat);
-
         private:
             std::string file_dir_;
             Int file_num_;
