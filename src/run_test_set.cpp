@@ -11,18 +11,18 @@ bool isInVector(const std::vector<FeatureId>& vec, Int value) {
 
 void run_test_set(HierachicalCluster &hc, Eigen::Map<RMatrixDf> & querys,
     Eigen::Map<RMatrixDi> & groundtruth,
-    Int recall_topk, Int at_num) {
+    Int recall_topk, Int at_num, Int thread_num) {
     TimeStat ts("run_test_set ");
     std::vector<std::vector<FeatureId>> results(querys.rows(), std::vector<FeatureId>());
     ts.TimeMark("search begin");
-    //#pragma omp parallel for
+    #pragma omp parallel for num_threads(thread_num)
     for (Int i = 0; i < querys.rows(); i++) {
         //TimeStat ts("searching " + num2str<Int>(i));
         std::vector<FeatureId> result;
         hc.search(querys.row(i), at_num, result);
         results[i] = result;
     }
-    for (Int i = 0; i < 14; i++) {
+    for (Int i = 0; i < 16; i++) {
         std::cout << i << " " << hc.m_time_stat[i] * 1.0 / querys.rows() << std::endl;
     }
     /*
@@ -112,9 +112,9 @@ void run_test_set2(HierachicalCluster &hc, Eigen::Map<RMatrixDf> & querys,
 
 int main(int argc, char* argv[]) {
     //Eigen::initParallel();
-    if (argc != 6) {
+    if (argc != 7) {
         std::cerr << "Usage: " << argv[0] 
-        << " <conf_file> <query_file> <groundtruth_file> <topk> <at_num>" << std::endl;
+        << " <conf_file> <query_file> <groundtruth_file> <topk> <at_num> <thread_num>" << std::endl;
         return 1;
     }
     std::string conf_file = argv[1];
@@ -122,6 +122,7 @@ int main(int argc, char* argv[]) {
     std::string groundtruth_file = argv[3];
     Int topk = str2num<Int>(argv[4]);
     Int at_num = str2num<Int>(argv[5]);
+    Int thread_num = str2num<Int>(argv[6]);
     Conf conf;
     conf.Init(conf_file.c_str());
     Int ret = 0;
@@ -151,6 +152,6 @@ int main(int argc, char* argv[]) {
     readDimVecs(groundtruth_file, groundtruth_data, dim, numVecs);
     Eigen::Map<RMatrixDi> groundtruth(groundtruth_data.data(), numVecs, dim);
 
-    run_test_set(hc, querys, groundtruth, topk, at_num);
+    run_test_set(hc, querys, groundtruth, topk, at_num, thread_num);
     return 0;
 }

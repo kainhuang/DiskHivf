@@ -12,7 +12,7 @@
 #include <algorithm>
 
 namespace disk_hivf {
-    HierachicalCluster::HierachicalCluster(Conf & conf): m_time_stat(15, 0), m_conf(conf),
+    HierachicalCluster::HierachicalCluster(Conf & conf): m_time_stat(20, 0), m_conf(conf),
         m_first_centers_data(conf.m_first_cluster_num * conf.m_dim),
         m_second_centers_data(conf.m_second_cluster_num * conf.m_dim),
         m_first_centers(m_first_centers_data.data(), conf.m_first_cluster_num, conf.m_dim),
@@ -232,12 +232,14 @@ namespace disk_hivf {
         if (m_conf.m_hs_mode) {
             m_feature_ids.resize(m_file_tot_offset[m_conf.m_index_file_num], 0);
         }
+        Int nthreads = std::min(m_conf.m_index_file_num, (Int)5);
+        #pragma omp parallel for num_threads(nthreads)
         for (Int file_id = 0; file_id < m_file_read_writer.get_file_num(); file_id++) {
             std::vector<char> data;
             Int size = m_file_read_writer.read(file_id, data);
             if (size < 0) {
                 //LOG
-                return -1;
+                //return -1;
             }
             Int item_size = sizeof(FeatureId) + m_conf.m_dim * sizeof(float);
             Int item_num = size / item_size;
@@ -264,7 +266,7 @@ namespace disk_hivf {
             Int ret = m_file_read_writer.clear(file_id);
             if (ret < 0) {
                 //LOG
-                return -1;
+                //return -1;
             }
             for (Int i = 0; i < item_num; i++) {
                 Int first2second_cells_id = 
@@ -294,7 +296,7 @@ namespace disk_hivf {
                 */
                 if (begin_offset < 0) {
                     //LOG
-                    return -1;
+                    //return -1;
                 }
                 m_first2second_cells[first2second_cells_id].m_offset = 
                     std::min(m_first2second_cells[first2second_cells_id].m_offset,
@@ -744,6 +746,9 @@ namespace disk_hivf {
             result_heap.pop();
         }
         m_time_stat[5] += ts.TimeCost();
+
+        m_time_stat[14] += searched_num;
+        m_time_stat[15] += searched_block_num;
         return 0;
     }
 

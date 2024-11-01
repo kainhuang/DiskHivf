@@ -85,7 +85,7 @@ namespace disk_hivf {
         }
 
         inline bool is_continuous(const SearchingCell & other, Int item_size) const {
-            if (m_file_id == other.m_file_id && other.m_offset - (m_offset + item_size * m_len) == 0) {
+            if (m_file_id == other.m_file_id && other.m_offset - (m_offset + item_size * m_len) <= 0) {
                 return true;
             } else {
                 return false;
