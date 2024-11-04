@@ -216,6 +216,9 @@ namespace disk_hivf {
                         std::vector<std::pair<float, Int>> & first_center_dists
                             = topkfirst_center[features_id];
                         LimitedMaxHeap<FeatureAssign> & heap = heap_vecs[features_id];
+                        Eigen::Map<RMatrixXf> second_centers(m_second_centers_data.data(), m_conf.m_second_cluster_num, m_conf.m_dim);
+                        Eigen::RowVectorXf query2second_centers_dist(m_conf.m_second_cluster_num);
+                        Eigen::RowVectorXf qt = feature * second_centers.transpose() * (-2);
                         for (size_t i = 0; i < first_center_dists.size(); i++) {
                             float first_center_dist = first_center_dists[i].first;
                             Int first_center_id = first_center_dists[i].second;
@@ -235,10 +238,8 @@ namespace disk_hivf {
                             if (second_cut <= 0) {
                                 continue;
                             }
-                            Eigen::Map<RMatrixXf> second_centers_cuted(m_second_centers_data.data(), second_cut, m_conf.m_dim);
-                            Eigen::RowVectorXf query2second_centers_dist = feature * second_centers_cuted.transpose() * (-2);
                             for (Int j = 0; j < second_cut; j++) {
-                                query2second_centers_dist(j) +=
+                                query2second_centers_dist(j) = qt(j) +
                                     (first_center_dist + m_first2second_edges_stationary_dist(first_center_id, j));
                                 if (empty_cell_fillter) {
                                     Int cell_id = first_center_id * m_conf.m_second_cluster_num + j;
@@ -252,6 +253,7 @@ namespace disk_hivf {
                     }
                     return 0;
                 }
+
         private:
             Conf m_conf;
             std::vector<float> m_first_centers_data;
