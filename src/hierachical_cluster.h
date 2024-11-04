@@ -1,15 +1,18 @@
 #pragma once
+#include "common.h"
 #include "kmeans.h"
 #include <iostream>
 #include <vector>
 #include "Eigen/Dense"
 #include "file_read_write.h"
-#include "common.h"
 #include "conf.h"
 #include "heap.h"
 #include <cmath>
 #include <algorithm>
 #include <queue>
+#include <future>
+#include <stdexcept>
+#include <mutex>
 
 namespace disk_hivf {
     struct DataIndex{
@@ -193,6 +196,8 @@ namespace disk_hivf {
                 return m_file_tot_offset[file_id] + offset / item_size;
             }
 
+            std::future<std::vector<char>> read_file_async(Int file_id, Int offset, Int len);
+
             Int init_edge_info();
             std::vector<Int> make_second_centers_disk_order();
             Int rerank_disk_order(const std::vector<FeatureAssign>& features_assign,
@@ -276,5 +281,7 @@ namespace disk_hivf {
             std::vector<Int> m_file_tot_offset;
 
             std::vector<FeatureId> m_feature_ids;
+
+            std::vector<std::mutex> m_file_mutexs;
     };
 }

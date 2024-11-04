@@ -1,3 +1,4 @@
+#include "common.h"
 #include <iostream>
 #include "kmeans.h"
 #include "Eigen/Dense"
@@ -5,7 +6,6 @@
 #include <random>
 #include <algorithm>
 #include <vector>
-#include "common.h"
 #include "unity.h"
 #include "matrix.h"
 
@@ -87,6 +87,79 @@ namespace disk_hivf {
         return loss;
     }
 
+    double kmeans_inference(std::vector<float> &features_data,
+        std::vector<float> & centers_data, int dim, Int batch_size,
+        std::vector<Int> & assign) {
+        Int k = centers_data.size() / dim;
+        Int numVecs = features_data.size() / dim;
+        double loss = 0;
+        Int ret = 0;
+        Eigen::Map<RMatrixXf> centers(centers_data.data(), k, dim);
+        Eigen::Map<RMatrixXf> features(features_data.data(), numVecs, dim);
+        Eigen::VectorXf centers_squa_norm = centers.rowwise().squaredNorm();
+        assign.resize(numVecs, 0);
+        #pragma omp parallel for reduction(+:loss)
+        for (Int i = 0; i < numVecs; i += batch_size) {
+            Int curr_batch_size = std::min(batch_size, numVecs - i);
+            float * data_ptr = features.data() + i * dim;
+            Eigen::Map<RMatrixXf> batch_features(data_ptr, curr_batch_size, dim);
+            std::vector<Int> tmp_assign;
+            double tmp_loss = kmeans_core(batch_features, centers, centers_squa_norm, tmp_assign);
+            loss += tmp_loss;
+            if (ret != 0) {
+                std::cerr << "kmeans kmeans_core err" << std::endl;
+            }
+            for (Int j = 0; j < curr_batch_size; j++) {
+                Int idx = i + j;
+                assign[idx] = tmp_assign[j];
+            }
+        }
+        return loss / numVecs;
+    }
+
+    Int kmeans(std::vector<float> &features_data, int dim, Int k, Int epoch, 
+        Int batch_size, Int centers_select_type, Int sample_num,
+        std::vector<float> & centers_data,
+        std::vector<Int> & assign, double& ret_loss) {
+        Int vecs_num = features_data.size() / dim;
+
+        std::cout << " sample_num=" << sample_num << " vecs_num=" << vecs_num << std::endl;
+        if (sample_num <= 0 || sample_num >= vecs_num) {
+            std::cout << "no sample kmeans" << std::endl; 
+            return kmeans(features_data, dim, k, epoch, 
+                batch_size, centers_select_type,
+                centers_data, assign, ret_loss);
+        } else {
+            std::cout << "sample kmeans" << std::endl;
+            std::vector<float> sample_features_data(sample_num * dim);
+            Kiss32Random ks(rand());
+            std::vector<uint32_t> m_nums;
+            Int ret = rand_m_nums(ks, vecs_num, sample_num, m_nums);
+            if (ret != 0) {
+                std::cerr << "kmeans::rand_m_nums fail" << std::endl;
+                return ret; 
+            }
+            for (size_t i = 0; i < m_nums.size(); i++) {
+                memcpy(sample_features_data.data() + i * dim,
+                    features_data.data() + m_nums[i] * dim,
+                    dim * sizeof(float));
+            }
+            std::vector<Int> __assign;
+            double __ret_loss;
+
+            ret = kmeans(sample_features_data, dim, k, epoch, batch_size,
+                centers_select_type, centers_data, __assign, __ret_loss);
+            std::cout << " __ret_loss=" << __ret_loss << std::endl;
+            if (ret != 0) {
+                std::cerr << "kmeans::kmeans fail" << std::endl;
+                return ret; 
+            }
+            ret_loss = kmeans_inference(features_data, centers_data, dim, batch_size, assign);
+        }
+        
+        return 0;
+    }
+
     Int kmeans(std::vector<float> &features_data, int dim, Int k, Int epoch, 
         Int batch_size, Int centers_select_type,
         std::vector<float> & centers_data,
@@ -120,7 +193,7 @@ namespace disk_hivf {
         std::vector<Int> training_assign;
         
         for (Int _ = 0; _ < epoch; _++) {
-            //TimeStat ts("epoch=" + num2str(_));
+            TimeStat ts("epoch=" + num2str(_));
             tmp_centers_data.resize(k * dim, 0);
             Eigen::Map<RMatrixXf> tmp_centers(tmp_centers_data.data(), k, dim);
             std::vector<Int> nassign(k, 0);

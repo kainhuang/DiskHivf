@@ -1,6 +1,12 @@
 #pragma once
+
+//#define EIGEN_USE_MKL_ALL
+//#define EIGEN_VECTORIZE_SSE4_2
+
 #include <inttypes.h>
 #include "Eigen/Dense"
+
+
 namespace disk_hivf {
     typedef float Float;
     typedef uint64_t Uint;

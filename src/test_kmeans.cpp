@@ -51,7 +51,7 @@ void test_kmeans(std::string & input_file) {
     std::vector<float> centers_data;
     std::vector<Int> assign;
     double ret_loss;
-    kmeans(features_data, dimension, 300, 40, 256, 3, centers_data, assign, ret_loss);
+    kmeans(features_data, dimension, 300, 40, 256, 3, 50000, centers_data, assign, ret_loss);
     std::cout << "ret_loss " << ret_loss << std::endl;
     //for (auto a: assign) {
     //    std::cout << a << std::endl;

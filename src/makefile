@@ -1,8 +1,10 @@
 CXX = g++
-OUT_PATH = ./
-CFLAGS = -g -std=c++11 -Wall -O3 -march=native -mtune=native -flto -ggdb -pipe -W -fPIC -std=c++11 -ffast-math -mavx -mfma
+OUT_PATH = ../bin
+CFLAGS = -g -std=c++11 -Wall -O3 -march=native -mtune=native -ggdb -pipe -W -fPIC -ffast-math -mavx -mfma 
 FFLAGS = -lpthread -fopenmp -lssl -lrt -lz
+#FFLAGS = -lpthread -fopenmp -lssl -lrt -lz -L/opt/intel/oneapi/mkl/latest/lib -lmkl_rt
 INCLUDE = -Ieigen-3.4.0/
+#INCLUDE = -Ieigen-3.4.0/ -I/opt/intel/oneapi/mkl/latest/include
 
 
 run_test_set: run_test_set.cpp common.h hierachical_cluster.o kmeans.o random.o unity.o Log.o file_read_write.o conf.o common.h
@@ -23,7 +25,7 @@ test_read_vec_file:test_read_vec_file.cpp file_read_write.o common.h
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/test_read_vec_file test_read_vec_file.cpp file_read_write.o
 testrand:testrand.cpp unity.o Log.o random.o common.h
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/testrand testrand.cpp unity.o Log.o random.o
-hierachical_cluster.o: hierachical_cluster.cpp hierachical_cluster.h matrix.h kmeans.o random.o unity.o Log.o file_read_write.o conf.o
+hierachical_cluster.o: hierachical_cluster.cpp hierachical_cluster.h matrix.h kmeans.o random.o unity.o Log.o file_read_write.o conf.o 
 	$(CXX) $(CFLAGS) $(INCLUDE) -c hierachical_cluster.cpp kmeans.o random.o unity.o Log.o file_read_write.o conf.o $(FFLAGS)
 file_read_write.o: file_read_write.cpp file_read_write.h unity.o common.h
 	$(CXX) $(CFLAGS) $(INCLUDE) -c file_read_write.cpp unity.o $(FFLAGS)
@@ -37,4 +39,5 @@ unity.o:unity.cpp unity.h Log.o
 	$(CXX) $(CFLAGS) $(INCLUDE) -c unity.cpp Log.o
 Log.o:Log.cpp Log.h
 	$(CXX) $(CFLAGS) -c Log.cpp
-
+clean:
+	rm *.o $(OUT_PATH)/disk_hivf_train_and_build $(OUT_PATH)/run_test_set $(OUT_PATH)/convert_vecs2dim_vecs

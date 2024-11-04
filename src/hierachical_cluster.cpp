@@ -1,9 +1,9 @@
+#include "common.h"
 #include "kmeans.h"
 #include <iostream>
 #include <vector>
 #include "Eigen/Dense"
 #include "file_read_write.h"
-#include "common.h"
 #include "conf.h"
 #include <cstring>
 #include "hierachical_cluster.h"
@@ -26,7 +26,8 @@ namespace disk_hivf {
         m_first_min_stationary_dist(conf.m_first_cluster_num),
         m_first2second_cells(conf.m_first_cluster_num * conf.m_second_cluster_num),
         m_file_read_writer(conf.m_index_dir, conf.m_index_file_num, conf.m_is_disk),
-        m_file_tot_offset(m_conf.m_index_file_num + 1, 0) {
+        m_file_tot_offset(m_conf.m_index_file_num + 1, 0),
+        m_file_mutexs(m_conf.m_index_file_num) {
         
         std::cout << "Eigen version: " << EIGEN_WORLD_VERSION << "."
               << EIGEN_MAJOR_VERSION << "."
@@ -147,11 +148,7 @@ namespace disk_hivf {
             std::cerr << "Number of vectors mismatch" << std::endl;
             return -1;
         }
-        std::vector<float> training_features_data(features_data.size());
-        memcpy(training_features_data.data(),
-            features_data.data(), 
-            features_data.size() * sizeof(float));
-        
+
         double ret_loss;
         double best_loss = std::numeric_limits<double>::max();
         std::vector<Int> assign(num_vecs);
@@ -159,6 +156,13 @@ namespace disk_hivf {
         std::vector<float> second_centers_data(m_conf.m_second_cluster_num * dim);
         Eigen::Map<RMatrixXf> features(features_data.data(),
             num_vecs, dim);
+        
+        std::vector<float> training_features_data(features_data.size());
+        
+        memcpy(training_features_data.data(),
+            features_data.data(), 
+            features_data.size() * sizeof(float));
+        
         Eigen::Map<RMatrixXf> training_features(training_features_data.data(),
             num_vecs, dim);
         Eigen::Map<RMatrixXf> first_centers(first_centers_data.data(),
@@ -167,12 +171,14 @@ namespace disk_hivf {
             m_conf.m_second_cluster_num, dim);
 
         for (Int _ = 0; _ < m_conf.m_hierachical_cluster_epoch; _++) {
+
             ret = kmeans(training_features_data,
                 m_conf.m_dim,
                 m_conf.m_first_cluster_num,
                 m_conf.m_kmeans_epoch,
                 m_conf.m_batch_size,
                 m_conf.m_kmeans_centers_select_type,
+                num_vecs * m_conf.m_kmeans_sample_rete,
                 first_centers_data,
                 assign, ret_loss
             );
@@ -193,6 +199,7 @@ namespace disk_hivf {
                 m_conf.m_kmeans_epoch,
                 m_conf.m_batch_size,
                 m_conf.m_kmeans_centers_select_type,
+                num_vecs * m_conf.m_kmeans_sample_rete,
                 second_centers_data,
                 assign, ret_loss
             );
@@ -321,7 +328,7 @@ namespace disk_hivf {
         if (m_conf.m_hs_mode) {
             m_feature_ids.resize(m_file_tot_offset[m_conf.m_index_file_num], 0);
         }
-        Int nthreads = std::min(m_conf.m_index_file_num, (Int)5);
+        Int nthreads = std::min(m_conf.m_index_file_num, m_conf.m_read_index_file_thread_num);
         #pragma omp parallel for num_threads(nthreads)
         for (Int file_id = 0; file_id < m_file_read_writer.get_file_num(); file_id++) {
             std::vector<char> data;
@@ -445,7 +452,9 @@ namespace disk_hivf {
                         << m_conf.m_index_data_file << std::endl;
                 }
                 now_offset = offset;
-                //std::cout << "now_offset=" << offset << std::endl;
+                if (now_offset % 10000000 == 0) {
+                    std::cout << "now_offset=" << offset << std::endl;
+                }
                 offset += curr_batch_size;
             }
 
@@ -463,15 +472,14 @@ namespace disk_hivf {
             if (ret != 0) {
                 std::cerr << "findTopkSecondCenters fail" << std::endl;
             }
-            #pragma omp critical
-            {
-                for (size_t j = 0; j < heap_vecs.size(); j++) {
-                    FeatureId idx = now_offset + j;
-                    features_assign[idx] = heap_vecs[j].top();
-                    features_assign[idx].m_feature_id = idx;
-                    //write idx,feature_vec to file dir/first_center_id
-                    Int file_id = features_assign[idx].m_first_center_id % m_conf.m_index_file_num;
-
+            for (size_t j = 0; j < heap_vecs.size(); j++) {
+                FeatureId idx = now_offset + j;
+                features_assign[idx] = heap_vecs[j].top();
+                features_assign[idx].m_feature_id = idx;
+                //write idx,feature_vec to file dir/first_center_id
+                Int file_id = features_assign[idx].m_first_center_id % m_conf.m_index_file_num;
+                {
+                    std::lock_guard<std::mutex> lock(m_file_mutexs[file_id]);
                     Int first2second_cells_id =
                         features_assign[idx].m_first_center_id * m_conf.m_second_cluster_num 
                         + features_assign[idx].m_second_center_id;
@@ -657,9 +665,21 @@ namespace disk_hivf {
         std::sort(search_blocks.begin(), search_blocks.end());
     }
 
+    std::future<std::vector<char>> HierachicalCluster::read_file_async(Int file_id, Int offset, Int len) {
+        return std::async([this](Int file_id, Int offset, Int len) {
+             std::vector<char> vec;
+             Int ret = m_file_read_writer.read(file_id, offset, len, vec);
+             if (ret < 0) {
+                std::cerr << "m_file_read_writer.read fail" << std::endl;
+                throw std::runtime_error("m_file_read_writer.read fail");
+             }
+             return vec;
+        }, file_id, offset, len);
+    }
+
     Int HierachicalCluster::search(const Eigen::Ref<const Eigen::RowVectorXf> & feature, Int topk,
         std::vector<std::pair<FeatureId, float>> & result) {
-        Eigen::setNbThreads(1);
+        Eigen::setNbThreads(10);
         //std::cout << feature << std::endl;
         TimeStat ts("search ", false);
         Eigen::RowVectorXf query2first_distance = feature * m_first_centers.transpose() * (-2);
@@ -691,7 +711,10 @@ namespace disk_hivf {
             Int offset = m_first2second_cells[cell_id].m_offset;
             Int len = m_first2second_cells[cell_id].m_len;
             double radius = m_first2second_cells[cell_id].m_radius;
-            search_cells.push_back(SearchingCell(file_id, cell_id, dist, offset, len, radius));
+            //距离是从大到小排的
+            if (len > 0) {
+                search_cells.push_back(SearchingCell(file_id, cell_id, dist, offset, len, radius));
+            }
             heap_vecs[0].pop();
         }
         m_time_stat[2] += ts.TimeCost();
@@ -707,25 +730,41 @@ namespace disk_hivf {
         Int cut = 0;
         Int searched_num = 0;
         Int searched_block_num = 0;
-        for (auto & block: search_blocks) {
-            TimeStat ts2("block search", false);
-            if (result_heap.is_full()) {
+
+        std::vector<std::future<std::vector<char>>> future_ptrs;
+        if (m_conf.m_is_async_read) {
+            for (size_t block_id = 0; block_id < search_blocks.size(); block_id++) {
+                auto & block = search_blocks[block_id];
                 if (searched_num >= m_conf.m_search_neighbors) {
                     break;
                 }
                 if (searched_block_num >= m_conf.m_search_block_num) {
                     break;
                 }
+                Int len = block.m_max_offset - block.m_offset;
+                future_ptrs.push_back(read_file_async(block.m_file_id, block.m_offset, len));
+                searched_num += len / item_size;
+                searched_block_num++;
+            }
+        }
+        //std::cout << "aadsdfdfdfd" << std::endl;
+        searched_num = 0;
+        searched_block_num = 0;
+
+        for (size_t block_id = 0; block_id < search_blocks.size(); block_id++) {
+            auto & block = search_blocks[block_id];
+            TimeStat ts2("block search", false);
+            if (searched_num >= m_conf.m_search_neighbors) {
+                break;
+            }
+            if (searched_block_num >= m_conf.m_search_block_num) {
+                break;
+            }
+            if (result_heap.is_full()) {
                 float cut_dist = result_heap.top().m_distance;
                 while (!block.m_search_cells.empty()) {
                     float radius = block.m_search_cells.front().m_radius;
                     float distance = block.m_search_cells.front().m_distance;
-                    /*
-                    std::cout << "distance=" << std::sqrt(distance) 
-                        << " radius=" << std::sqrt(radius) << " cut_dist=" 
-                        << std::sqrt(cut_dist) << " searched_num=" 
-                        << searched_num << std::endl;
-                    */
                     if (std::sqrt(distance) - std::sqrt(radius) > std::sqrt(cut_dist)) {
                         cut++;
                         block.pop_front();
@@ -739,12 +778,6 @@ namespace disk_hivf {
                 while (!block.m_search_cells.empty()) {
                     float radius = block.m_search_cells.back().m_radius;
                     float distance = block.m_search_cells.back().m_distance;
-                    /*
-                    std::cout << "distance=" << std::sqrt(distance) 
-                        << " radius=" << std::sqrt(radius) << " cut_dist=" 
-                        << std::sqrt(cut_dist) << " searched_num=" 
-                        << searched_num << std::endl;
-                    */
                     if (std::sqrt(distance) - std::sqrt(radius) > std::sqrt(cut_dist)) {
                         cut++;
                         block.pop_back(item_size);
@@ -757,6 +790,7 @@ namespace disk_hivf {
                 }
             } else {
             }
+
             m_time_stat[6] += ts2.TimeCost();
             /*
             for (auto & cell: block.m_search_cells) {
@@ -777,8 +811,14 @@ namespace disk_hivf {
             block_item_ids.resize(item_num);
             m_time_stat[7] += ts2.TimeCost();
             if (m_conf.m_is_disk) {
-                ret = m_file_read_writer.read(block.m_file_id, block.m_offset, read_len, block_features_data);
-                block_features_data_ptr = block_features_data.data();
+                if (m_conf.m_is_async_read) {
+                    //std::cout << "block_features_data_shared_ptr" << std::endl;
+                    block_features_data = future_ptrs[block_id].get();
+                    block_features_data_ptr = block_features_data.data();
+                } else {
+                    ret = m_file_read_writer.read(block.m_file_id, block.m_offset, read_len, block_features_data);
+                    block_features_data_ptr = block_features_data.data();
+                }
             } else {
                 char * tmp_ptr = 
                     m_file_read_writer.get_mem_ptr(block.m_file_id, block.m_offset);
@@ -813,20 +853,16 @@ namespace disk_hivf {
                 block_features_data_ptr = block_features_data.data();
             }
             m_time_stat[9] += ts2.TimeCost();
-            Eigen::Map<CMatrixDf> block_features(
-                reinterpret_cast<float *> (block_features_data_ptr),
-                m_conf.m_dim, item_num);
-            Eigen::RowVectorXf query2block_features_dist = 
-                computeDistanceMatrix(feature, block_features, true);
+            Eigen::Map<RMatrixDf> block_features(
+                reinterpret_cast<float *> (block_features_data_ptr), item_num,
+                m_conf.m_dim);
+            //Eigen::VectorXf query2block_features_dist(item_num);
+            Eigen::VectorXf query2block_features_dist = (block_features.rowwise() - feature).rowwise().squaredNorm();
+
+            //Eigen::RowVectorXf query2block_features_dist = 
+            //    computeDistanceMatrix(feature, block_features, true);
             m_time_stat[10] += ts2.TimeCost();
-            /*
-            std::cout << block_features << std::endl;
-            for (auto a: block_item_ids) {
-                std::cout << a << " ";
-            }
-            std::cout << std::endl;
-            std::cout << "query2block_features_dist=" << query2block_features_dist << std::endl;
-            */
+\
             for (Int i = 0; i < item_num; i++) {
                 result_heap.push(Result(block_item_ids[i], query2block_features_dist[i]));
             }

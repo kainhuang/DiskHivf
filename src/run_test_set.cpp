@@ -1,3 +1,4 @@
+#include "common.h"
 #include "hierachical_cluster.h"
 #include "file_read_write.h"
 #include "conf.h"
@@ -15,12 +16,14 @@ void run_test_set(HierachicalCluster &hc, Eigen::Map<RMatrixDf> & querys,
     TimeStat ts("run_test_set ");
     std::vector<std::vector<FeatureId>> results(querys.rows(), std::vector<FeatureId>());
     ts.TimeMark("search begin");
+    for (Int _ = 0; _ < 1; _++) {
     #pragma omp parallel for num_threads(thread_num)
-    for (Int i = 0; i < querys.rows(); i++) {
-        //TimeStat ts("searching " + num2str<Int>(i));
-        std::vector<FeatureId> result;
-        hc.search(querys.row(i), at_num, result);
-        results[i] = result;
+        for (Int i = 0; i < querys.rows(); i++) {
+            //TimeStat ts("searching " + num2str<Int>(i));
+            std::vector<FeatureId> result;
+            hc.search(querys.row(i), at_num, result);
+            results[i] = result;
+        }
     }
     for (Int i = 0; i < 16; i++) {
         std::cout << i << " " << hc.m_time_stat[i] * 1.0 / querys.rows() << std::endl;
@@ -151,7 +154,6 @@ int main(int argc, char* argv[]) {
     Int numVecs;
     readDimVecs(groundtruth_file, groundtruth_data, dim, numVecs);
     Eigen::Map<RMatrixDi> groundtruth(groundtruth_data.data(), numVecs, dim);
-
     run_test_set(hc, querys, groundtruth, topk, at_num, thread_num);
     return 0;
 }

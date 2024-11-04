@@ -1,3 +1,4 @@
+#include "common.h"
 #include "hierachical_cluster.h"
 #include "conf.h"
 

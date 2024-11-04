@@ -11,6 +11,7 @@ namespace disk_hivf {
         m_index_file_num = 1;
         m_dim = 128;
         m_kmeans_epoch = 40;
+        m_kmeans_sample_rete = 1;
         m_batch_size = 256;
         m_kmeans_centers_select_type = 3;
         m_first_cluster_num = 300;
@@ -26,6 +27,8 @@ namespace disk_hivf {
         m_search_top_cut = 1.5;
         m_hs_mode = 0;
         m_thread_num = 1;
+        m_read_index_file_thread_num = 5;
+        m_is_async_read = 1;
     }
     int Conf::Init(const char * configFile) {
         Int ret = makePool(configFile);
@@ -41,6 +44,7 @@ namespace disk_hivf {
             m_index_file_num = str2num<Int>(pool["index_file_num"]);
             m_dim = str2num<Int>(pool["dim"]);
             m_kmeans_epoch = str2num<Int>(pool["kmeans_epoch"]);
+            m_kmeans_sample_rete = str2num<float>(pool["kmeans_sample_rete"]);
             m_batch_size = str2num<Int>(pool["batch_size"]);
             m_kmeans_centers_select_type = str2num<Int>(pool["kmeans_centers_select_type"]);
             m_first_cluster_num = str2num<Int>(pool["first_cluster_num"]);
@@ -56,6 +60,8 @@ namespace disk_hivf {
             m_search_top_cut = str2num<float>(pool["search_top_cut"]);
             m_hs_mode = str2num<float>(pool["hs_mode"]);
             m_thread_num = str2num<float>(pool["thread_num"]);
+            m_read_index_file_thread_num = str2num<float>(pool["read_index_file_thread_num"]);
+            m_is_async_read = str2num<float>(pool["is_async_read"]);
         } catch (...) {
             fprintf(stderr, "Init conf fail!!!!!!!!");
             return -1;

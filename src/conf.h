@@ -16,6 +16,7 @@ namespace disk_hivf {
             Int m_index_file_num;
             Int m_dim;
             Int m_kmeans_epoch;
+            float m_kmeans_sample_rete;
             Int m_batch_size;
             Int m_kmeans_centers_select_type;
             Int m_first_cluster_num;
@@ -31,5 +32,7 @@ namespace disk_hivf {
             float m_search_top_cut;
             Int m_hs_mode;
             Int m_thread_num;
+            Int m_read_index_file_thread_num;
+            Int m_is_async_read;
     };
 }

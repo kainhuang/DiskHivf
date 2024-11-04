@@ -262,15 +262,19 @@ namespace disk_hivf {
             */
             template<typename T>
             Int read(Int file_id, Int offset, Uint len, std::vector<T>& data) {
-                //TimeStat ts("read");
-                //std::vector<Int> time_stat(4, 0);
+                data.resize(len);
+                return read(file_id, offset, len, data.data());
+            }
+
+            template<typename T>
+            Int read(Int file_id, Int offset, Uint len, T* data) {
                 if (file_id < 0 || file_id >= file_num_) {
                     std::cerr << "read err file_id=" << file_id 
                         << " offset=" << offset << " len=" << len << std::endl;
                     return -1; // Invalid file_id
                 }
                 std::thread::id main_id = std::this_thread::get_id();
-                //std::cout << "Main Thread ID: " << main_id << std::endl;
+                //std::cout << "Main Thread ID: " << main_id << " file id" << file_id << std::endl;
                 std::string key = num2str(main_id) + "_" + num2str(file_id);
                 std::shared_ptr<std::fstream> ifs;
                 {
@@ -278,15 +282,13 @@ namespace disk_hivf {
                     if (fs_cache_.find(key) != fs_cache_.end()) {
                         ifs = fs_cache_[key];
                     } else {
-                        //std::cout << "open" << std::endl;
+                        //std::cout << "Main Thread ID: " << main_id << " file id open" << file_id << std::endl;
                         std::string file_path = file_dir_ + "/file_" + std::to_string(file_id) + ".dat";
                         ifs = std::make_shared<std::fstream>(file_path,
                                 std::ios::in | std::ios::out | std::ios::binary);
                         fs_cache_[key] = ifs;
                     }
                 }
-                //time_stat[0] += ts.TimeCost();
-                //auto & ifs = file_streams_[file_id];
                 if (!ifs || !ifs->is_open()) {
                     std::cerr << "read error: file stream is not open for file_id=" << file_id << std::endl;
                     return -1; // File stream is not open
@@ -299,24 +301,16 @@ namespace disk_hivf {
                             << " offset=" << offset << std::endl;
                     return -1; // Seek failed
                 }
-                //time_stat[1] += ts.TimeCost();
-                data.resize(len);
-                //time_stat[2] += ts.TimeCost();
-                ifs->read(reinterpret_cast<char*>(data.data()), len * sizeof(T));
+                ifs->read(reinterpret_cast<char*>(data), len * sizeof(T));
                 if (!ifs) {
                     std::cerr << "read fail file_id=" << file_id 
                         << " offset=" << offset << " len=" << len << std::endl;
                     return -1; // Read failed
                 }
-                /*
-                time_stat[3] += ts.TimeCost();
-                for (auto & a: time_stat) {
-                    std::cout << a << " ";
-                }
-                std::cout << len << std::endl;
-                */
+                //std::cout << "Main Thread ID: " << main_id << " file id ok" << file_id << std::endl;
                 return ifs->gcount(); // Return the number of bytes read
             }
+
 
             Int clear(Int file_id);
 
