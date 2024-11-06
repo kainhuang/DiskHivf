@@ -193,7 +193,7 @@ namespace disk_hivf {
         std::vector<Int> training_assign;
         
         for (Int _ = 0; _ < epoch; _++) {
-            TimeStat ts("epoch=" + num2str(_));
+            //TimeStat ts("epoch=" + num2str(_));
             tmp_centers_data.resize(k * dim, 0);
             Eigen::Map<RMatrixXf> tmp_centers(tmp_centers_data.data(), k, dim);
             std::vector<Int> nassign(k, 0);

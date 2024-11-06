@@ -196,10 +196,19 @@ namespace disk_hivf {
                 return m_file_tot_offset[file_id] + offset / item_size;
             }
 
+            inline Int get_file_id(Int x) {
+                Int n = m_conf.m_first_cluster_num;
+                Int m = m_conf.m_index_file_num;
+                Int bucket_size = n / m + (n % m == 0? 0: 1);
+                return x / bucket_size;
+            }
+
             std::future<std::vector<char>> read_file_async(Int file_id, Int offset, Int len);
 
             Int init_edge_info();
-            std::vector<Int> make_second_centers_disk_order();
+            
+            std::vector<Int> make_centers_disk_order(Eigen::Map<RMatrixXf> & centers, Int centers_num);
+
             Int rerank_disk_order(const std::vector<FeatureAssign>& features_assign,
                 const std::vector<Int>& disk_order);
 
@@ -211,14 +220,16 @@ namespace disk_hivf {
                     std::vector<std::vector<std::pair<float, Int>>> & topkfirst_center,
                     std::vector<LimitedMaxHeap<FeatureAssign>> & heap_vecs,
                     bool empty_cell_fillter = false) {
+                    
+                    Eigen::Map<RMatrixXf> second_centers(m_second_centers_data.data(), m_conf.m_second_cluster_num, m_conf.m_dim);
+                    RMatrixDf qt = batch_features * second_centers.transpose() * (-2);
                     for (Int features_id = 0; features_id < batch_features.rows(); features_id++) {
-                        const Eigen::RowVectorXf & feature = batch_features.row(features_id);
                         std::vector<std::pair<float, Int>> & first_center_dists
                             = topkfirst_center[features_id];
                         LimitedMaxHeap<FeatureAssign> & heap = heap_vecs[features_id];
                         Eigen::Map<RMatrixXf> second_centers(m_second_centers_data.data(), m_conf.m_second_cluster_num, m_conf.m_dim);
                         Eigen::RowVectorXf query2second_centers_dist(m_conf.m_second_cluster_num);
-                        Eigen::RowVectorXf qt = feature * second_centers.transpose() * (-2);
+                        
                         for (size_t i = 0; i < first_center_dists.size(); i++) {
                             float first_center_dist = first_center_dists[i].first;
                             Int first_center_id = first_center_dists[i].second;
@@ -239,7 +250,7 @@ namespace disk_hivf {
                                 continue;
                             }
                             for (Int j = 0; j < second_cut; j++) {
-                                query2second_centers_dist(j) = qt(j) +
+                                query2second_centers_dist(j) = qt(features_id, j) +
                                     (first_center_dist + m_first2second_edges_stationary_dist(first_center_id, j));
                                 if (empty_cell_fillter) {
                                     Int cell_id = first_center_id * m_conf.m_second_cluster_num + j;

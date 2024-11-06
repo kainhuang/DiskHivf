@@ -34,5 +34,6 @@ namespace disk_hivf {
             Int m_thread_num;
             Int m_read_index_file_thread_num;
             Int m_is_async_read;
+            Int m_build_index_num;
     };
 }

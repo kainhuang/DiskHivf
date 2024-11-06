@@ -218,6 +218,9 @@ namespace disk_hivf {
                 training_features.row(i) = features.row(i) - second_centers.row(assign[i]);
             }
         }
+        
+        std::vector<Int> first_centers_order = make_centers_disk_order(m_first_centers, m_conf.m_first_cluster_num);
+        sort_rows_by_vec(m_first_centers, first_centers_order);
         m_first_centers_squa_norm = m_first_centers.rowwise().squaredNorm();
         sort_rows_by_squa_norm_desc(m_second_centers);
         m_second_centers_squa_norm = m_second_centers.rowwise().squaredNorm();
@@ -289,21 +292,21 @@ namespace disk_hivf {
     }
 
 
-    std::vector<Int> HierachicalCluster::make_second_centers_disk_order() {
-        RMatrixDf distances = computeDistanceMatrix(m_second_centers, m_second_centers);
+    std::vector<Int> HierachicalCluster::make_centers_disk_order(Eigen::Map<RMatrixXf> & centers, Int centers_num) {
+        RMatrixDf distances = computeDistanceMatrix(centers, centers);
         std::vector<Int> tmp_vec;
-        std::vector<Int> ret_vec(m_conf.m_second_cluster_num, -1);
-        std::vector<bool> mark(m_conf.m_second_cluster_num, false);
-        if (m_conf.m_second_cluster_num <= 0) {
+        std::vector<Int> ret_vec(centers_num, -1);
+        std::vector<bool> mark(centers_num, false);
+        if (centers_num <= 0) {
             return ret_vec;
         }
-        mark[m_conf.m_second_cluster_num-1] = true;
-        tmp_vec.push_back(m_conf.m_second_cluster_num-1);
-        Int per_center_id = m_conf.m_second_cluster_num-1;
-        for (Int i = 1; i < m_conf.m_second_cluster_num; i++) {
+        mark[centers_num-1] = true;
+        tmp_vec.push_back(centers_num-1);
+        Int per_center_id = centers_num-1;
+        for (Int i = 1; i < centers_num; i++) {
             float min_dist = std::numeric_limits<float>::max();
             float min_id = 0;
-            for (Int j = 0; j < m_conf.m_second_cluster_num; j++) {
+            for (Int j = 0; j < centers_num; j++) {
                 if (mark[j]) {
                     continue;
                 }
@@ -316,7 +319,7 @@ namespace disk_hivf {
             mark[min_id] = true;
             per_center_id = min_id;
         }
-        for (Int i = 0; i < m_conf.m_second_cluster_num; i++) {
+        for (Int i = 0; i < centers_num; i++) {
             ret_vec[tmp_vec[i]] = i;
         }
         return ret_vec;
@@ -431,6 +434,10 @@ namespace disk_hivf {
             std::cerr << "Error reading numVecs from file: "  << m_conf.m_index_data_file << std::endl;
             return -1;
         }
+        if (m_conf.m_build_index_num > 0) {
+            vecs_num = std::min(vecs_num, m_conf.m_build_index_num);
+        }
+        std::cout << "build index vecs_num = " << vecs_num << std::endl;
         Int batch_size = m_conf.m_read_file_batch_size;
         Int offset = 0;
         std::vector<FeatureAssign> features_assign(vecs_num);
@@ -452,7 +459,7 @@ namespace disk_hivf {
                         << m_conf.m_index_data_file << std::endl;
                 }
                 now_offset = offset;
-                if (now_offset % 10000000 == 0) {
+                if (now_offset % 100000 == 0) {
                     std::cout << "now_offset=" << offset << std::endl;
                 }
                 offset += curr_batch_size;
@@ -477,7 +484,8 @@ namespace disk_hivf {
                 features_assign[idx] = heap_vecs[j].top();
                 features_assign[idx].m_feature_id = idx;
                 //write idx,feature_vec to file dir/first_center_id
-                Int file_id = features_assign[idx].m_first_center_id % m_conf.m_index_file_num;
+                //Int file_id = features_assign[idx].m_first_center_id % m_conf.m_index_file_num;
+                Int file_id = get_file_id(features_assign[idx].m_first_center_id);
                 {
                     std::lock_guard<std::mutex> lock(m_file_mutexs[file_id]);
                     Int first2second_cells_id =
@@ -512,7 +520,7 @@ namespace disk_hivf {
             std::cout << file_tot_offset << " ";
         }
         std::cout << std::endl;
-        std::vector<Int> second_centers_disk_order = make_second_centers_disk_order();
+        std::vector<Int> second_centers_disk_order = make_centers_disk_order(m_second_centers, m_conf.m_second_cluster_num);
         Int ret = rerank_disk_order(features_assign, second_centers_disk_order);
         if (ret < 0) {
             std::cerr << "rerank_disk_order fail" << std::endl;
@@ -704,7 +712,8 @@ namespace disk_hivf {
         std::vector<SearchingCell> search_cells;
         while (!heap_vecs[0].empty()) {
             const FeatureAssign & tmp = heap_vecs[0].top();
-            Int file_id = tmp.m_first_center_id % m_conf.m_index_file_num;
+            //Int file_id = tmp.m_first_center_id % m_conf.m_index_file_num;
+            Int file_id = get_file_id(tmp.m_first_center_id);
             Int cell_id = 
                 tmp.m_first_center_id * m_conf.m_second_cluster_num + tmp.m_second_center_id;
             float dist = tmp.m_distance;

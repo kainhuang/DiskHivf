@@ -115,9 +115,9 @@ void run_test_set2(HierachicalCluster &hc, Eigen::Map<RMatrixDf> & querys,
 
 int main(int argc, char* argv[]) {
     //Eigen::initParallel();
-    if (argc != 7) {
+    if (argc != 8) {
         std::cerr << "Usage: " << argv[0] 
-        << " <conf_file> <query_file> <groundtruth_file> <topk> <at_num> <thread_num>" << std::endl;
+        << " <conf_file> <query_file> <groundtruth_file> <topk> <at_num> <thread_num> <first_centers_num>" << std::endl;
         return 1;
     }
     std::string conf_file = argv[1];
@@ -126,8 +126,13 @@ int main(int argc, char* argv[]) {
     Int topk = str2num<Int>(argv[4]);
     Int at_num = str2num<Int>(argv[5]);
     Int thread_num = str2num<Int>(argv[6]);
+    Int first_centers_num = str2num<Int>(argv[7]);
     Conf conf;
     conf.Init(conf_file.c_str());
+    conf.m_search_first_center_num = first_centers_num;
+    conf.m_search_second_center_num = first_centers_num * first_centers_num;
+    conf.m_search_neighbors = conf.m_search_second_center_num * 20;
+    conf.m_search_block_num = conf.m_search_second_center_num / 2;
     Int ret = 0;
     HierachicalCluster hc(conf);
     ret = hc.init();

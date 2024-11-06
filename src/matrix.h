@@ -35,6 +35,36 @@ namespace disk_hivf {
         matrix = tmp;
     }
 
+
+    template <typename Derived>
+    void sort_rows_by_vec(Eigen::MatrixBase<Derived>& matrix, std::vector<Int> & vec) {
+        // 获取矩阵的行数和列数
+        Int rows = matrix.rows();
+
+        // 创建一个向量来存储每一行的模和行索引
+        std::vector<std::pair<double, Int>> norms(rows);
+
+        // 计算每一行的模
+        for (Int i = 0; i < rows; ++i) {
+            norms[i] = {vec[i], i};
+        }
+
+        // 根据模的大小进行排序
+        sort(norms.begin(), norms.end(), 
+            [](const std::pair<double, Int>& a, const std::pair<double, Int>& b) {
+                return a.first > b.first;
+            });
+
+        // 按照排序后的索引重新排列矩阵的行
+        RMatrixXf tmp(matrix.rows(), matrix.cols());
+        for (Int i = 0; i < rows; ++i) {
+            Int target = norms[i].second;
+            tmp.row(i) = matrix.row(target);
+        }
+        matrix = tmp;
+    }
+
+
     // 计算距离矩阵
     template <typename DerivedA, typename DerivedB>
     RMatrixDf computeDistanceMatrix(const Eigen::MatrixBase<DerivedA>& A,

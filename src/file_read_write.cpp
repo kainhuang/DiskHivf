@@ -11,7 +11,7 @@
 
 namespace disk_hivf {
     FileReadWriter::FileReadWriter(const std::string & file_dir, Int file_num, Int is_disk):
-        file_dir_(file_dir), file_num_(file_num), is_disk_(is_disk) {
+        file_dir_(file_dir), file_num_(file_num), is_disk_(is_disk), offsets_(file_num, 0) {
     }
 
     FileReadWriter::~FileReadWriter() {
@@ -34,22 +34,22 @@ namespace disk_hivf {
             for (Int i = 0; i < file_num_; ++i) {
                 std::string file_path = file_dir_ + "/file_" + std::to_string(i) + ".dat";
                 // Check if file exists
-            std::ifstream ifs(file_path);
-            if (!ifs) {
-                // File does not exist, create it
-                std::ofstream ofs(file_path);
-                if (!ofs) {
-                    std::cerr << "Failed to create file" << std::endl;
-                    return -1; // Failed to create file
+                std::ifstream ifs(file_path);
+                if (!ifs) {
+                    // File does not exist, create it
+                    std::ofstream ofs(file_path);
+                    if (!ofs) {
+                        std::cerr << "Failed to create file" << std::endl;
+                        return -1; // Failed to create file
+                    }
+                    ofs.close();
+                } else {
+                    ifs.close(); // Explicitly close the ifstream
                 }
-                ofs.close();
-            } else {
-                ifs.close(); // Explicitly close the ifstream
-            }
                 // Open file streams and store them
                 std::shared_ptr<std::fstream> file_stream(
                     new std::fstream(file_path,
-                        std::ios::in | std::ios::out | std::ios::binary));
+                        std::ios::in | std::ios::out | std::ios::app | std::ios::binary));
                 if (!file_stream->is_open()) {
                     std::cerr << "Failed to open file" << std::endl;
                     return -1; // Failed to open file
@@ -90,8 +90,9 @@ namespace disk_hivf {
             return -1; // Invalid file_id
         }
         auto & ofs = file_streams_[file_id];
-        ofs->seekp(0, std::ios::end);
-        Int ret_offset = ofs->tellp();
+        //ofs->seekp(0, std::ios::end);
+        //Int ret_offset = ofs->tellp();
+        Int ret_offset = offsets_[file_id];
         if (-1 == ret_offset) {
             std::cerr << "Failed to get the initial offset." << std::endl;
             return -1;
@@ -101,7 +102,8 @@ namespace disk_hivf {
             std::cerr << "ERR FileReadWriter.write fail err file_id=" << file_id << std::endl; 
             return -1; // Write failed
         }
-        
+        offsets_[file_id] += len;
+        //std::cout << "ret_offset=" << ret_offset << std::endl;
         return ret_offset; // Success
     }
 
@@ -111,7 +113,7 @@ namespace disk_hivf {
             std::cerr << "Invalid file ID: " << file_id << std::endl;
             return -1;
         }
-
+        offsets_[file_id] = 0;
         auto &ofs = file_streams_[file_id];
         ofs->close();
 
@@ -119,6 +121,14 @@ namespace disk_hivf {
             std::ios::binary | std::ios::in | std::ios::out | std::ios::trunc);
         if (!ofs->is_open()) {
             std::cerr << "Failed to clear file: " << file_path << std::endl;
+            return -1;
+        }
+        ofs->close();
+
+        ofs->open(file_path,
+            std::ios::binary | std::ios::in | std::ios::out | std::ios::app);
+        if (!ofs->is_open()) {
+            std::cerr << "Failed to clear file again: " << file_path << std::endl;
             return -1;
         }
 

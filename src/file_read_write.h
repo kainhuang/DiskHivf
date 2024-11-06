@@ -130,9 +130,16 @@ namespace disk_hivf {
         }
     }
 
+    template<typename T1, typename T2> 
+    void convert_type(T1 * dest, T2 * src, Int len) {
+        for (Int i = 0; i < len; i++) {
+            dest[i] = static_cast<T1>(src[i]);
+        }
+    }
+
     template<typename T>
     Int convertVecs2DimVecs(const std::string& inputFilename, const std::string& outputFilename,
-        int dim, Int numVectors, Int batchSize) {
+        int dim, Int numVectors, Int batchSize, Int bvec2fvec = 1, Int fvec2bvec = 0) {
         std::ifstream inputFile(inputFilename, std::ios::binary);
         if (!inputFile) {
             std::cerr << "Cannot open input file: " << inputFilename << std::endl;
@@ -154,8 +161,8 @@ namespace disk_hivf {
         size_t out_buffer_size = batchSize * (dim * sizeof(T));
         std::unique_ptr<char> out_buffer(new char[out_buffer_size]);
 
-        std::vector<float> convert_buffer(out_buffer_size, 0);
-
+        std::vector<float> float_convert_buffer(out_buffer_size, 0);
+        std::vector<uint8_t> uint8_convert_buffer(out_buffer_size, 0);
         for (Int i = 0; i < numVectors; i += batchSize) {
             Int currentBatchSize = std::min(batchSize, numVectors - i);
             size_t read_size = currentBatchSize * (4 + dim * sizeof(T));
@@ -173,18 +180,32 @@ namespace disk_hivf {
                 src += (4 + dim * sizeof(T));
             }
             if (sizeof(T) < 4) {
-                T * ptr = reinterpret_cast<T *>(out_buffer.get());
-                for (Int j = 0; j < currentBatchSize * dim; j++) {
-                    convert_buffer[j] = static_cast<float>(ptr[j]);
+                if (bvec2fvec) {
+                    T * ptr = reinterpret_cast<T *>(out_buffer.get());
+                    convert_type<float, T>(float_convert_buffer.data(), ptr, currentBatchSize * dim);
+                    outputFile.write(reinterpret_cast<const char *>(float_convert_buffer.data()),
+                        currentBatchSize * dim * sizeof(float));
+                } else {
+                    outputFile.write(out_buffer.get(), currentBatchSize * dim * sizeof(T));
                 }
-                outputFile.write(reinterpret_cast<const char *>(convert_buffer.data()), currentBatchSize * dim * sizeof(float));
-            }
-            else {
-                // Write the batch of vectors to the output file
-                outputFile.write(out_buffer.get(), currentBatchSize * dim * sizeof(T));
                 if (!outputFile) {
                     std::cerr << "Error writing vector data to output file: " << outputFilename << std::endl;
                     return -1;
+                }
+            }
+            else {
+                if (fvec2bvec) {
+                    T * ptr = reinterpret_cast<T *>(out_buffer.get());
+                    convert_type<uint8_t, T>(uint8_convert_buffer.data(), ptr, currentBatchSize * dim);
+                    outputFile.write(reinterpret_cast<const char *>(uint8_convert_buffer.data()),
+                        currentBatchSize * dim * sizeof(uint8_t));
+                } else {
+                    // Write the batch of vectors to the output file
+                    outputFile.write(out_buffer.get(), currentBatchSize * dim * sizeof(T));
+                    if (!outputFile) {
+                        std::cerr << "Error writing vector data to output file: " << outputFilename << std::endl;
+                        return -1;
+                    }
                 }
             }
         }
@@ -332,6 +353,7 @@ namespace disk_hivf {
             std::vector<std::vector<char>> mem_datas_;
             std::unordered_map<std::string, std::shared_ptr<std::fstream>> fs_cache_;
             std::mutex fs_cache_mutex_;
+            std::vector<Int> offsets_;
     };
 
 }

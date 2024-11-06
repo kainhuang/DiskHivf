@@ -29,6 +29,7 @@ namespace disk_hivf {
         m_thread_num = 1;
         m_read_index_file_thread_num = 5;
         m_is_async_read = 1;
+        m_build_index_num = -1;
     }
     int Conf::Init(const char * configFile) {
         Int ret = makePool(configFile);
@@ -62,6 +63,7 @@ namespace disk_hivf {
             m_thread_num = str2num<float>(pool["thread_num"]);
             m_read_index_file_thread_num = str2num<float>(pool["read_index_file_thread_num"]);
             m_is_async_read = str2num<float>(pool["is_async_read"]);
+            m_build_index_num = str2num<Int>(pool["build_index_num"]);
         } catch (...) {
             fprintf(stderr, "Init conf fail!!!!!!!!");
             return -1;
