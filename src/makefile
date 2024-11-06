@@ -2,11 +2,12 @@ CXX = g++
 OUT_PATH = ../bin
 CFLAGS = -g -std=c++11 -Wall -O3 -march=native -mtune=native -ggdb -pipe -W -fPIC -ffast-math -mavx -mfma 
 FFLAGS = -lpthread -fopenmp -lssl -lrt -lz
-#FFLAGS = -lpthread -fopenmp -lssl -lrt -lz -L/opt/intel/oneapi/mkl/latest/lib -lmkl_rt
+#FFLAGS = -lpthread -fopenmp -lssl -lrt -lz -L/opt/intel/oneapi/mkl/2024.0/lib -lmkl_rt
 INCLUDE = -Ieigen-3.4.0/
-#INCLUDE = -Ieigen-3.4.0/ -I/opt/intel/oneapi/mkl/latest/include
+#INCLUDE = -Ieigen-3.4.0/ -I/opt/intel/oneapi/mkl/2024.0/include
 
-
+build_index: build_index.cpp common.h hierachical_cluster.o kmeans.o random.o unity.o Log.o file_read_write.o conf.o common.h
+	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/build_index build_index.cpp hierachical_cluster.o kmeans.o random.o unity.o Log.o file_read_write.o conf.o ../env/tcmalloc/lib/libtcmalloc.a $(FFLAGS)
 run_test_set: run_test_set.cpp common.h hierachical_cluster.o kmeans.o random.o unity.o Log.o file_read_write.o conf.o common.h
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/run_test_set run_test_set.cpp hierachical_cluster.o kmeans.o random.o unity.o Log.o file_read_write.o conf.o ../env/tcmalloc/lib/libtcmalloc.a $(FFLAGS)
 convert_vecs2dim_vecs:convert_vecs2dim_vecs.cpp file_read_write.h common.h file_read_write.o
@@ -40,4 +41,4 @@ unity.o:unity.cpp unity.h Log.o
 Log.o:Log.cpp Log.h
 	$(CXX) $(CFLAGS) -c Log.cpp
 clean:
-	rm *.o $(OUT_PATH)/disk_hivf_train_and_build $(OUT_PATH)/run_test_set $(OUT_PATH)/convert_vecs2dim_vecs
+	rm *.o $(OUT_PATH)/disk_hivf_train_and_build $(OUT_PATH)/run_test_set $(OUT_PATH)/convert_vecs2dim_vecs $(OUT_PATH)/build_index
