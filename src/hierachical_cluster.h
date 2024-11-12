@@ -13,6 +13,7 @@
 #include <future>
 #include <stdexcept>
 #include <mutex>
+#include "matrix.h"
 
 namespace disk_hivf {
     struct DataIndex{
@@ -114,12 +115,22 @@ namespace disk_hivf {
 
 
     struct Result {
-        Result(Int vec_id, float distance): m_vec_id(vec_id), m_distance(distance) {}
+        Result(Int vec_id, float distance, int rank_id, int searched_num):
+            m_vec_id(vec_id), m_distance(distance),
+            m_rank_id(rank_id), m_searched_num(searched_num) {}
+        Result() {
+            m_vec_id = -1;
+            m_distance = -1;
+            m_rank_id = 0;
+            m_searched_num = 0;
+        }
         inline bool operator < (const Result & other) const {
             return m_distance < other.m_distance;
         }
         Int m_vec_id;
         float m_distance;
+        int m_rank_id;
+        int m_searched_num;
     };
 
     struct SearchingBlock {
@@ -199,8 +210,12 @@ namespace disk_hivf {
             inline Int get_file_id(Int x) {
                 Int n = m_conf.m_first_cluster_num;
                 Int m = m_conf.m_index_file_num;
-                Int bucket_size = n / m + (n % m == 0? 0: 1);
-                return x / bucket_size;
+                Int bucket_size = n / m;
+                if (x / bucket_size < m) {
+                    return x / bucket_size;
+                } else {
+                    return x % m;
+                }
             }
 
             std::future<std::vector<char>> read_file_async(Int file_id, Int offset, Int len);
@@ -220,14 +235,15 @@ namespace disk_hivf {
                     std::vector<std::vector<std::pair<float, Int>>> & topkfirst_center,
                     std::vector<LimitedMaxHeap<FeatureAssign>> & heap_vecs,
                     bool empty_cell_fillter = false) {
-                    
+                    //TimeStat ts("findTopkSecondCenters");
                     Eigen::Map<RMatrixXf> second_centers(m_second_centers_data.data(), m_conf.m_second_cluster_num, m_conf.m_dim);
                     RMatrixDf qt = batch_features * second_centers.transpose() * (-2);
+                    //ts.TimeMark("make qt");
                     for (Int features_id = 0; features_id < batch_features.rows(); features_id++) {
                         std::vector<std::pair<float, Int>> & first_center_dists
                             = topkfirst_center[features_id];
                         LimitedMaxHeap<FeatureAssign> & heap = heap_vecs[features_id];
-                        Eigen::Map<RMatrixXf> second_centers(m_second_centers_data.data(), m_conf.m_second_cluster_num, m_conf.m_dim);
+                        //Eigen::Map<RMatrixXf> second_centers(m_second_centers_data.data(), m_conf.m_second_cluster_num, m_conf.m_dim);
                         Eigen::RowVectorXf query2second_centers_dist(m_conf.m_second_cluster_num);
                         
                         for (size_t i = 0; i < first_center_dists.size(); i++) {
@@ -237,6 +253,7 @@ namespace disk_hivf {
                             Int second_cut;
                             if (heap.is_full()) {
                                 float cut_dist = heap.top().m_distance;
+
                                 for (second_cut = 0; second_cut < m_conf.m_second_cluster_num; second_cut++) {
                                     if (std::sqrt(first_center_dist) - std::sqrt(m_second_centers_squa_norm(second_cut)) 
                                         > std::sqrt(cut_dist)) {
@@ -264,6 +281,68 @@ namespace disk_hivf {
                     }
                     return 0;
                 }
+
+
+            template <typename Derived>
+                Int findTopkSecondCenters2(const Eigen::MatrixBase<Derived>& batch_features,
+                    std::vector<std::vector<std::pair<float, Int>>> & topkfirst_center,
+                    Int topk,
+                    std::vector<std::vector<int>> & batch_cell_ids,
+                    std::vector<std::vector<float>> & batch_dists_data) {
+                    //TimeStat ts("findTopkSecondCenters2");
+                    Eigen::Map<RMatrixXf> second_centers(m_second_centers_data.data(), m_conf.m_second_cluster_num, m_conf.m_dim);
+                    RMatrixDf qt = batch_features * second_centers.transpose() * (-2);
+                    std::vector<float> first_center_dists_data;
+                    //ts.TimeMark("findTopkSecondCenters2 qt");
+                    for (Int features_id = 0; features_id < batch_features.rows(); features_id++) {
+                        auto & cell_ids = batch_cell_ids[features_id];
+                        auto & dists_data = batch_dists_data[features_id];
+                        std::vector<std::pair<float, Int>> & first_center_dists
+                            = topkfirst_center[features_id];
+                        first_center_dists_data.reserve(first_center_dists.size());
+                        for (auto & pair: first_center_dists) {
+                            first_center_dists_data.push_back(pair.first);
+                        }
+                        Eigen::Map<Eigen::VectorXf> first_center_dists_vec(
+                            first_center_dists_data.data(),
+                            first_center_dists_data.size()
+                        );
+                        dists_data.resize(first_center_dists.size() * m_conf.m_second_cluster_num);
+                        for (size_t i = 0; i < first_center_dists.size(); i++) {
+                            Int first_center_id = first_center_dists[i].second;
+                            memcpy(dists_data.data() + i * m_conf.m_second_cluster_num,
+                                m_first2second_edges_stationary_dist_data.data() 
+                                + first_center_id * m_conf.m_second_cluster_num,
+                                m_conf.m_second_cluster_num * sizeof(float)
+                            );
+                        }
+                        //ts.TimeMark("findTopkSecondCenters2 memcpy");
+                        Eigen::Map<RMatrixXf> dists(
+                            dists_data.data(), 
+                            first_center_dists.size(),
+                            m_conf.m_second_cluster_num
+                        );
+                        dists.rowwise() += qt.row(features_id);
+                        dists.colwise() += first_center_dists_vec;
+                        //ts.TimeMark("findTopkSecondCenters2 calc");
+                        cell_ids.resize(
+                            first_center_dists.size() * m_conf.m_second_cluster_num);
+                        //ts.TimeMark("findTopkSecondCenters2 resize");
+                        for (size_t i = 0; i < first_center_dists.size(); i++) {
+                            Int first_center_id = first_center_dists[i].second;
+                            for (Int j = 0; j < m_conf.m_second_cluster_num; j++) {
+                                Int cell_id = first_center_id * m_conf.m_second_cluster_num + j;
+                                Int id = i * m_conf.m_second_cluster_num + j;
+                                cell_ids[id] = cell_id;
+                            }
+                        }
+                        //ts.TimeMark("findTopkSecondCenters2 make fa_vec");
+                        topKByVec2(cell_ids, dists_data, topk);
+                        //ts.TimeMark("findTopkSecondCenters2 push 2 heap");
+                    }
+                    return 0;
+                }
+
 
         private:
             Conf m_conf;
@@ -296,5 +375,7 @@ namespace disk_hivf {
             std::vector<FeatureId> m_feature_ids;
 
             std::vector<std::mutex> m_file_mutexs;
+
+            Int m_data_unit_size;
     };
 }

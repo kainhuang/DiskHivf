@@ -15,8 +15,9 @@ void run_test_set(HierachicalCluster &hc, Eigen::Map<RMatrixDf> & querys,
     Int recall_topk, Int at_num, Int thread_num) {
     TimeStat ts("run_test_set ");
     std::vector<std::vector<FeatureId>> results(querys.rows(), std::vector<FeatureId>());
-    ts.TimeMark("search begin");
+    
     for (Int _ = 0; _ < 1; _++) {
+        long long st = ts.TimeMark("search begin");
     #pragma omp parallel for num_threads(thread_num)
         for (Int i = 0; i < querys.rows(); i++) {
             //TimeStat ts("searching " + num2str<Int>(i));
@@ -24,6 +25,8 @@ void run_test_set(HierachicalCluster &hc, Eigen::Map<RMatrixDf> & querys,
             hc.search(querys.row(i), at_num, result);
             results[i] = result;
         }
+        long long tim = ts.TimeMark("search end");
+        std::cout << "avg_time " << ((tim - st) * 1.0 / querys.rows()) << " us" << std::endl;
     }
     for (Int i = 0; i < 16; i++) {
         std::cout << i << " " << hc.m_time_stat[i] * 1.0 / querys.rows() << std::endl;
@@ -36,8 +39,7 @@ void run_test_set(HierachicalCluster &hc, Eigen::Map<RMatrixDf> & querys,
         std::cout << std::endl;
     }
     */
-    long long tim = ts.TimeMark("search end");
-    std::cout << "avg_time " << (tim * 1.0 / querys.rows()) << " us" << std::endl;
+
     Int tot = 0;
     Int recall = 0;
 
@@ -129,10 +131,12 @@ int main(int argc, char* argv[]) {
     Int first_centers_num = str2num<Int>(argv[7]);
     Conf conf;
     conf.Init(conf_file.c_str());
-    conf.m_search_first_center_num = first_centers_num;
-    conf.m_search_second_center_num = first_centers_num * first_centers_num;
-    conf.m_search_neighbors = conf.m_search_second_center_num * 20;
-    conf.m_search_block_num = conf.m_search_second_center_num / 2;
+    if (first_centers_num > 0) {
+        conf.m_search_first_center_num = first_centers_num;
+        conf.m_search_second_center_num = first_centers_num * first_centers_num;
+        conf.m_search_neighbors = conf.m_search_second_center_num * 20;
+        conf.m_search_block_num = conf.m_search_second_center_num / 2;
+    }
     Int ret = 0;
     HierachicalCluster hc(conf);
     ret = hc.init();
@@ -153,12 +157,13 @@ int main(int argc, char* argv[]) {
 
     std::vector<float> query_data;
     Eigen::Map<RMatrixDf> querys = readMatrixFromDimVecs(query_file, query_data);
-
+    //std::cout << querys << std::endl;
     std::vector<int> groundtruth_data;
     int dim;
     Int numVecs;
     readDimVecs(groundtruth_file, groundtruth_data, dim, numVecs);
     Eigen::Map<RMatrixDi> groundtruth(groundtruth_data.data(), numVecs, dim);
+    //std::cout << groundtruth << std::endl;
     run_test_set(hc, querys, groundtruth, topk, at_num, thread_num);
     return 0;
 }

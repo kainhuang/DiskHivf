@@ -140,4 +140,86 @@ namespace disk_hivf {
         std::vector<std::vector<std::pair<float, Int>>> topk_neighbors = findTopKNeighbors(distances, topk);
         return topk_neighbors;
     }
+    /*
+    int partition(std::vector<int>& vec1, std::vector<float>& vec2,
+        int left, int right, int pivotIndex);
+
+    void quickSelect(std::vector<int>& vec1, std::vector<float>& vec2,
+        int left, int right, int k);
+    
+    void topKByVec2(std::vector<int>& vec1, std::vector<float>& vec2,
+        int k);
+
+    inline int partition(std::vector<int>& vec1, std::vector<float>& vec2,
+        int left, int right, int pivotIndex) {
+        float pivotValue = vec2[pivotIndex];
+        std::swap(vec2[pivotIndex], vec2[right]);
+        std::swap(vec1[pivotIndex], vec1[right]);
+        int storeIndex = left;
+
+        for (int i = left; i < right; ++i) {
+            if (vec2[i] < pivotValue) { // 注意这里是小于号，因为我们要取top k 小的元素
+                if (i != storeIndex) {
+                    std::swap(vec2[storeIndex], vec2[i]);
+                    std::swap(vec1[storeIndex], vec1[i]);
+                }
+                ++storeIndex;
+            }
+        }
+        std::swap(vec2[right], vec2[storeIndex]);
+        std::swap(vec1[right], vec1[storeIndex]);
+        return storeIndex;
+    }
+    */
+
+    inline int partition(std::vector<int>& vec1, std::vector<float>& vec2,
+        int left, int right, int pivotIndex) {
+        int pivotValue1 = vec1[pivotIndex];
+        float pivotValue2 = vec2[pivotIndex];
+        std::swap(vec2[pivotIndex], vec2[left]);
+        std::swap(vec1[pivotIndex], vec1[left]);
+        int i = left;
+        int j = right;
+
+        while (i < j) {
+            while (i < j && vec2[j] >= pivotValue2) j--;
+            vec1[i] = vec1[j];
+            vec2[i] = vec2[j];
+            while (i < j && vec2[i] <= pivotValue2) i++;
+            vec1[j] = vec1[i];
+            vec2[j] = vec2[i];
+        }
+        vec1[i] = pivotValue1;
+        vec2[i] = pivotValue2;
+
+        return i;
+    }
+
+    inline void quickSelect(std::vector<int>& vec1, std::vector<float>& vec2,
+        int left, int right, int k) {
+        if (left == right) return;
+
+        int pivotIndex = left + (right - left) / 2;
+        pivotIndex = partition(vec1, vec2, left, right, pivotIndex);
+
+        if (k == pivotIndex) {
+            return;
+        } else if (k < pivotIndex) {
+            quickSelect(vec1, vec2, left, pivotIndex - 1, k);
+        } else {
+            quickSelect(vec1, vec2, pivotIndex + 1, right, k);
+        }
+    }
+
+    inline void topKByVec2(std::vector<int>& vec1, std::vector<float>& vec2, int k) {
+        if (k <= 0 || k > (int)vec2.size()) return;
+
+        quickSelect(vec1, vec2, 0, vec2.size() - 1, k);
+
+        // 现在 vec1 和 vec2 的前 k 个元素是 vec2 中最小的 k 个元素
+        vec1.resize(k);
+        vec2.resize(k);
+    }
+
+
 }

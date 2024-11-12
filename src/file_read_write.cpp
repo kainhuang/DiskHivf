@@ -73,6 +73,18 @@ namespace disk_hivf {
         }
     }
 
+    Int FileReadWriter::write(Int file_id, const char * data, Uint len, Int float2uint8) {
+        if (float2uint8) {
+            Int uint8_len = len / sizeof(float) * sizeof(uint8_t);
+            std::vector<uint8_t> tmp_data(uint8_len);
+            convert_type<uint8_t, float>(tmp_data.data(), 
+                reinterpret_cast<const float *>(data), uint8_len * sizeof(uint8_t));
+            return write(file_id, reinterpret_cast<const char *>(tmp_data.data()), uint8_len);
+        } else {
+            return write(file_id, data, len);
+        }
+    }
+
     Int FileReadWriter::write(Int file_id, const char * data, Uint len) {
         //std::cout << "ptr2=" << data << std::endl;
         /*

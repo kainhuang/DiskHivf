@@ -20,9 +20,9 @@ int main(int argc, char* argv[]) {
     int dimension = 0;
     Int numVectors = 0;
     if (fileType == FileType::BVEC) {
-        ret = readVectorFileMetadata<char>(inputFilename, dimension, numVectors);
+        ret = readVectorFileMetadata<uint8_t>(inputFilename, dimension, numVectors);
         std::cout << "Read " << numVectors << " vectors of dimension " << dimension << " from " << inputFilename << std::endl;
-        ret = convertVecs2DimVecs<char>(inputFilename, outputFilename, dimension, numVectors, batchSize, bvec2fvec, fvec2bvec);
+        ret = convertVecs2DimVecs<uint8_t>(inputFilename, outputFilename, dimension, numVectors, batchSize, bvec2fvec, fvec2bvec);
     } else if (fileType == FileType::FVEC) {
         ret = readVectorFileMetadata<float>(inputFilename, dimension, numVectors);
         std::cout << "Read " << numVectors << " vectors of dimension " << dimension << " from " << inputFilename << std::endl;

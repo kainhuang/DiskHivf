@@ -14,6 +14,7 @@ template <typename T>
             if (heap_.size() < capacity_) {
                 heap_.push(value);
             } else if (value < heap_.top()) {
+                pre = heap_.top();
                 heap_.pop();
                 heap_.push(value);
             }
@@ -39,8 +40,16 @@ template <typename T>
             return heap_.size() >= capacity_;
         }
 
+        T get_pre() const {
+            return pre;
+        }
+
+        size_t capacity() const {
+            return capacity_;
+        }
     private:
         size_t capacity_;
         std::priority_queue<T> heap_;
+        T pre;
     };
 }

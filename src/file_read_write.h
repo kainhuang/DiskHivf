@@ -24,6 +24,12 @@ namespace disk_hivf {
 
     FileType getFileType(const std::string& filename);
 
+    template<typename T1, typename T2> 
+    void convert_type(T1 * dest, const T2 * src, Int len) {
+        for (Int i = 0; i < len; i++) {
+            dest[i] = static_cast<T1>(src[i]);
+        }
+    }
 
     // Template function to read vector file metadata
     template <typename T>
@@ -51,7 +57,8 @@ namespace disk_hivf {
 
 
     template<typename T>
-    Int readDimVecs(const std::string& filename, std::vector<T>& data, int& dimension, Int& numVecs) {
+    Int readDimVecs(const std::string& filename, std::vector<T>& data,
+        int& dimension, Int& numVecs, Int data_num = -1, Int use_uint8_data = 0) {
         TimeStat ts("readDimVecs " + filename);
         std::ifstream file(filename, std::ios::binary);
         if (!file) {
@@ -72,12 +79,25 @@ namespace disk_hivf {
             return -1;
         }
         dimension = d;
+        if (data_num > 0) {
+            num = data_num;
+        }
         numVecs = num;
         data.resize(num * d);
-        file.read(reinterpret_cast<char*>(data.data()), num * d * sizeof(T));
-        if (!file) {
-            std::cerr << "Error reading Vecs from file: "  << filename << std::endl;
-            return -1;
+        if (use_uint8_data) {
+            std::vector<uint8_t> tmp_data(num * d);
+            file.read(reinterpret_cast<char*>(tmp_data.data()), num * d * sizeof(uint8_t));
+            if (!file) {
+                std::cerr << "Error reading Vecs from file: "  << filename << std::endl;
+                return -1;
+            }
+            convert_type<T, uint8_t>(data.data(), tmp_data.data(), data.size());
+        } else {
+            file.read(reinterpret_cast<char*>(data.data()), num * d * sizeof(T));
+            if (!file) {
+                std::cerr << "Error reading Vecs from file: "  << filename << std::endl;
+                return -1;
+            }
         }
         return 0;
     }
@@ -127,13 +147,6 @@ namespace disk_hivf {
                 std::cout << static_cast<Int>(data[i * dimension + j]) << " ";
             }
             std::cout << std::endl;
-        }
-    }
-
-    template<typename T1, typename T2> 
-    void convert_type(T1 * dest, T2 * src, Int len) {
-        for (Int i = 0; i < len; i++) {
-            dest[i] = static_cast<T1>(src[i]);
         }
     }
 
@@ -241,6 +254,8 @@ namespace disk_hivf {
             len:数据的长度
             */
             Int write(Int file_id, const char * data, Uint len);
+            
+            Int write(Int file_id, const char * data, Uint len, Int float2uint8);
 
             /*读函数
             输入:
@@ -282,9 +297,19 @@ namespace disk_hivf {
             data:数据指针，用来返回数据
             */
             template<typename T>
-            Int read(Int file_id, Int offset, Uint len, std::vector<T>& data) {
+            Int read(Int file_id, Int offset, Uint len, std::vector<T>& data, Int use_uint8_data = 0) {
                 data.resize(len);
-                return read(file_id, offset, len, data.data());
+                if (use_uint8_data) {
+                    std::vector<uint8_t> tmp_data(len);
+                    Int ret = read(file_id, offset, len, tmp_data.data());
+                    if (ret < 0) {
+                        return ret;
+                    }
+                    convert_type<T, uint8_t>(data.data(), tmp_data.data(), len);
+                    return ret;
+                } else {
+                    return read(file_id, offset, len, data.data());
+                }
             }
 
             template<typename T>
@@ -308,6 +333,7 @@ namespace disk_hivf {
                         ifs = std::make_shared<std::fstream>(file_path,
                                 std::ios::in | std::ios::out | std::ios::binary);
                         fs_cache_[key] = ifs;
+                        //std::cout << "open file size=" << fs_cache_.size() << std::endl;
                     }
                 }
                 if (!ifs || !ifs->is_open()) {
