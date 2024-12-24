@@ -106,7 +106,7 @@ plt.figure(figsize=(10, 6))
 
 plt.plot(diskhivf_lacency, diskhivf_recall, marker='o', label='DiskHivf')
 plt.plot(diskann_lacency, diskann_recall, marker='o', label='Diskann')
-plt.plot(starling_lacency, starling_recall, marker='o', label='starling')
+plt.plot(starling_lacency, starling_recall, marker='o', label='starling', color='red')
 
 # 添加标题和标签
 plt.title('bigann1B 1-recall@1 vs. Lacency')
