@@ -169,11 +169,11 @@ namespace disk_hivf {
         }
     }
 
-    Eigen::Map<RMatrixXf> readMatrixFromDimVecs(const std::string& filename, std::vector<float>& data) {
+    Eigen::Map<RMatrixXf> readMatrixFromDimVecs(const std::string& filename, std::vector<float>& data, Int use_uint8_data) {
         Int ret = 0;
         int dimension;
         Int numVecs;
-        ret = readDimVecs<float>(filename, data, dimension, numVecs);
+        ret = readDimVecs<float>(filename, data, dimension, numVecs, -1, use_uint8_data);
         if (ret != 0) {
             std::cerr << "readMatrixFromDimVecs readDimVecs err" << std::endl;
             throw std::runtime_error("readMatrixFromDimVecs readDimVecs err");
@@ -181,5 +181,42 @@ namespace disk_hivf {
         return Eigen::Map<RMatrixXf>(data.data(), numVecs, dimension);
     }
 
-    
+    int readGTData(const std::string& filename,
+        std::vector<int>& gt_data,
+        std::vector<float>& gt_dist,
+        int& dimension, Int& numVecs) {
+        std::ifstream file(filename, std::ios::binary);
+        if (!file) {
+            std::cerr << "Cannot open file: " << filename << std::endl;
+            return -1;
+        }
+        
+        int d;
+        file.read(reinterpret_cast<char*>(&d), sizeof(int));
+        if (!file) {
+            std::cerr << "Error reading dimension from file: " << filename << std::endl;
+            return -1;
+        }
+        Int num;
+        file.read(reinterpret_cast<char*>(&num), sizeof(Int));
+        if (!file) {
+            std::cerr << "Error reading numVecs from file: "  << filename << std::endl;
+            return -1;
+        }
+        dimension = d;
+        numVecs = num;
+        gt_data.resize(num * d);
+        gt_dist.resize(num * d);
+        file.read(reinterpret_cast<char*>(gt_data.data()), num * d * sizeof(int));
+        if (!file) {
+            std::cerr << "Error reading Vecs from file: "  << filename << std::endl;
+            return -1;
+        }
+        file.read(reinterpret_cast<char*>(gt_dist.data()), num * d * sizeof(float));
+        if (!file) {
+            std::cerr << "Error reading Vecs from file: "  << filename << std::endl;
+            return -1;
+        }
+        return 0;
+    }
 }

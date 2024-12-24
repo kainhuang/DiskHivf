@@ -103,8 +103,12 @@ namespace disk_hivf {
     }
 
 
-    Eigen::Map<RMatrixXf> readMatrixFromDimVecs(const std::string& filename, std::vector<float>& data);
+    Eigen::Map<RMatrixXf> readMatrixFromDimVecs(const std::string& filename, std::vector<float>& data, Int use_uint8_data=0);
 
+    int readGTData(const std::string& filename,
+        std::vector<int>& gt_data,
+        std::vector<float>& gt_dist,
+        int& dimension, Int& numVecs);
 
     template<typename T>
     Int readVectors(const std::string& filename, std::vector<T>& data, int& dimension, int& numVecs) {

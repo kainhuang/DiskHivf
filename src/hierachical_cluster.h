@@ -14,6 +14,8 @@
 #include <stdexcept>
 #include <mutex>
 #include "matrix.h"
+#include "thread_pool.h"
+#include "lru_cache.h"
 
 namespace disk_hivf {
     struct DataIndex{
@@ -33,7 +35,9 @@ namespace disk_hivf {
     };
 
     struct FeatureAssign {
-        FeatureAssign() {}
+        FeatureAssign(): m_feature_id(0), m_first_center_id(0), m_second_center_id(0) {
+            m_distance = std::numeric_limits<float>::max();
+        }
         FeatureAssign(FeatureId feature_id, Uint first_center_id, Uint second_center_id, float distance):
             m_feature_id(feature_id), m_first_center_id(first_center_id),
             m_second_center_id(second_center_id), m_distance(distance) {}
@@ -113,24 +117,13 @@ namespace disk_hivf {
         double m_radius;
     };
 
-
-    struct Result {
-        Result(Int vec_id, float distance, int rank_id, int searched_num):
-            m_vec_id(vec_id), m_distance(distance),
-            m_rank_id(rank_id), m_searched_num(searched_num) {}
-        Result() {
-            m_vec_id = -1;
-            m_distance = -1;
-            m_rank_id = 0;
-            m_searched_num = 0;
+    struct CellData {
+        CellData(std::vector<FeatureId> & ids, std::vector<char> & data) {
+            m_ids = std::move(ids);
+            m_data = std::move(data);
         }
-        inline bool operator < (const Result & other) const {
-            return m_distance < other.m_distance;
-        }
-        Int m_vec_id;
-        float m_distance;
-        int m_rank_id;
-        int m_searched_num;
+        std::vector<FeatureId> m_ids;
+        std::vector<char> m_data;
     };
 
     struct SearchingBlock {
@@ -138,7 +131,6 @@ namespace disk_hivf {
             m_min_distance = std::numeric_limits<float>::max();
         }
         inline void push_back(SearchingCell & search_cell, Int item_size) {
-            m_search_cells.push_back(search_cell);
             if (-1 == m_file_id) {
                 m_file_id = search_cell.m_file_id;
             }
@@ -147,37 +139,19 @@ namespace disk_hivf {
             }
             m_max_offset = search_cell.m_offset + item_size * search_cell.m_len;
             m_min_distance = std::min(m_min_distance, search_cell.m_distance);
+            m_cell_vecs.emplace_back(search_cell.m_cell_id, search_cell.m_len);
         }
 
         inline bool operator < (const SearchingBlock & other) const {
             return m_min_distance < other.m_min_distance;
         }
 
-        inline void pop_front() {
-            m_search_cells.pop_front();
-            if (!m_search_cells.empty()) {
-                m_offset = m_search_cells.front().m_offset;
-            } else {
-                m_offset = -1;
-            }
-        }
-
-        inline void pop_back(const Int item_size) {
-            m_search_cells.pop_back();
-            if (!m_search_cells.empty()) {
-                m_max_offset = m_search_cells.back().m_offset 
-                    + m_search_cells.back().m_len * item_size;
-            } else {
-                m_max_offset = -1;
-            }
-        }
-
-        std::deque<SearchingCell> m_search_cells;
         Int m_file_id;
         Int m_offset;
         Int m_max_offset;
         float m_min_distance;
-        std::vector<char> m_data;
+        //std::vector<char> m_data;
+        std::vector<std::pair<Int, Int>> m_cell_vecs; 
     };
 
 
@@ -192,13 +166,13 @@ namespace disk_hivf {
             Int save_index();
             Int load_index();
             Int search(const Eigen::Ref<const Eigen::RowVectorXf> & feature, Int topk,
-                std::vector<std::pair<FeatureId, float>> & result);
+                std::vector<std::pair<FeatureId, float>> & result, Int use_cache = 0);
             Int search(const Eigen::Ref<const Eigen::RowVectorXf> & feature, Int topk,
-                std::vector<FeatureId> & result);
+                std::vector<FeatureId> & result, Int use_cache = 0);
             Int search(std::vector<float> & feature_data, Int topk,
-                std::vector<std::pair<FeatureId, float>> & result);
+                std::vector<std::pair<FeatureId, float>> & result, Int use_cache = 0);
             Int search(std::vector<float> & feature_data, Int topk,
-                std::vector<FeatureId> & result);
+                std::vector<FeatureId> & result, Int use_cache = 0);
         public:
             std::vector<Int> m_time_stat;    
 
@@ -227,7 +201,8 @@ namespace disk_hivf {
             Int rerank_disk_order(const std::vector<FeatureAssign>& features_assign,
                 const std::vector<Int>& disk_order);
 
-            void make_search_block(std::vector<SearchingCell> & search_cells,
+            void make_search_block(
+                std::vector<SearchingCell> & search_cells,
                 std::vector<SearchingBlock> & search_blocks, Int item_size);
 
             template <typename Derived>
@@ -343,6 +318,11 @@ namespace disk_hivf {
                     return 0;
                 }
 
+        inline float dynamic_prune_func(float x) {
+            return m_conf.m_dynamic_prune_a * x * x + 
+                m_conf.m_dynamic_prune_b * x + 
+                m_conf.m_dynamic_prune_c;
+        }
 
         private:
             Conf m_conf;
@@ -377,5 +357,11 @@ namespace disk_hivf {
             std::vector<std::mutex> m_file_mutexs;
 
             Int m_data_unit_size;
+
+            ThreadPool m_io_thread_pool;
+
+            float m_build_index_loss;
+
+            std::unordered_map<int, CellData> m_cache;
     };
 }

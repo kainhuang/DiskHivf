@@ -27,7 +27,9 @@ namespace disk_hivf {
         m_first2second_cells(conf.m_first_cluster_num * conf.m_second_cluster_num),
         m_file_read_writer(conf.m_index_dir, conf.m_index_file_num, conf.m_is_disk),
         m_file_tot_offset(m_conf.m_index_file_num + 1, 0),
-        m_file_mutexs(m_conf.m_index_file_num) {
+        m_file_mutexs(m_conf.m_index_file_num),
+        m_io_thread_pool(m_conf.m_io_thread_num),
+        m_build_index_loss(0.0) {
         
         if (m_conf.m_use_uint8_data) {
             m_data_unit_size = sizeof(uint8_t);
@@ -395,14 +397,6 @@ namespace disk_hivf {
                 } else {
                     begin_offset = m_file_read_writer.write(file_id, tmp_ptr + i * item_size, item_size);
                 }
-                /*
-                Int features_id = *(reinterpret_cast<Int *>(tmp_ptr + i * item_size));
-                float * features_ptr = reinterpret_cast<float *>(tmp_ptr + i * item_size + sizeof(Int));
-                Eigen::Map<Eigen::RowVectorXf> features_mp(features_ptr, m_conf.m_dim);
-                std::cout << begin_offset << std::endl;
-                std::cout << features_id << std::endl;
-                std::cout << features_mp << std::endl;
-                */
                 if (begin_offset < 0) {
                     //LOG
                     //return -1;
@@ -503,8 +497,6 @@ namespace disk_hivf {
                 FeatureId idx = now_offset + j;
                 features_assign[idx] = heap_vecs[j].top();
                 features_assign[idx].m_feature_id = idx;
-                //write idx,feature_vec to file dir/first_center_id
-                //Int file_id = features_assign[idx].m_first_center_id % m_conf.m_index_file_num;
                 Int file_id = get_file_id(features_assign[idx].m_first_center_id);
                 {
                     std::lock_guard<std::mutex> lock(m_file_mutexs[file_id]);
@@ -531,7 +523,8 @@ namespace disk_hivf {
             }
         }
         loss /= vecs_num;
-        std::cerr << "build index loss = " << loss << std::endl; 
+        std::cerr << "build index loss = " << loss << std::endl;
+        m_build_index_loss = loss;
         for (size_t i = 1; i < m_file_tot_offset.size(); i++) {
             m_file_tot_offset[i] = m_file_tot_offset[i-1] + file_vec_nums[i-1];
 
@@ -546,23 +539,6 @@ namespace disk_hivf {
             std::cerr << "rerank_disk_order fail" << std::endl;
             return -1;
         }
-        /*
-        {
-            std::vector<Int> second_centers_disk_order_rev(second_centers_disk_order.size());
-            for (Int i = 0; i < second_centers_disk_order.size(); i++) {
-                second_centers_disk_order_rev[second_centers_disk_order[i]] = i;
-            }
-            for (Int i = 0; i < m_conf.m_first_cluster_num; i++) {
-                for (Int j = 0; j < m_conf.m_second_cluster_num; j++) {
-                    Int second_centers_id = second_centers_disk_order_rev[j];
-                    Int cell_id = i * m_conf.m_first_cluster_num + second_centers_id;
-                    m_first2second_cells[cell_id].print();
-                }
-            }
-        }
-        */
-        //RMatrixDf dist = computeDistanceMatrix(m_second_centers, m_second_centers);
-        //std::cout << dist << std::endl;
         return 0;
     }
     
@@ -608,6 +584,13 @@ namespace disk_hivf {
                 return -1;
             }
         }
+
+        outputFile.write(reinterpret_cast<const char*>(&m_build_index_loss), sizeof(float));
+        if (!outputFile) {
+            std::cerr << "Error writing m_build_index_loss to file: " 
+                << index_file_name << std::endl;
+            return -1;
+        }
         //std::cout << m_first2second_edges_stationary_dist << std::endl;
         //for (auto & cell: m_first2second_cells) {
         //    cell.print();
@@ -651,9 +634,9 @@ namespace disk_hivf {
                 << index_file_name << std::endl;
             return -1;
         }
-        //for (auto offset: m_file_tot_offset) {
-        //    std::cout << offset << std::endl;
-        //}
+        for (auto offset: m_file_tot_offset) {
+            std::cout << offset << std::endl;
+        }
         if (m_conf.m_hs_mode) {
             m_feature_ids.resize(m_file_tot_offset[m_conf.m_index_file_num], 0);
             inputFile.read(reinterpret_cast<char *>(m_feature_ids.data()),
@@ -664,17 +647,110 @@ namespace disk_hivf {
                 return -1;
             }
         }
+
+        inputFile.read(reinterpret_cast<char *>(&m_build_index_loss), sizeof(float));
+        if (!inputFile) {
+            std::cerr << "Error reading m_build_index_loss from file: "
+                << index_file_name << std::endl;
+            return -1;
+        }
+        std::cout << "NOTICE\tm_build_index_loss\t" << m_build_index_loss << std::endl;
         //std::cout << m_first2second_edges_stationary_dist << std::endl;
         //for (auto & cell: m_first2second_cells) {
         //    cell.print();
         //}
         //std::cout << m_first_min_stationary_dist << std::endl;
+        if (m_conf.m_use_cache && m_conf.m_is_disk) {
+            TimeStat ts2("loading cache... ");
+            std::priority_queue<std::pair<int, int>,
+                std::vector<std::pair<int, int>>,
+                std::greater<std::pair<int, int>>> min_heap;
+            int capacity = 0;
+            for (int i = 0; i < m_conf.m_first_cluster_num * m_conf.m_second_cluster_num; i++) {
+                int len = m_first2second_cells[i].m_len;
+                if (len == 0) {
+                    continue;
+                }
+                if (capacity + len <= m_conf.m_cache_capacity) {
+                    min_heap.emplace(len, i);
+                    capacity += len;
+                    //std::cout << "++\t" << capacity << "\t" << min_heap.size() << std::endl;
+                } else if (len > min_heap.top().first) {
+                    while (capacity + len > m_conf.m_cache_capacity && (!min_heap.empty())) {
+                        capacity -= min_heap.top().first;
+                        min_heap.pop();
+                        //std::cout << "--\t" << capacity << "\t" << min_heap.size() << std::endl;
+                    }
+                    if (capacity + len <= m_conf.m_cache_capacity) {
+                        min_heap.emplace(len, i);
+                        capacity += len;
+                        //std::cout << "++\t" << capacity << "\t" << min_heap.size() << std::endl;
+                    }
+                }
+            }
+            Int item_size;
+            if (m_conf.m_hs_mode) {
+                item_size = m_conf.m_dim * m_data_unit_size;
+            } else {
+                item_size = sizeof(FeatureId) + m_conf.m_dim * m_data_unit_size;
+            }
+            
+            while (!min_heap.empty()) {
+                auto & item = min_heap.top();
+                int len = item.first;
+                int cell_id = item.second;
+                //std::cout << len << "\t" << cell_id << std::endl;
+                min_heap.pop();
+                Int first_centers_id = cell_id / m_conf.m_second_cluster_num;
+                Int file_id = get_file_id(first_centers_id);
+                Int offset = m_first2second_cells[cell_id].m_offset;
+                std::vector<char> block_features_data(len * m_conf.m_dim * sizeof(float));
+                std::vector<FeatureId> block_item_ids(len);
+                Int ret = m_file_read_writer.read(file_id, offset, 
+                    len * item_size, block_features_data);
+                //std::cout << len << "\t" << cell_id << std::endl;
+                if (ret < 0) {
+                    //LOG
+                    return -1;
+                }
+                char * block_features_data_ptr = block_features_data.data();
+                if (m_conf.m_hs_mode) {
+                    Int tot_offset = get_tot_offset(file_id, offset, item_size);
+                    memcpy(block_item_ids.data(),
+                        m_feature_ids.data() + tot_offset,
+                        len * sizeof(FeatureId));
+                } else {
+                    for (Int i = 0; i < len; i++) {
+                        FeatureId item_id = 
+                            *(reinterpret_cast<FeatureId*>(block_features_data_ptr + (i * item_size)));
+                        block_item_ids[i] = item_id;
+                            memmove(block_features_data_ptr + (i * m_conf.m_dim * m_data_unit_size),
+                                block_features_data_ptr + (i * item_size) + sizeof(FeatureId),
+                                m_conf.m_dim * m_data_unit_size);          
+                    }
+                }
+                //std::cout << len << "\t" << cell_id << std::endl;
+                if (m_conf.m_use_uint8_data) {
+                    std::vector<char> uint8_tmp_data;
+                    uint8_tmp_data.resize(len * m_conf.m_dim * sizeof(float));
+                    float * tmp_ptr = reinterpret_cast<float *>(uint8_tmp_data.data());
+                    convert_type<float, uint8_t>(tmp_ptr, 
+                        reinterpret_cast<const uint8_t *> (block_features_data_ptr),
+                        len * m_conf.m_dim);
+                    block_features_data = std::move(uint8_tmp_data);
+                    block_features_data_ptr = block_features_data.data();
+                }
+                //std::cout << len << "\t" << cell_id << std::endl;
+                m_cache.emplace(cell_id, CellData(block_item_ids, block_features_data));
+            }
+        }
         inputFile.close();
         return 0;
     }
 
 
-    void HierachicalCluster::make_search_block(std::vector<SearchingCell> & search_cells,
+    void HierachicalCluster::make_search_block(
+                std::vector<SearchingCell> & search_cells,
                 std::vector<SearchingBlock> & search_blocks, Int item_size) {
         std::sort(search_cells.begin(), search_cells.end());
         for (size_t i = 0; i < search_cells.size(); i++) {
@@ -698,7 +774,7 @@ namespace disk_hivf {
     }
 
     std::future<std::vector<char>> HierachicalCluster::read_file_async(Int file_id, Int offset, Int len) {
-        return std::async([this](Int file_id, Int offset, Int len) {
+        return m_io_thread_pool.enqueue([this](Int file_id, Int offset, Int len) {
              std::vector<char> vec;
              Int ret = m_file_read_writer.read(file_id, offset, len, vec);
              if (ret < 0) {
@@ -707,10 +783,11 @@ namespace disk_hivf {
              }
              return vec;
         }, file_id, offset, len);
+        
     }
 
     Int HierachicalCluster::search(const Eigen::Ref<const Eigen::RowVectorXf> & feature, Int topk,
-        std::vector<std::pair<FeatureId, float>> & result) {
+        std::vector<std::pair<FeatureId, float>> & result, Int use_cache) {
         Eigen::setNbThreads(1);
         //std::cout << feature << std::endl;
         TimeStat ts("search ", false);
@@ -742,7 +819,10 @@ namespace disk_hivf {
             item_size = sizeof(FeatureId) + m_conf.m_dim * m_data_unit_size;
         }
         std::vector<SearchingCell> search_cells;
-        for (Int idx = 0; idx < m_conf.m_search_second_center_num; idx++) {
+        LimitedMaxHeap<Result> result_heap(topk);
+        Int searched_num = 0;
+        Int searched_block_num = 0;
+        for (size_t idx = 0; idx < batch_cell_ids[0].size(); idx++) {
             Int cell_id = batch_cell_ids[0][idx];
             Int first_centers_id = cell_id / m_conf.m_second_cluster_num;
             //Int file_id = tmp.m_first_center_id % m_conf.m_index_file_num;
@@ -751,8 +831,27 @@ namespace disk_hivf {
             Int offset = m_first2second_cells[cell_id].m_offset;
             Int len = m_first2second_cells[cell_id].m_len;
             double radius = m_first2second_cells[cell_id].m_radius;
+            //std::cout << cell_id << std::endl;
             if (len > 0) {
-                search_cells.push_back(SearchingCell(file_id, cell_id, dist, offset, len, radius));
+                if (m_conf.m_use_cache
+                    && m_conf.m_cache_capacity > 0
+                    && m_cache.find(cell_id) != m_cache.end()) {
+                    auto cell_iter = m_cache.find(cell_id);
+                    Int cell_len = cell_iter->second.m_ids.size();
+                    Eigen::Map<RMatrixDf> cell_features(
+                        reinterpret_cast<float *>(
+                            cell_iter->second.m_data.data()),
+                            cell_len, m_conf.m_dim);
+                    Eigen::VectorXf query2cell_features_dist = 
+                        (cell_features.rowwise() - feature).rowwise().squaredNorm();
+                    for (size_t i = 0; i < cell_iter->second.m_ids.size(); i++) {
+                        result_heap.push(
+                            Result(cell_iter->second.m_ids[i],
+                                query2cell_features_dist(i), 0 ,0));
+                    }
+                } else {
+                    search_cells.emplace_back(file_id, cell_id, dist, offset, len, radius);
+                }
                 /*
                 search_cells[search_cells.size()-1].print();
                 std::cout << "first_center = " << tmp.m_first_center_id
@@ -768,16 +867,14 @@ namespace disk_hivf {
         std::vector<SearchingBlock> search_blocks;
         make_search_block(search_cells, search_blocks, item_size);
         m_time_stat[3] += ts.TimeCost();
-        LimitedMaxHeap<Result> result_heap(topk);
+       
         //std::vector<char> tmp_data;
         
         //RMatrixXf block_features;
         std::vector<char> block_features_data;
         block_features_data.reserve(200 * (m_conf.m_dim * sizeof(float) + sizeof(FeatureId)));
         std::vector<FeatureId> block_item_ids;
-        Int cut = 0;
-        Int searched_num = 0;
-        Int searched_block_num = 0;
+
 
         std::vector<std::future<std::vector<char>>> future_ptrs;
         if (m_conf.m_is_async_read) {
@@ -808,47 +905,7 @@ namespace disk_hivf {
             if (searched_block_num >= m_conf.m_search_block_num) {
                 break;
             }
-            /*
-            if (result_heap.is_full()) {
-                float cut_dist = result_heap.top().m_distance;
-                while (!block.m_search_cells.empty()) {
-                    float radius = block.m_search_cells.front().m_radius;
-                    float distance = block.m_search_cells.front().m_distance;
-                    if (std::sqrt(distance) - std::sqrt(radius) > std::sqrt(cut_dist)) {
-                        cut++;
-                        block.pop_front();
-                    } else if (distance / cut_dist > m_conf.m_search_top_cut) {
-                        cut++;
-                        block.pop_front();
-                    } else {
-                        break;
-                    }
-                }
-                while (!block.m_search_cells.empty()) {
-                    float radius = block.m_search_cells.back().m_radius;
-                    float distance = block.m_search_cells.back().m_distance;
-                    if (std::sqrt(distance) - std::sqrt(radius) > std::sqrt(cut_dist)) {
-                        cut++;
-                        block.pop_back(item_size);
-                    } else if (distance / cut_dist > m_conf.m_search_top_cut) {
-                        cut++;
-                        block.pop_back(item_size);
-                    } else {
-                        break;
-                    }
-                }
-            } else {
-            }
-            */
             m_time_stat[6] += ts2.TimeCost();
-            /*
-            for (auto & cell: block.m_search_cells) {
-                cell.print();
-            }
-            */
-            if (block.m_search_cells.empty()) {
-                continue;
-            }
             Int read_len = block.m_max_offset - block.m_offset;
             if (read_len <= 0 || read_len % item_size != 0) {
                 std::cerr << "read_len err read_len=" << read_len << std::endl;
@@ -905,6 +962,9 @@ namespace disk_hivf {
                 convert_type<float, uint8_t>(tmp_ptr, 
                     reinterpret_cast<const uint8_t *> (block_features_data_ptr),
                     item_num * m_conf.m_dim);
+                //convert_uint8_to_float(tmp_ptr,
+                //    reinterpret_cast<const uint8_t *> (block_features_data_ptr),
+                //    item_num * m_conf.m_dim);
                 block_features_data = std::move(uint8_tmp_data);
                 block_features_data_ptr = block_features_data.data();
             } else {
@@ -915,47 +975,42 @@ namespace disk_hivf {
             Eigen::Map<RMatrixDf> block_features(
                 reinterpret_cast<float *> (block_features_data_ptr), item_num,
                 m_conf.m_dim);
-            //Eigen::VectorXf query2block_features_dist(item_num);
-            Eigen::VectorXf query2block_features_dist = (block_features.rowwise() - feature).rowwise().squaredNorm();
 
-            //Eigen::RowVectorXf query2block_features_dist = 
-            //    computeDistanceMatrix(feature, block_features, true);
+            Eigen::VectorXf query2block_features_dist = (block_features.rowwise() - feature).rowwise().squaredNorm();
             
             m_time_stat[11] += ts2.TimeCost();
-            searched_num += item_num;
             searched_block_num++;
             for (Int i = 0; i < item_num; i++) {
-                result_heap.push(Result(block_item_ids[i], query2block_features_dist[i], searched_block_num, searched_num));
+                result_heap.push(Result(block_item_ids[i], query2block_features_dist[i], searched_block_num, searched_num + i));
             }
-
-            /*
-            printf ("top[%f] block_distance[%f] block_min_distance[%f] cut[%ld] searched_num[%ld] searched_block_num[%ld]\n",
-                result_heap.top().m_distance,
-                block.m_search_cells.front().m_distance,
-                block.m_min_distance,
-                cut,
-                searched_num, searched_block_num);
-            */
+            searched_num += item_num;
+            if (m_conf.m_dynamic_prune_switch) {
+                float prune_block_num = dynamic_prune_func(result_heap.top().m_distance / m_build_index_loss);
+                prune_block_num = std::max(prune_block_num, (float)10);
+                float up = std::max(m_conf.m_search_second_center_num * 1.0 / 2500, 1.0);
+                if (searched_block_num > prune_block_num * up) {
+                    break;
+                }
+            }
             m_time_stat[12] += ts2.TimeCost();
         }
         m_time_stat[4] += ts.TimeCost();
         //std::cout << "CUT\t" << cut << "\tsearched_num\t" << searched_num << std::endl;
-        /*
-        Result pre_result = result_heap.get_pre();
-
-        std::cout << "NOTICE top_rank0=\t" 
-            << pre_result.m_rank_id
-            << "\t" << result_heap.top().m_rank_id
-            << "\t" << pre_result.m_searched_num
-            << "\t" << result_heap.top().m_searched_num
-            << "\t" << pre_result.m_distance
-            << "\t" << result_heap.top().m_distance
-            << "\t" << search_blocks[0].m_min_distance
-            << "\t" << search_blocks[0].m_search_cells[0].m_radius
-            << "\t" << search_blocks[search_blocks.size()-1].m_min_distance
-            << std::endl;
-        */
+        if (m_conf.m_debug_log) {
+            Result pre_result = result_heap.get_pre();
+            std::cout << "NOTICE\t" 
+                << pre_result.m_rank_id
+                << "\t" << result_heap.top().m_rank_id
+                << "\t" << pre_result.m_searched_num
+                << "\t" << result_heap.top().m_searched_num
+                << "\t" << pre_result.m_distance
+                << "\t" << result_heap.top().m_distance
+                << "\t" << search_blocks[0].m_min_distance
+                << "\t" << search_blocks[search_blocks.size()-1].m_min_distance
+                << std::endl;
+        }
         if (result_heap.size() <= 0) {
+            std::cerr << "feature = " << feature << std::endl;
             std::cerr << "result_heap err result_heap.size() <= 0" << std::endl;
             return 0;
         }
@@ -973,7 +1028,7 @@ namespace disk_hivf {
     }
 
     Int HierachicalCluster::search(std::vector<float> & feature_data, Int topk,
-        std::vector<std::pair<FeatureId, float>> & result) {
+        std::vector<std::pair<FeatureId, float>> & result, Int use_cache) {
         if (feature_data.size() != (size_t)m_conf.m_dim) {
             std::cerr << "HierachicalCluster::search fail "
                 "feature_data.size() != m_conf.m_dim size = "
@@ -981,13 +1036,13 @@ namespace disk_hivf {
             return -1;
         }
         Eigen::Map<Eigen::RowVectorXf> feature(feature_data.data(), m_conf.m_dim);
-        return search(feature, topk, result);
+        return search(feature, topk, result, use_cache);
     }
 
     Int HierachicalCluster::search(const Eigen::Ref<const Eigen::RowVectorXf> & feature, Int topk,
-                std::vector<FeatureId> & result) {
+                std::vector<FeatureId> & result, Int use_cache) {
         std::vector<std::pair<FeatureId, float>> tmp_result;
-        Int ret = search(feature, topk, tmp_result);
+        Int ret = search(feature, topk, tmp_result, use_cache);
         if (ret != 0) {
             return -1;
         }
@@ -999,9 +1054,9 @@ namespace disk_hivf {
     }
 
     Int HierachicalCluster::search(std::vector<float> & feature_data, Int topk,
-                std::vector<FeatureId> & result) {
+                std::vector<FeatureId> & result, Int use_cache) {
                 std::vector<std::pair<FeatureId, float>> tmp_result;
-        Int ret = search(feature_data, topk, tmp_result);
+        Int ret = search(feature_data, topk, tmp_result, use_cache);
         if (ret != 0) {
             return -1;
         }

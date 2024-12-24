@@ -16,7 +16,6 @@
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 #include "def.h"
-#include"Log.h"
 #include "common.h"
 namespace disk_hivf
 {
@@ -175,5 +174,7 @@ namespace disk_hivf
 			std::map<std::string,std::string> pool;
 		private:
 	};
+
+	void convert_uint8_to_float(float* dst, const uint8_t* src, size_t count);
 }
 

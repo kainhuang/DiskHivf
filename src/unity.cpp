@@ -1,7 +1,7 @@
 #include <fstream>
 #include "sstream"
 #include "unity.h"
-#include "Log.h"
+#include <emmintrin.h> // SSE2
 namespace disk_hivf
 {
     // UTF8ToCharSplit函数是将utf8的短语切分成字符，且对于英文、标点都会被切分开，比如robot会被切分成r、o、b、o、t
@@ -175,7 +175,7 @@ namespace disk_hivf
 		std::ifstream fpconfig(configFile);
 		if( !fpconfig )
 		{
-			LogErr("Config::makePool %s not exit!",configFile);
+			std::cerr << "Config::makePool not exit! conf file = " << configFile << std::endl;
 			return -1;
 		}
 		pool.clear();
@@ -203,5 +203,31 @@ namespace disk_hivf
 			oss<<(*i).first<<"=["<<(*i).second<<"]\n";
 		}
 		return oss.str();
+	}
+
+
+
+	void convert_uint8_to_float(float* dst, const uint8_t* src, size_t count) {
+		size_t i = 0;
+		for (; i + 16 <= count; i += 16) {
+			__m128i u8_values = _mm_loadu_si128(reinterpret_cast<const __m128i*>(src + i));
+			__m128i u16_values = _mm_unpacklo_epi8(u8_values, _mm_setzero_si128());
+			__m128i u16_values_high = _mm_unpackhi_epi8(u8_values, _mm_setzero_si128());
+
+			__m128 f_values1 = _mm_cvtepi32_ps(_mm_unpacklo_epi16(u16_values, _mm_setzero_si128()));
+			__m128 f_values2 = _mm_cvtepi32_ps(_mm_unpackhi_epi16(u16_values, _mm_setzero_si128()));
+			__m128 f_values3 = _mm_cvtepi32_ps(_mm_unpacklo_epi16(u16_values_high, _mm_setzero_si128()));
+			__m128 f_values4 = _mm_cvtepi32_ps(_mm_unpackhi_epi16(u16_values_high, _mm_setzero_si128()));
+
+			_mm_storeu_ps(dst + i, f_values1);
+			_mm_storeu_ps(dst + i + 4, f_values2);
+			_mm_storeu_ps(dst + i + 8, f_values3);
+			_mm_storeu_ps(dst + i + 12, f_values4);
+		}
+
+		// Handle remaining elements
+		for (; i < count; ++i) {
+			dst[i] = static_cast<float>(src[i]);
+		}
 	}
 }

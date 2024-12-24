@@ -32,6 +32,15 @@ namespace disk_hivf {
         m_build_index_num = -1;
         m_train_data_num = -1;
         m_use_uint8_data = 0;
+        m_io_thread_num = 0;
+        m_debug_log = 0;
+        m_dynamic_prune_switch = 0;
+        m_dynamic_prune_a = 0;
+        m_dynamic_prune_b = 0;
+        m_dynamic_prune_c = 1000000;
+        m_use_cache = 0;
+        m_cache_capacity = 0;
+        m_cache_segment = 0;
     }
 
     int Conf::Init(const char * configFile) {
@@ -69,6 +78,31 @@ namespace disk_hivf {
             m_build_index_num = str2num<Int>(pool["build_index_num"]);
             m_train_data_num = str2num<Int>(pool["train_data_num"]);
             m_use_uint8_data = str2num<Int>(pool["use_uint8_data"]);
+            m_io_thread_num = str2num<Int>(pool["io_thread_num"]);
+            if (pool.find("debug_log") != pool.end()) {
+                m_debug_log = str2num<Int>(pool["debug_log"]);
+            }
+            if (pool.find("dynamic_prune_switch") != pool.end()) {
+                m_dynamic_prune_switch = str2num<Int>(pool["dynamic_prune_switch"]);
+            }
+            if (pool.find("dynamic_prune_a") != pool.end()) {
+                m_dynamic_prune_a = str2num<float>(pool["dynamic_prune_a"]);
+            }
+            if (pool.find("dynamic_prune_b") != pool.end()) {
+                m_dynamic_prune_b = str2num<float>(pool["dynamic_prune_b"]);
+            }
+            if (pool.find("dynamic_prune_c") != pool.end()) {
+                m_dynamic_prune_c = str2num<float>(pool["dynamic_prune_c"]);
+            }
+            if (pool.find("use_cache") != pool.end()) {
+                m_use_cache = str2num<Int>(pool["use_cache"]);
+            }
+            if (pool.find("cache_capacity") != pool.end()) {
+                m_cache_capacity = str2num<Int>(pool["cache_capacity"]);
+            }
+            if (pool.find("cache_segment") != pool.end()) {
+                m_cache_segment = str2num<Int>(pool["cache_segment"]);
+            }
         } catch (...) {
             fprintf(stderr, "Init conf fail!!!!!!!!");
             return -1;

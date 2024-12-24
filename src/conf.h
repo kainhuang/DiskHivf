@@ -37,5 +37,14 @@ namespace disk_hivf {
             Int m_build_index_num;
             Int m_train_data_num;
             Int m_use_uint8_data;
+            Int m_io_thread_num;
+            Int m_debug_log;
+            Int m_dynamic_prune_switch;
+            float m_dynamic_prune_a;
+            float m_dynamic_prune_b;
+            float m_dynamic_prune_c;
+            Int m_use_cache;
+            Int m_cache_capacity;
+            Int m_cache_segment;
     };
 }

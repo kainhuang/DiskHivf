@@ -5,6 +5,7 @@
 using namespace disk_hivf;
 
 int main(int argc, char* argv[]) {
+    TimeStat ts("disk_hivf_train_and_build ");
     Eigen::initParallel();
     if (argc != 2) {
         std::cerr << "Usage: " << argv[0] << " <conf_file>" << std::endl;

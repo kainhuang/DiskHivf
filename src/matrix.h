@@ -133,9 +133,10 @@ namespace disk_hivf {
     template <typename DerivedA, typename DerivedB>
     std::vector<std::vector<std::pair<float, Int>>> findTopKNeighbors(
         const Eigen::MatrixBase<DerivedA>& A,
-        const Eigen::MatrixBase<DerivedB>& B, Int topk) {
+        const Eigen::MatrixBase<DerivedB>& B, Int topk,
+        bool b_had_transpose = false) {
         // 计算距离矩阵
-        Eigen::MatrixXf distances = computeDistanceMatrix(A, B);
+        Eigen::MatrixXf distances = computeDistanceMatrix(A, B, b_had_transpose);
         // 找到每个向量的 topk 最近邻
         std::vector<std::vector<std::pair<float, Int>>> topk_neighbors = findTopKNeighbors(distances, topk);
         return topk_neighbors;
