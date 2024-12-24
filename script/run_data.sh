@@ -1,0 +1,50 @@
+set -x
+
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 10 1 100 100 0 0 0 1 4000 50
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 10 1 100 100 0 0 0 1 6000 70
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 100 200 0 0 0 1 6000 80
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 100 300 0 0 0 1 6000 80
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 100 400 0 0 0 1 6000 90
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 100 500 0 0 0 1 8000 90
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 100 600 0 0 0 1 8000 90
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 100 700 0 0 0 1 10000 100
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 100 800 0 0 0 1 10000 100
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 200 1000 0 0 0 1 12000 110
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 200 1200 0 0 0 1 15000 120
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 200 1500 0 0 0 1 15000 150
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 200 1800 0 0 0 1 18000 180
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 200 2000 0 0 0 1 20000 200
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 200 2500 0 0 0 1 25000 300
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 200 2500 0 0 0 1 30000 300
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 250 3500 0 0 0 1 35000 350
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 250 4000 0 0 0 1 40000 400
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 250 5000 0 0 0 1 50000 500
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 250 5000 0 0 0 1 70000 600
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 250 5000 0 0 0 1 80000 800
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 300 5000 0 0 0 1 80000 800
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 1 1 1 300 5000 0 0 0 1 90000 900
+
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 100 100 0 0 0 1 4000 50
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 100 100 0 0 0 1 6000 70
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 100 200 0 0 0 1 6000 80
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 100 300 0 0 0 1 6000 80
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 100 400 0 0 0 1 6000 90
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 100 500 0 0 0 1 8000 90
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 100 600 0 0 0 1 8000 90
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 100 700 0 0 0 1 10000 100
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 100 800 0 0 0 1 10000 100
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 200 1000 0 0 0 1 12000 110
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 200 1200 0 0 0 1 15000 120
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 200 1500 0 0 0 1 15000 150
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 200 1800 0 0 0 1 18000 180
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 200 2000 0 0 0 1 20000 200
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 200 2500 0 0 0 1 25000 300
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 200 2500 0 0 0 1 30000 300
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 250 3500 0 0 0 1 35000 350
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 250 4000 0 0 0 1 40000 400
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 250 5000 0 0 0 1 50000 500
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 250 5000 0 0 0 1 70000 600
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 250 5000 0 0 0 1 80000 800
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 300 5000 0 0 0 1 80000 800
+./bin/run_test_set conf/data.conf data/data/query2.dim.fvecs data/data/query_gt2.dim.ivecs 10 10 1 300 5000 0 0 0 1 90000 900
+
