@@ -73,6 +73,7 @@ namespace disk_hivf {
             } else {
                 return m_distance > other.m_distance;
             }
+            
         }
     };
 

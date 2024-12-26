@@ -78,7 +78,7 @@ void run_test_set(HierachicalCluster & hc, Eigen::Map<RMatrixDf> & querys,
 
         }
     }
-    float recall_rate = recall * 1.0 / tot;
+    float recall_rate = recall * 1.0 / tot * 100;
     printf("%ld-recall@%ld = %f\n", recall_topk, at_num, recall_rate);
 }
 
@@ -167,6 +167,7 @@ int main(int argc, char* argv[]) {
     Eigen::Map<RMatrixDf> dist(gt_dist.data(), numVecs, dim);
 
     // warmup
+    
     #pragma omp parallel for num_threads(32) schedule(dynamic)
     for (Int i = 0; i < querys.rows(); i++) {
         //TimeStat ts("searching " + num2str<Int>(i));
@@ -181,6 +182,7 @@ int main(int argc, char* argv[]) {
         std::cout << "DS = " << dist.row(i) << std::endl;
         */
     }
+    
 
     hc.m_time_stat.resize(16, 0);
 

@@ -2,28 +2,28 @@ import matplotlib.pyplot as plt
 
 # DiskHivf 数据
 diskhivf_lacency = [
-    6340.51, 
-    7860.95, 
-    8822.83, 
-    9820.2, 
-    11431, 
-    13187.2, 
-    16647.3, 
-    18491.4, 
-    19050.3, 
-    20541.6, 
+    5994.58,
+    7198.37,
+    8215.36,
+    9031.53,
+    10568.6,
+    12171.5,
+    15265.2,
+    17017.8,
+    18594.5,
+    19869,
 ]
 diskhivf_recall = [
-    89.269,
-    91.548,
-    92.698,
-    93.217,
-    94.34,
-    95.131,
-    96.267,
-    96.638,
-    96.97,
-    97.21,
+    89.3000,
+    91.5770,
+    92.7270,
+    93.2440,
+    94.3650,
+    95.1560,
+    96.2890,
+    96.6600,
+    96.9910,
+    97.2300,
 ]
 
 # DiskHivf 数据
@@ -58,7 +58,7 @@ plt.plot(diskhivf_wo_prune_lacency, diskhivf_wo_prune_recall, marker='o', label=
 
 
 # 添加标题和标签
-plt.title('10-recall@10 vs. Lacency')
+plt.title('bigann1B 10-recall@10 vs. Lacency')
 plt.xlabel('Lacency')
 plt.ylabel('10-recall@10')
 

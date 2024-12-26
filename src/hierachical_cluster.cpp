@@ -756,7 +756,7 @@ namespace disk_hivf {
         for (size_t i = 0; i < search_cells.size(); i++) {
             //search_blocks.push_back(SearchingBlock());
             //search_blocks[search_blocks.size()-1].push_back(search_cells[i], item_size);
-            
+            //continue;
             if (0 == i) {
                 search_blocks.push_back(SearchingBlock());
                 search_blocks[search_blocks.size()-1].push_back(search_cells[i], item_size);
