@@ -15,6 +15,7 @@ diskhivf_lacency_sample_1 = [
     8021.59,
     8480.74,
 ]
+diskhivf_lacency_sample_1 = [v / 1000 for v in diskhivf_lacency_sample_1]
 diskhivf_recall_sample_1 = [
     89.775002,
     95.080002,
@@ -44,6 +45,7 @@ diskhivf_lacency_sample_5 = [
     5529.49,
     6654.27,
 ]
+diskhivf_lacency_sample_5 = [v / 1000 for v in diskhivf_lacency_sample_5]
 diskhivf_recall_sample_5 = [
     87.375000,
     93.047997,
@@ -73,6 +75,7 @@ diskhivf_lacency_sample_10 = [
     5449.11,
     6560.97,
 ]
+diskhivf_lacency_sample_10 = [v / 1000 for v in diskhivf_lacency_sample_10]
 diskhivf_recall_sample_10 = [
     87.490997,
     92.945000,
@@ -103,6 +106,7 @@ diskhivf_lacency_sample_20 = [
     5499.34,
     6572.24,
 ]
+diskhivf_lacency_sample_20 = [v / 1000 for v in diskhivf_lacency_sample_20]
 diskhivf_recall_sample_20 = [
     87.736000,
     93.194000,
@@ -132,6 +136,7 @@ diskhivf_lacency_sample_50 = [
     5312.8,
     6384.23,
 ]
+diskhivf_lacency_sample_50 = [v / 1000 for v in diskhivf_lacency_sample_50]
 diskhivf_recall_sample_50 = [
     87.603996,
     93.140999,
@@ -161,6 +166,7 @@ diskhivf_lacency_sample_100 = [
     5420.23,
     6442.8,
 ]
+diskhivf_lacency_sample_100 = [v / 1000 for v in diskhivf_lacency_sample_100]
 diskhivf_recall_sample_100 = [
     87.675003,
     93.148003,
@@ -180,12 +186,12 @@ diskhivf_recall_sample_100 = [
 # 创建折线图
 plt.figure(figsize=(10, 6))
 
-plt.plot(diskhivf_lacency_sample_1, diskhivf_recall_sample_1, marker='o', label='%1-base data')
-plt.plot(diskhivf_lacency_sample_5, diskhivf_recall_sample_5, marker='o', label='%5-base data')
-plt.plot(diskhivf_lacency_sample_10, diskhivf_recall_sample_10, marker='o', label='%10-base data')
-plt.plot(diskhivf_lacency_sample_20, diskhivf_recall_sample_20, marker='o', label='%20-base data')
-plt.plot(diskhivf_lacency_sample_50, diskhivf_recall_sample_50, marker='o', label='%50-base data')
-plt.plot(diskhivf_lacency_sample_100, diskhivf_recall_sample_100, marker='o', label='%100-base data')
+plt.plot(diskhivf_lacency_sample_1, diskhivf_recall_sample_1, marker='o', label='using 1% of the data')
+plt.plot(diskhivf_lacency_sample_5, diskhivf_recall_sample_5, marker='o', label='using 5% of the data')
+plt.plot(diskhivf_lacency_sample_10, diskhivf_recall_sample_10, marker='o', label='using 10% of the data')
+plt.plot(diskhivf_lacency_sample_20, diskhivf_recall_sample_20, marker='o', label='using 20% of the data')
+plt.plot(diskhivf_lacency_sample_50, diskhivf_recall_sample_50, marker='o', label='using 50% of the data')
+plt.plot(diskhivf_lacency_sample_100, diskhivf_recall_sample_100, marker='o', label='using 100% of the data')
 
 #plt.plot(diskhivf_lacency_300x300, diskhivf_recall_300x300, marker='o', label='DiskHivf-300x300-centers')
 #plt.plot(diskhivf_lacency_333x333, diskhivf_recall_333x333, marker='o', label='DiskHivf-333x333-centers')
@@ -196,7 +202,7 @@ plt.plot(diskhivf_lacency_sample_100, diskhivf_recall_sample_100, marker='o', la
 
 # 添加标题和标签
 plt.title('sift1M 10-recall@10 vs. Lacency')
-plt.xlabel('Lacency')
+plt.xlabel('Average Lacency')
 plt.ylabel('10-recall@10')
 
 # 显示图例
