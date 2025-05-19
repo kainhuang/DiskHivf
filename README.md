@@ -55,7 +55,7 @@ cache_segment = 0 # 未完成
 ```
 sh learn_dynamic_prune_hyperparameter.sh <conf_file> <query_file>
 ```
-**conf_file:** 配置文件，参数同上
+**conf_file:** 配置文件，参数同上  
 **query_file:** 查询向量文件
 
 ## Run Test Set
