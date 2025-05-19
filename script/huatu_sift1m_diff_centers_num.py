@@ -55,6 +55,35 @@ diskhivf_recall_300x300 = [
     99.931999,
 ]
 
+diskhivf_lacency_333x333 = [
+    441.679,
+    721.961,
+    1045.07,
+    1397.76,
+    1776.04,
+    2257.59,
+    2733.15,
+    3356.79,
+    3840.35,
+    4451.57,
+    4923.66,
+    5918.96,
+]
+diskhivf_recall_333x333 = [
+    85.786003,
+    91.889999,
+    95.045998,
+    96.857002,
+    97.917000,
+    98.667999,
+    99.069000,
+    99.378998,
+    99.560997,
+    99.676003,
+    99.754997,
+    99.827003,
+]
+
 
 diskhivf_lacency_500x200 = [
     820.735,
@@ -83,6 +112,34 @@ diskhivf_recall_500x200 = [
     99.849998,
 ]
 
+diskhivf_lacency_800x125 = [
+    471.503,
+    783.857,
+    1144.95,
+    1533.72,
+    1983.55,
+    2494.62,
+    3008.44,
+    3603.08,
+    4227.68,
+    4960.9,
+    5428.23,
+    6680.72,
+]
+diskhivf_recall_800x125 = [
+    87.198997,
+    92.779999,
+    95.773003,
+    97.424004,
+    98.334000,
+    98.935997,
+    99.297997,
+    99.542000,
+    99.675003,
+    99.755997,
+    99.795998,
+    99.857002,
+]
 
 diskhivf_lacency_500x500 = [
     685.089,
@@ -145,7 +202,9 @@ plt.figure(figsize=(10, 6))
 
 plt.plot(diskhivf_lacency_100x100, diskhivf_recall_100x100, marker='o', label='DiskHivf-100x100-centers')
 plt.plot(diskhivf_lacency_300x300, diskhivf_recall_300x300, marker='o', label='DiskHivf-300x300-centers')
+#plt.plot(diskhivf_lacency_333x333, diskhivf_recall_333x333, marker='o', label='DiskHivf-333x333-centers')
 plt.plot(diskhivf_lacency_500x200, diskhivf_recall_500x200, marker='o', label='DiskHivf-500x200-centers')
+#plt.plot(diskhivf_lacency_800x125, diskhivf_recall_800x125, marker='o', label='DiskHivf-800x125-centers')
 plt.plot(diskhivf_lacency_500x500, diskhivf_recall_500x500, marker='o', label='DiskHivf-500x500-centers')
 plt.plot(diskhivf_lacency_1000x1000, diskhivf_recall_1000x1000, marker='o', label='DiskHivf-1000x1000-centers')
 
