@@ -1,5 +1,10 @@
 # DiskHIVF: Disk-Resident Hierarchical Inverted File Index for Billion-scale Approximate Nearest Neighbor Search
 
+## Compile
+```
+sh make.sh
+```
+
 ## Train model abd build index
 训练模型和建立索引
 ``` train and build 
