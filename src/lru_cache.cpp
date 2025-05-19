@@ -1,7 +1,7 @@
 #include "lru_cache.h"
 
 namespace disk_hivf {
-
+    /*
     Int Segment::get(const Int key,
         const Eigen::Ref<const Eigen::RowVectorXf> & feature,
         LimitedMaxHeap<Result> & result_heap
@@ -84,4 +84,5 @@ namespace disk_hivf {
         size_t segment_index = hash(key) % num_segments_;
         segments_[segment_index]->put(key, ids, data, len, dim);
     }
+    */
 }

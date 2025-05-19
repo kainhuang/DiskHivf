@@ -3,8 +3,8 @@
 #include <unordered_map>
 #include <list>
 #include <vector>
-#include <boost/thread/shared_mutex.hpp>
-#include <boost/thread/locks.hpp>
+//#include <boost/thread/shared_mutex.hpp>
+//#include <boost/thread/locks.hpp>
 #include <stdexcept>
 #include <thread>
 #include "common.h"
@@ -32,7 +32,7 @@ namespace disk_hivf {
         int m_rank_id;
         int m_searched_num;
     };
-
+    /*
     struct CacheData {
         CacheData(const Int key, const FeatureId * ids,
             const float * data, Int len, int dim): m_key(key) {
@@ -84,5 +84,5 @@ namespace disk_hivf {
         std::vector<Segment *> segments_;
         std::hash<Int> hash;
     };
-
+    */
 }

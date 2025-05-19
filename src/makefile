@@ -1,7 +1,7 @@
 CXX = g++
 OUT_PATH = ../bin
 CFLAGS = -g -std=c++11 -Wall -O3 -march=native -mtune=native -ggdb -pipe -W -fPIC -ffast-math -mavx -mfma 
-FFLAGS = -lpthread -fopenmp -lssl -lrt -lz -lboost_thread -lboost_system
+FFLAGS = -lpthread -fopenmp -lssl -lrt -lz #-lboost_thread -lboost_system
 #FFLAGS = -lpthread -fopenmp -lssl -lrt -lz -L/opt/intel/oneapi/mkl/2024.0/lib -lmkl_rt
 INCLUDE = -Ieigen-3.4.0/
 #INCLUDE = -Ieigen-3.4.0/ -I/opt/intel/oneapi/mkl/2024.0/include
