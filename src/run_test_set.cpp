@@ -1,3 +1,4 @@
+//#define WARMUP
 #include "common.h"
 #include "hierachical_cluster.h"
 #include "file_read_write.h"
@@ -167,21 +168,13 @@ int main(int argc, char* argv[]) {
     Eigen::Map<RMatrixDf> dist(gt_dist.data(), numVecs, dim);
 
     // warmup
-    
+    #ifdef WARMUP
     #pragma omp parallel for num_threads(32) schedule(dynamic)
     for (Int i = 0; i < querys.rows(); i++) {
-        //TimeStat ts("searching " + num2str<Int>(i));
         std::vector<std::pair<FeatureId, float>> result;
         hc.search(querys.row(i), at_num, result, 0);
-        /*
-        for (auto a: result) {
-            std::cout << a.first << " " << a.second << " ";
-        }
-        std::cout << std::endl;
-        std::cout << "GT = " << groundtruth.row(i) << std::endl;
-        std::cout << "DS = " << dist.row(i) << std::endl;
-        */
     }
+    #endif
     
 
     hc.m_time_stat.resize(16, 0);

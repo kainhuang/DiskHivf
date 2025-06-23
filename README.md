@@ -50,6 +50,14 @@ cache_capacity = 0 # 未完成
 cache_segment = 0 # 未完成
 ```
 
+## Data Format
+**.dim.fvec:**  是一个二进制格式，开头是一个`uint32`变量`dim`表示向量维度 和 一个`uint64`变量`n`表示向量个数，后面紧跟着 `n * dim`个`float`，表示`n`个`float`向量
+
+**.dim.ivec:**  是一个二进制格式，开头是一个`uint32`变量`dim`表示向量维度 和 一个`uint64`变量`n`表示向量个数，后面紧跟着 `n * dim`个`int32`，表示`n`个`int32`向量
+
+**.dim.bvec:**  是一个二进制格式，开头是一个`uint32`变量`dim`表示向量维度 和 一个`uint64`变量`n`表示向量个数，后面紧跟着 `n * dim`个`int8`，表示`n`个`int8`向量
+
+
 ## Dynamic Prune
 使用最小二乘法生成动态剪枝的超参数
 ```
@@ -64,8 +72,8 @@ sh learn_dynamic_prune_hyperparameter.sh <conf_file> <query_file>
 ./bin/run_test_set <conf_file> <query_file> <groundtruth_file> <topk> <at_num> <thread_num> <first_centers_num> <second_centers_num> <debug_log> <use_cache> <is_query_uint8> <use_dist> <search_neighbors> <search_blocks>
 ```
 **conf_file:** 配置文件，参数同上  
-**query_file:** 查询向量文件  
-**groundtruth_file:** 查询向量的groundtruth  
+**query_file:** 查询向量文件 格式为 .dim.fvec 
+**groundtruth_file:** 查询向量的groundtruth 格式为 .dim.ivec  
 **topk:** 评估指标 topk-recall@at_num  
 **at_num:** 评估指标 topk-recall@at_num  
 **thread_num:** 评估时的线程数，通常取1  
@@ -74,7 +82,7 @@ sh learn_dynamic_prune_hyperparameter.sh <conf_file> <query_file>
 **debug_log:** 0-关闭debug_log 1-打开debug_log  
 **use_cache:** 未完成，通常设置为0  
 **is_query_uint8:** 1-query向量是uint8 0-query向量是float  
-**use_dist:** groundtruth_file中带有距离用于评估  
+**use_dist:** groundtruth_file中带有距离用于评估
 **search_neighbors:** 搜索时，最多搜索的向量数，会覆盖conf_file的参数  
 **search_blocks:** 搜索时，最多查询的磁盘块/内存块的数量，会覆盖conf_file的参数   
 
@@ -82,3 +90,4 @@ sh learn_dynamic_prune_hyperparameter.sh <conf_file> <query_file>
 ```
 ./bin/run_test_set conf/hivf.conf data/sift/sift_query.dim.fvecs data/sift/sift_groundtruth.dim.ivecs 10 10 1 70 5000 0 0 0 1
 ```
+

@@ -48,6 +48,14 @@ cache_capacity = 0 # Not implemented
 cache_segment = 0 # Not implemented
 ```
 
+## Data Format
+
+**.dim.fvec:** This is a binary format that begins with a `uint32` variable `dim` representing the vector dimension and a `uint64` variable `n` representing the number of vectors. Following these are `n * dim` `float`s, representing `n` `float` vectors.
+
+**.dim.ivec:** This is a binary format that begins with a `uint32` variable `dim` representing the vector dimension and a `uint64` variable `n` representing the number of vectors. Following these are `n * dim` `int32`s, representing `n` `int32` vectors.
+
+**.dim.bvec:** This is a binary format that begins with a `uint32` variable `dim` representing the vector dimension and a `uint64` variable `n` representing the number of vectors. Following these are `n * dim` `int8`s, representing `n` `int8` vectors.
+
 ## Dynamic Prune
 Generate hyperparameters for dynamic pruning using least squares method
 ```
