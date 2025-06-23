@@ -1,3 +1,4 @@
+mkdir -p bin
 cd src
 make clean
 make run_test_set disk_hivf_train_and_build convert_vecs2dim_vecs build_index \
