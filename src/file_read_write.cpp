@@ -214,7 +214,7 @@ namespace disk_hivf {
         }
         file.read(reinterpret_cast<char*>(gt_dist.data()), num * d * sizeof(float));
         if (!file) {
-            std::cerr << "Error reading Vecs from file: "  << filename << std::endl;
+            std::cerr << "Error reading Vecs distance from file: "  << filename << std::endl;
             return -1;
         }
         return 0;

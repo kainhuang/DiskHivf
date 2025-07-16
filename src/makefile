@@ -14,8 +14,8 @@ rand_train_set:rand_train_set.cpp file_read_write.h common.h file_read_write.o r
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/rand_train_set rand_train_set.cpp file_read_write.o random.o $(FFLAGS)
 convert_bin2ivecs: ./tools/convert_bin2ivecs.cpp file_read_write.h common.h file_read_write.o
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/convert_bin2ivecs ./tools/convert_bin2ivecs.cpp file_read_write.o $(FFLAGS)
-fbin_top_n_vecs:fbin_top_n_vecs.cpp file_read_write.h common.h file_read_write.o
-	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/fbin_top_n_vecs fbin_top_n_vecs.cpp file_read_write.o $(FFLAGS)
+fbin_top_n_vecs:./tools/fbin_top_n_vecs.cpp file_read_write.h common.h file_read_write.o
+	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/fbin_top_n_vecs ./tools/fbin_top_n_vecs.cpp file_read_write.o $(FFLAGS)
 convert_bin2dim_ivecs: ./tools/convert_bin2dim_ivecs.cpp file_read_write.h common.h file_read_write.o
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/convert_bin2dim_ivecs ./tools/convert_bin2dim_ivecs.cpp file_read_write.o $(FFLAGS)
 convert_fbin2dim_vecs: ./tools/convert_fbin2dim_vecs.cpp file_read_write.h common.h file_read_write.o
