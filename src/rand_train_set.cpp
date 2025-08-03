@@ -3,14 +3,15 @@
 using namespace disk_hivf;
 
 int main(int argc, char* argv[]) {
-    if (argc != 4) {
-        std::cerr << "Usage: " << argv[0] << " <input_filename> <output_filename> <rand_num>" 
+    if (argc != 5) {
+        std::cerr << "Usage: " << argv[0] << " <input_filename> <output_filename> <rand_num> <is_bvec>" 
         << std::endl;
         return 1;
     }
     std::string inputFilename = argv[1];
     std::string outputFilename = argv[2];
     Int rand_num = std::stoi(argv[3]);
+    Int is_bvec = std::stoi(argv[4]);
     std::ifstream file(inputFilename, std::ios::binary);
     if (!file) {
         std::cerr << "open read file fail filename=" << inputFilename << std::endl;
@@ -38,6 +39,11 @@ int main(int argc, char* argv[]) {
         return -1;
     }
     Int vec_size = dim * sizeof(float);
+    if (is_bvec) {
+        vec_size = dim * sizeof(uint8_t);
+        std::cerr << "use uint8_t vec_size = " << vec_size << std::endl;
+    }
+    
     std::vector<char> out_buff(rand_num * vec_size);
     file.read(out_buff.data(), rand_num * vec_size);
     Kiss32Random ks;

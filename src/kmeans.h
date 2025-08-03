@@ -28,5 +28,6 @@ namespace disk_hivf {
         Eigen::VectorXf & centers_squa_norm,
         std::vector<Int> & assign);
     
+    double get_member_loss(std::vector<Int> &assign, Int numVecs, Int k);
 
 }

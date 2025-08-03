@@ -114,7 +114,28 @@ namespace disk_hivf {
                 assign[idx] = tmp_assign[j];
             }
         }
+        double member_loss = get_member_loss(assign, numVecs, k);
+        std::cout << "member_loss = " << member_loss << std::endl;
         return loss / numVecs;
+    }
+
+
+    double get_member_loss(std::vector<Int> &assign, Int numVecs, Int k) {
+        std::vector<Int> member_nums(k, 0);
+        for (Int id: assign) {
+            member_nums[id]++; 
+        }
+        double mean_member_num = numVecs * 1.0 / k;
+        double member_loss = 0;
+        Int max_members = 0;
+        for (Int member_num: member_nums) {
+            member_loss += std::sqrt((member_num - mean_member_num) * (member_num - mean_member_num));
+            max_members = std::max(max_members, member_num);
+        }
+        std::cout << "max_members = " << max_members << std::endl;
+        member_loss /= k;
+
+        return member_loss;
     }
 
     Int kmeans(std::vector<float> &features_data, int dim, Int k, Int epoch, 
@@ -126,9 +147,12 @@ namespace disk_hivf {
         std::cout << " sample_num=" << sample_num << " vecs_num=" << vecs_num << std::endl;
         if (sample_num <= 0 || sample_num >= vecs_num) {
             std::cout << "no sample kmeans" << std::endl; 
-            return kmeans(features_data, dim, k, epoch, 
+            Int ret = kmeans(features_data, dim, k, epoch, 
                 batch_size, centers_select_type,
                 centers_data, assign, ret_loss);
+            double member_loss = get_member_loss(assign, vecs_num, k);
+            std::cout << "member_loss = " << member_loss << std::endl;
+            return ret;
         } else {
             std::cout << "sample kmeans" << std::endl;
             std::vector<float> sample_features_data(sample_num * dim);
