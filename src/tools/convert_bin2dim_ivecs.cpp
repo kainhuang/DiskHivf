@@ -47,11 +47,15 @@ int main(int argc, char* argv[]) {
             std::cerr << "batch read file fail filename=" << inputFilename << std::endl;
             return -1;
         }
-        int * ptr = reinterpret_cast<int *>(buff.data()); 
-        for (Int j = 0; j < dim; j++) {
-            std::cout << ptr[j] << " ";
+        if (i < 10) {
+            std::cout << "i = " << i << std::endl;
+            int * ptr = reinterpret_cast<int *>(buff.data()); 
+            for (Int j = 0; j < dim; j++) {
+                std::cout << ptr[j] << " ";
+            }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
+
         outputFile.write(buff.data(), read_size);
         if (!outputFile) {
             std::cerr << "batch write file fail filename=" << outputFilename << std::endl;
@@ -67,11 +71,15 @@ int main(int argc, char* argv[]) {
             std::cerr << "batch read file fail filename=" << inputFilename << std::endl;
             return -1;
         }
-        float * ptr = reinterpret_cast<float *>(buff.data()); 
-        for (Int j = 0; j < dim; j++) {
-            std::cout << ptr[j] << " ";
+        if (i < 10) {
+            std::cout << "i = " << i << std::endl;
+            float * ptr = reinterpret_cast<float *>(buff.data()); 
+            for (Int j = 0; j < dim; j++) {
+                std::cout << ptr[j] << " ";
+            }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
+
         outputFile.write(buff.data(), read_size);
         if (!outputFile) {
             std::cerr << "batch write file2 fail filename=" << outputFilename << std::endl;
