@@ -44,6 +44,14 @@ namespace disk_hivf {
         bool operator < (const FeatureAssign & other) const {
             return m_distance < other.m_distance;
         }
+        inline void print() {
+            std::cout << " m_feature_id = " << m_feature_id
+            << " m_first_center_id = " << m_first_center_id
+            << " m_second_center_id = " << m_second_center_id
+            << " m_distance = " << m_distance
+            << std::endl;
+        }
+        
         FeatureId m_feature_id;
         Uint m_first_center_id;
         Uint m_second_center_id;
@@ -244,7 +252,7 @@ namespace disk_hivf {
                             }
                             for (Int j = 0; j < second_cut; j++) {
                                 query2second_centers_dist(j) = qt(features_id, j) +
-                                    (first_center_dist + m_first2second_edges_stationary_dist(first_center_id, j));
+                                    (first_center_dist + m_first2second_edges_stationary_dist(first_center_id, j)) + m_second_centers_squa_norm(j);
                                 if (empty_cell_fillter) {
                                     Int cell_id = first_center_id * m_conf.m_second_cluster_num + j;
                                     if (m_first2second_cells[cell_id].m_len <= 0) {
@@ -269,6 +277,7 @@ namespace disk_hivf {
                     Eigen::Map<RMatrixXf> second_centers(m_second_centers_data.data(), m_conf.m_second_cluster_num, m_conf.m_dim);
                     RMatrixDf qt = batch_features * second_centers.transpose() * (-2);
                     std::vector<float> first_center_dists_data;
+                    std::vector<float> alpha_data;
                     //ts.TimeMark("findTopkSecondCenters2 qt");
                     for (Int features_id = 0; features_id < batch_features.rows(); features_id++) {
                         auto & cell_ids = batch_cell_ids[features_id];
@@ -284,10 +293,17 @@ namespace disk_hivf {
                             first_center_dists_data.size()
                         );
                         dists_data.resize(first_center_dists.size() * m_conf.m_second_cluster_num);
+                        alpha_data.resize(first_center_dists.size() * m_conf.m_second_cluster_num);
                         for (size_t i = 0; i < first_center_dists.size(); i++) {
                             Int first_center_id = first_center_dists[i].second;
                             memcpy(dists_data.data() + i * m_conf.m_second_cluster_num,
                                 m_first2second_edges_stationary_dist_data.data() 
+                                + first_center_id * m_conf.m_second_cluster_num,
+                                m_conf.m_second_cluster_num * sizeof(float)
+                            );
+
+                            memcpy(alpha_data.data() + i * m_conf.m_second_cluster_num,
+                                m_alpha_data.data() 
                                 + first_center_id * m_conf.m_second_cluster_num,
                                 m_conf.m_second_cluster_num * sizeof(float)
                             );
@@ -298,8 +314,20 @@ namespace disk_hivf {
                             first_center_dists.size(),
                             m_conf.m_second_cluster_num
                         );
-                        dists.rowwise() += qt.row(features_id);
+
+                        Eigen::Map<RMatrixXf> alpha(
+                            alpha_data.data(), 
+                            first_center_dists.size(),
+                            m_conf.m_second_cluster_num
+                        );
+                        // std::cout << "alpha = \n" << alpha << std::endl;
+                        RMatrixXf alpha_squa_second_squa_norm = alpha.array().square().rowwise() * m_second_centers_squa_norm.transpose().array();
+                        RMatrixXf alpha_qt = alpha.array().rowwise() * qt.row(features_id).array();
+                        //dists.rowwise() += m_second_centers_squa_norm.transpose();
+                        //dists.rowwise() += qt.row(features_id);
                         dists.colwise() += first_center_dists_vec;
+                        dists += alpha_squa_second_squa_norm;
+                        dists += alpha_qt;
                         //ts.TimeMark("findTopkSecondCenters2 calc");
                         cell_ids.resize(
                             first_center_dists.size() * m_conf.m_second_cluster_num);
@@ -337,14 +365,17 @@ namespace disk_hivf {
             // len = first_centers_num * second_centers_num
             std::vector<float> m_first2second_edges_stationary_dist_data;
 
-            //一级中心到二级中心的距离公共计算值 T * T + 2S * T 
+            //一级中心到二级中心的距离公共计算值 2S * T 
             //方便|q-S-T|的计算 |q-S-T| = q*q-2qS-2qT+(S*S+ T*T+2ST)
             Eigen::Map<RMatrixDf> m_first2second_edges_stationary_dist;
-            
+
+            std::vector<float> m_alpha_data;
+            Eigen::Map<RMatrixDf> m_alpha;
+
             // len = first_centers_num
             // m_first_min_stationary_dist =
             // m_first2second_edges_stationary_dist.rowwise().min();
-            Eigen::VectorXf m_first_min_stationary_dist;
+            // Eigen::VectorXf m_first_min_stationary_dist;
             
             // len = first_centers_num * second_centers_num
             std::vector<DataIndex> m_first2second_cells;

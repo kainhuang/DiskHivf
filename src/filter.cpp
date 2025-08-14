@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     std::cout << "groundtruth numVecs=" << groundtruth.rows() << " dim=" << groundtruth.cols() << std::endl;
     Eigen::Map<RMatrixDf> dist(gt_dist.data(), numVecs, dim);
     std::cout << "dist numVecs=" << dist.rows() << " dim=" << dist.cols() << std::endl;
-    int out_num = 0;
+    Int out_num = 0;
     std::vector<int> buff;
     buff.resize(numVecs * dim);
     Eigen::Map<RMatrixDi> out_gt(buff.data(), numVecs, dim);
@@ -61,16 +61,16 @@ int main(int argc, char* argv[]) {
         }
     }
     std::cout << "out_num = " << out_num << std::endl;
-    output_query.write(reinterpret_cast<char*>(&out_num), sizeof(int));
     output_query.write(reinterpret_cast<char*>(&query_dim), sizeof(int));
+    output_query.write(reinterpret_cast<char*>(&out_num), sizeof(Int));
     output_query.write(reinterpret_cast<char *>(query_buff.data()), out_num * query_dim * sizeof(float));
     if (!output_query) {
         std::cerr << "write file fail output_query_file=" << output_query_file << std::endl;
         return -1;
     }
     std::cout << "out_num = " << out_num << std::endl;
-    outputFile.write(reinterpret_cast<char*>(&out_num), sizeof(int));
     outputFile.write(reinterpret_cast<char*>(&dim), sizeof(int));
+    outputFile.write(reinterpret_cast<char*>(&out_num), sizeof(Int));
     outputFile.write(reinterpret_cast<char *>(buff.data()), out_num * dim * sizeof(int));
     outputFile.write(reinterpret_cast<char *>(dist_buff.data()), out_num * dim * sizeof(float));
     if (!outputFile) {

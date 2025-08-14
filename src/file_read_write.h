@@ -78,6 +78,7 @@ namespace disk_hivf {
             std::cerr << "Error reading numVecs from file: "  << filename << std::endl;
             return -1;
         }
+        std::cout << "d = " << d << "  num = " << num << std::endl;
         dimension = d;
         if (data_num > 0) {
             num = data_num;

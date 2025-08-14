@@ -23,7 +23,9 @@ namespace disk_hivf {
         m_first2second_edges_stationary_dist_data(conf.m_first_cluster_num * conf.m_second_cluster_num),
         m_first2second_edges_stationary_dist(m_first2second_edges_stationary_dist_data.data(), 
             conf.m_first_cluster_num, conf.m_second_cluster_num),
-        m_first_min_stationary_dist(conf.m_first_cluster_num),
+        m_alpha_data(conf.m_first_cluster_num * conf.m_second_cluster_num, 1),
+        m_alpha(m_alpha_data.data(), conf.m_first_cluster_num, conf.m_second_cluster_num),
+        // m_first_min_stationary_dist(conf.m_first_cluster_num),
         m_first2second_cells(conf.m_first_cluster_num * conf.m_second_cluster_num),
         m_file_read_writer(conf.m_index_dir, conf.m_index_file_num, conf.m_is_disk),
         m_file_tot_offset(m_conf.m_index_file_num + 1, 0),
@@ -295,8 +297,8 @@ namespace disk_hivf {
     
     Int HierachicalCluster::init_edge_info() {
         m_first2second_edges_stationary_dist = m_first_centers * m_second_centers.transpose() * 2;
-        m_first2second_edges_stationary_dist.rowwise() += m_second_centers_squa_norm.transpose();
-        m_first_min_stationary_dist = m_first2second_edges_stationary_dist.rowwise().minCoeff();
+        // m_first2second_edges_stationary_dist.rowwise() += m_second_centers_squa_norm.transpose();
+        // m_first_min_stationary_dist = m_first2second_edges_stationary_dist.rowwise().minCoeff();
         return 0;
     }
 
@@ -344,8 +346,8 @@ namespace disk_hivf {
 
         std::vector<char> data;
         std::vector<char> tmp_data;
-
-        #pragma omp parallel for firstprivate(data) firstprivate(tmp_data) num_threads(nthreads)
+        double loss = 0;
+        #pragma omp parallel for firstprivate(data) firstprivate(tmp_data) num_threads(nthreads) reduction(+:loss)
         for (Int file_id = 0; file_id < m_file_read_writer.get_file_num(); file_id++) {
             //std::vector<char> data;
             Int size = m_file_read_writer.read(file_id, data);
@@ -381,9 +383,11 @@ namespace disk_hivf {
                 //return -1;
             }
             for (Int i = 0; i < item_num; i++) {
+                Int first_center_id = disk_order_members[i].m_first_center_id;
+                Int second_center_id = disk_order_members[i].m_second_center_id;
                 Int first2second_cells_id = 
-                    disk_order_members[i].m_first_center_id * m_conf.m_second_cluster_num
-                    + disk_order_members[i].m_second_center_id;
+                    first_center_id * m_conf.m_second_cluster_num
+                    + second_center_id;
                 //std::cout << "ptr1=" << tmp_ptr + i * item_size << std::endl;
                 Int begin_offset;
                 if (m_conf.m_hs_mode) {
@@ -404,9 +408,64 @@ namespace disk_hivf {
                 m_first2second_cells[first2second_cells_id].m_offset = 
                     std::min(m_first2second_cells[first2second_cells_id].m_offset,
                     begin_offset);
+
+                
+                float * item_vec_data_ptr = NULL;
+                std::vector<char> uint8_tmp_data;
+                if (m_conf.m_use_uint8_data) {
+                    uint8_tmp_data.resize(m_conf.m_dim * sizeof(float));
+                    float * uint8_tmp_data_ptr = reinterpret_cast<float *>(uint8_tmp_data.data());
+                    convert_type<float, uint8_t>(uint8_tmp_data_ptr, 
+                        reinterpret_cast<const uint8_t *> (tmp_ptr + i * item_size + sizeof(FeatureId)),
+                        m_conf.m_dim);
+                    item_vec_data_ptr = uint8_tmp_data_ptr;
+                } else {
+                    item_vec_data_ptr = reinterpret_cast<float *> (tmp_ptr + i * item_size + sizeof(FeatureId));
+                }
+                Eigen::Map<Eigen::VectorXf> item_vec(item_vec_data_ptr, m_conf.m_dim);
+                if (m_alpha(first_center_id, second_center_id) == 1 && m_first2second_cells[first2second_cells_id].m_len == 0) {
+                    m_alpha(first_center_id, second_center_id) = 0;
+                }
+                m_alpha(first_center_id, second_center_id) *= m_first2second_cells[first2second_cells_id].m_len;
+                // std::cout << "m_alpha(first_center_id, second_center_id) " << m_alpha(first_center_id, second_center_id) << std::endl;
+                m_alpha(first_center_id, second_center_id) += 
+                    (item_vec - m_first_centers.row(first_center_id).transpose()).dot(m_second_centers.row(second_center_id).transpose()) / 
+                        m_second_centers_squa_norm(second_center_id);
+                // std::cout << "m_alpha(first_center_id, second_center_id)2 " << m_alpha(first_center_id, second_center_id) << std::endl;
                 m_first2second_cells[first2second_cells_id].m_len++;
+
+                m_alpha(first_center_id, second_center_id) /= m_first2second_cells[first2second_cells_id].m_len;
+                
+                loss += (item_vec - m_first_centers.row(first_center_id).transpose() - 
+                            m_alpha(first_center_id, second_center_id) * 
+                            m_second_centers.row(second_center_id).transpose()).squaredNorm();
             }
         }
+
+        Int tot_vec_num = m_file_tot_offset[m_file_tot_offset.size() - 1];
+        loss /= tot_vec_num;
+        double index_member_loss = 0;
+        int index_max_member_num = 0;
+        Int empty_cells_nums = 0;
+        double avg_member_num = tot_vec_num * 1.0 / m_first2second_cells.size();
+        for (auto & cell: m_first2second_cells) {
+            index_member_loss += std::sqrt((cell.m_len * 1.0 - avg_member_num) * (cell.m_len * 1.0 - avg_member_num));
+            if (cell.m_len == 0) {
+                empty_cells_nums++;
+            }
+            index_max_member_num = std::max(index_max_member_num, cell.m_len);
+        }
+        index_member_loss /= tot_vec_num;
+        std::cout << "rebuild loss = " << loss << std::endl;
+        std::cout << "rebuild tot_vec_num = " << tot_vec_num << std::endl;
+        std::cout << "rebuild avg_member_num = " << avg_member_num << std::endl;
+        std::cout << "rebuild index_max_member_num = " << index_max_member_num << std::endl;
+        std::cout << "rebuild empty_cells_nums = " << empty_cells_nums << std::endl;
+        std::cout << "rebuild empty_cells_nums / tot_vec_num = " << empty_cells_nums * 1.0 / tot_vec_num << std::endl;
+        std::cout << "rebuild index_member_loss = " << index_member_loss << std::endl;
+
+        m_first2second_edges_stationary_dist = m_first2second_edges_stationary_dist.cwiseProduct(m_alpha);
+        m_build_index_loss = loss;
         return 0;
     }
 
@@ -495,9 +554,20 @@ namespace disk_hivf {
             }
             for (size_t j = 0; j < heap_vecs.size(); j++) {
                 FeatureId idx = now_offset + j;
-                features_assign[idx] = heap_vecs[j].top();
+                std::vector<FeatureAssign> sorted_assign(heap_vecs[j].size());
+                // std::cout << "heap_vecs.size() " << heap_vecs[j].size() << std::endl;
+                Int sorted_assign_id = heap_vecs[j].size() - 1;
+                while (!heap_vecs[j].empty()) {
+                    sorted_assign[sorted_assign_id] = heap_vecs[j].top();
+                    heap_vecs[j].pop();
+                    // std::cout << "sorted_assign_id = " << sorted_assign_id << std::endl;
+                    // sorted_assign[sorted_assign_id].print();
+                    sorted_assign_id--;
+                } 
+                features_assign[idx] = sorted_assign[0];
                 features_assign[idx].m_feature_id = idx;
                 Int file_id = get_file_id(features_assign[idx].m_first_center_id);
+                
                 {
                     std::lock_guard<std::mutex> lock(m_file_mutexs[file_id]);
                     Int first2second_cells_id =
@@ -520,6 +590,7 @@ namespace disk_hivf {
                     }
                     file_vec_nums[file_id]++;
                 }
+
             }
         }
         loss /= vecs_num;
@@ -560,6 +631,15 @@ namespace disk_hivf {
             return -1;
         }
         
+        outputFile.write(reinterpret_cast<const char*>(m_alpha_data.data()),
+                        m_alpha_data.size() * sizeof(float));
+        
+        if (!outputFile) {
+            std::cerr << "Error writing m_alpha_data to file: " 
+                << index_file_name << std::endl;
+            return -1;
+        }
+
         outputFile.write(reinterpret_cast<const char*>(m_first2second_cells.data()),
                         m_first2second_cells.size() * sizeof(DataIndex));
         if (!outputFile) {
@@ -608,6 +688,7 @@ namespace disk_hivf {
             std::cerr << "load_index::Cannot open input file: " << index_file_name << std::endl;
             return -1;
         }
+
         m_first2second_edges_stationary_dist_data.resize(m_conf.m_first_cluster_num * m_conf.m_second_cluster_num);
         inputFile.read(reinterpret_cast<char*>(m_first2second_edges_stationary_dist_data.data()),
                     m_first2second_edges_stationary_dist_data.size() * sizeof(float));
@@ -616,6 +697,16 @@ namespace disk_hivf {
                 << index_file_name << std::endl;
             return -1;
         }
+
+        m_alpha_data.resize(m_conf.m_first_cluster_num * m_conf.m_second_cluster_num);
+        inputFile.read(reinterpret_cast<char*>(m_alpha_data.data()),
+                    m_alpha_data.size() * sizeof(float));
+        if (!inputFile) {
+            std::cerr << "Error reading m_alpha_data from file: " 
+                << index_file_name << std::endl;
+            return -1;
+        }
+
         m_first2second_cells.resize(m_conf.m_first_cluster_num * m_conf.m_second_cluster_num);
         inputFile.read(reinterpret_cast<char*>(m_first2second_cells.data()),
                     m_first2second_cells.size() * sizeof(DataIndex));
@@ -624,7 +715,7 @@ namespace disk_hivf {
                 << index_file_name << std::endl;
             return -1;
         }
-        m_first_min_stationary_dist = m_first2second_edges_stationary_dist.rowwise().minCoeff();
+        //m_first_min_stationary_dist = m_first2second_edges_stationary_dist.rowwise().minCoeff();
 
         m_file_tot_offset.resize(m_conf.m_index_file_num + 1, 0);
         inputFile.read(reinterpret_cast<char *>(m_file_tot_offset.data()),
@@ -825,6 +916,7 @@ namespace disk_hivf {
         for (size_t idx = 0; idx < batch_cell_ids[0].size(); idx++) {
             Int cell_id = batch_cell_ids[0][idx];
             Int first_centers_id = cell_id / m_conf.m_second_cluster_num;
+            Int second_centers_id = cell_id % m_conf.m_second_cluster_num;
             //Int file_id = tmp.m_first_center_id % m_conf.m_index_file_num;
             Int file_id = get_file_id(first_centers_id);
             float dist = batch_dists_data[0][idx];
@@ -832,6 +924,10 @@ namespace disk_hivf {
             Int len = m_first2second_cells[cell_id].m_len;
             double radius = m_first2second_cells[cell_id].m_radius;
             //std::cout << cell_id << std::endl;
+            //std::cout << " first_centers_id = " << first_centers_id
+            //        << " second_centers_id = " << second_centers_id
+            //        << " dist = " << dist
+            //        << std::endl;
             if (len > 0) {
                 if (m_conf.m_use_cache
                     && m_conf.m_cache_capacity > 0
@@ -852,6 +948,7 @@ namespace disk_hivf {
                 } else {
                     search_cells.emplace_back(file_id, cell_id, dist, offset, len, radius);
                 }
+                
                 /*
                 search_cells[search_cells.size()-1].print();
                 std::cout << "first_center = " << tmp.m_first_center_id
@@ -1007,6 +1104,7 @@ namespace disk_hivf {
                 << "\t" << result_heap.top().m_distance
                 << "\t" << search_blocks[0].m_min_distance
                 << "\t" << search_blocks[search_blocks.size()-1].m_min_distance
+                << "\t" << ts.TimeCost()
                 << std::endl;
         }
         if (result_heap.size() <= 0) {
