@@ -1,4 +1,4 @@
-//#define WARMUP
+#define WARMUP
 #include "common.h"
 #include "hierachical_cluster.h"
 #include "file_read_write.h"

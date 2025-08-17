@@ -11,6 +11,7 @@
 #include "heap.h"
 #include <algorithm>
 #include <omp.h>
+#include <set>
 
 namespace disk_hivf {
     HierachicalCluster::HierachicalCluster(Conf & conf): m_time_stat(20, 0), m_conf(conf),
@@ -503,7 +504,8 @@ namespace disk_hivf {
         std::cout << "build index vecs_num = " << vecs_num << std::endl;
         Int batch_size = m_conf.m_read_file_batch_size;
         Int offset = 0;
-        std::vector<FeatureAssign> features_assign(vecs_num);
+        std::vector<FeatureAssign> features_assign(vecs_num * 2);
+        FeatureId features_assign_num = vecs_num;
         double loss = 0;
         std::vector<Int> file_vec_nums(m_conf.m_index_file_num, 0);
         std::vector<float> batch_features_data;
@@ -545,7 +547,7 @@ namespace disk_hivf {
             query2first_distance.rowwise() += m_first_centers_squa_norm.transpose(); 
             std::vector<std::vector<std::pair<float, Int>>> topkfirst_center = 
                 findTopKNeighbors(query2first_distance, m_conf.m_build_index_search_first_center_num);
-            Int topk = 1;
+            Int topk = 8;
             std::vector<LimitedMaxHeap<FeatureAssign>>
                 heap_vecs(curr_batch_size, LimitedMaxHeap<FeatureAssign>(topk));
             Int ret = findTopkSecondCenters(batch_features, topkfirst_center, heap_vecs);
@@ -555,46 +557,62 @@ namespace disk_hivf {
             for (size_t j = 0; j < heap_vecs.size(); j++) {
                 FeatureId idx = now_offset + j;
                 std::vector<FeatureAssign> sorted_assign(heap_vecs[j].size());
-                // std::cout << "heap_vecs.size() " << heap_vecs[j].size() << std::endl;
                 Int sorted_assign_id = heap_vecs[j].size() - 1;
                 while (!heap_vecs[j].empty()) {
                     sorted_assign[sorted_assign_id] = heap_vecs[j].top();
                     heap_vecs[j].pop();
-                    // std::cout << "sorted_assign_id = " << sorted_assign_id << std::endl;
-                    // sorted_assign[sorted_assign_id].print();
                     sorted_assign_id--;
-                } 
-                features_assign[idx] = sorted_assign[0];
-                features_assign[idx].m_feature_id = idx;
-                Int file_id = get_file_id(features_assign[idx].m_first_center_id);
-                
-                {
-                    std::lock_guard<std::mutex> lock(m_file_mutexs[file_id]);
-                    Int first2second_cells_id =
-                        features_assign[idx].m_first_center_id * m_conf.m_second_cluster_num 
-                        + features_assign[idx].m_second_center_id;
-                    //std::cout << file_id << " " << first2second_cells_id << std::endl;
-                    m_first2second_cells[first2second_cells_id].m_radius =
-                        std::max(m_first2second_cells[first2second_cells_id].m_radius,
-                        features_assign[idx].m_distance);
-                    loss += features_assign[idx].m_distance;
-                    ret = m_file_read_writer.write(file_id, reinterpret_cast<char *>(&idx), sizeof(FeatureId));
-                    if (ret < 0) {
-                        //LOG
-                    }
-                    ret = m_file_read_writer.write(file_id, 
-                        reinterpret_cast<char *>(batch_features.row(j).data()),
-                        dim * sizeof(float), m_conf.m_use_uint8_data);
-                    if (ret < 0) {
-                        //LOG
-                    }
-                    file_vec_nums[file_id]++;
                 }
-
+                std::vector<Int> first_id_vec(sorted_assign.size(), -1);
+                for (size_t rank_id = 0; rank_id < sorted_assign.size(); rank_id++) {
+                    FeatureId features_assign_id = 0;
+                    sorted_assign[rank_id].print();
+                    if (rank_id == 0) {
+                        features_assign_id = idx;
+                        first_id_vec[rank_id] = sorted_assign[rank_id].m_first_center_id;
+                    } else {
+                        Int diff = diff_in_vector(first_id_vec, sorted_assign[rank_id].m_first_center_id);
+                        if (first_id_vec[rank_id-1] == -1 && 
+                            diff > 10) {
+                            first_id_vec[rank_id] = sorted_assign[rank_id].m_first_center_id;
+                            #pragma omp atomic
+                            features_assign_num++;
+                            std::cout << " diff = " << diff << std::endl;
+                            std::cout << " idx = " << idx << " features_assign_num = " << features_assign_num << std::endl;
+                        }
+                        continue;
+                    }
+                    features_assign[features_assign_id] = sorted_assign[rank_id];
+                    features_assign[features_assign_id].m_feature_id = idx;
+                    Int file_id = get_file_id(features_assign[features_assign_id].m_first_center_id);
+                    
+                    {
+                        std::lock_guard<std::mutex> lock(m_file_mutexs[file_id]);
+                        Int first2second_cells_id =
+                            features_assign[features_assign_id].m_first_center_id * m_conf.m_second_cluster_num 
+                            + features_assign[features_assign_id].m_second_center_id;
+                        //std::cout << file_id << " " << first2second_cells_id << std::endl;
+                        m_first2second_cells[first2second_cells_id].m_radius =
+                            std::max(m_first2second_cells[first2second_cells_id].m_radius,
+                            features_assign[features_assign_id].m_distance);
+                        loss += features_assign[features_assign_id].m_distance;
+                        ret = m_file_read_writer.write(file_id, reinterpret_cast<char *>(&features_assign_id), sizeof(FeatureId));
+                        if (ret < 0) {
+                            //LOG
+                        }
+                        ret = m_file_read_writer.write(file_id, 
+                            reinterpret_cast<char *>(batch_features.row(j).data()),
+                            dim * sizeof(float), m_conf.m_use_uint8_data);
+                        if (ret < 0) {
+                            //LOG
+                        }
+                        file_vec_nums[file_id]++;
+                    }
+                }
             }
         }
         loss /= vecs_num;
-        std::cerr << "build index loss = " << loss << std::endl;
+        std::cerr << "build index loss = " << loss << " features_assign_num = " << features_assign_num << std::endl;
         m_build_index_loss = loss;
         for (size_t i = 1; i < m_file_tot_offset.size(); i++) {
             m_file_tot_offset[i] = m_file_tot_offset[i-1] + file_vec_nums[i-1];

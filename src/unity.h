@@ -38,6 +38,18 @@ namespace disk_hivf
             lis[i] = lis[i] / sum;
         }
     }
+
+	inline Int diff_in_vector(const std::vector<Int> & vec, Int tar) {
+		Int ret = std::numeric_limits<Int>::max();
+		for (Int a: vec) {
+			if (a == -1) {
+				continue;
+			}
+			ret = std::min(ret, std::abs(tar-a));
+		}
+		return ret;
+	}
+
 	class TimeStat
 	{
 		public:
