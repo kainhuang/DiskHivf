@@ -18,6 +18,7 @@ template <typename T>
                 heap_.pop();
                 heap_.push(value);
             }
+            //std::cout << "heap size() " << size() << std::endl;
         }
 
         T top() const {

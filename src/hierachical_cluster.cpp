@@ -361,11 +361,11 @@ namespace disk_hivf {
             char * ptr = data.data();
             std::vector<DiskOrderRankMember> disk_order_members;
             for (Int i = 0; i < item_num; i++) {
-                FeatureId features_id = *(reinterpret_cast<FeatureId *>(ptr + i * item_size));
-                Int first_center_id = features_assign[features_id].m_first_center_id;
-                Int second_center_id = features_assign[features_id].m_second_center_id;
+                FeatureId features_assign_id = *(reinterpret_cast<FeatureId *>(ptr + i * item_size));
+                Int first_center_id = features_assign[features_assign_id].m_first_center_id;
+                Int second_center_id = features_assign[features_assign_id].m_second_center_id;
                 Int second_center_disk_order = disk_order[second_center_id];
-                float dist = features_assign[features_id].m_distance;
+                float dist = features_assign[features_assign_id].m_distance;
                 disk_order_members.push_back(DiskOrderRankMember(i, first_center_id,
                     second_center_id, second_center_disk_order, dist));
             }
@@ -391,8 +391,9 @@ namespace disk_hivf {
                     + second_center_id;
                 //std::cout << "ptr1=" << tmp_ptr + i * item_size << std::endl;
                 Int begin_offset;
+                FeatureId features_assign_id = *(reinterpret_cast<FeatureId *>(tmp_ptr + i * item_size));
+                 FeatureId features_id = features_assign[features_assign_id].m_feature_id;
                 if (m_conf.m_hs_mode) {
-                    FeatureId features_id = *(reinterpret_cast<FeatureId *>(tmp_ptr + i * item_size));
                     begin_offset = m_file_read_writer.write(file_id,
                         tmp_ptr + i * item_size + sizeof(FeatureId),
                         item_size - sizeof(FeatureId));
@@ -400,7 +401,11 @@ namespace disk_hivf {
                         begin_offset, item_size - sizeof(FeatureId));
                     m_feature_ids[features_id_offset] = features_id;           
                 } else {
-                    begin_offset = m_file_read_writer.write(file_id, tmp_ptr + i * item_size, item_size);
+                    begin_offset = m_file_read_writer.write(file_id,
+                            reinterpret_cast<char *>(&features_id), sizeof(FeatureId));
+                    Int _ = m_file_read_writer.write(file_id,
+                            tmp_ptr + i * item_size + sizeof(FeatureId),
+                            item_size - sizeof(FeatureId));
                 }
                 if (begin_offset < 0) {
                     //LOG
@@ -504,7 +509,7 @@ namespace disk_hivf {
         std::cout << "build index vecs_num = " << vecs_num << std::endl;
         Int batch_size = m_conf.m_read_file_batch_size;
         Int offset = 0;
-        std::vector<FeatureAssign> features_assign(vecs_num * 2);
+        std::vector<FeatureAssign> features_assign(vecs_num * 4);
         FeatureId features_assign_num = vecs_num;
         double loss = 0;
         std::vector<Int> file_vec_nums(m_conf.m_index_file_num, 0);
@@ -547,7 +552,7 @@ namespace disk_hivf {
             query2first_distance.rowwise() += m_first_centers_squa_norm.transpose(); 
             std::vector<std::vector<std::pair<float, Int>>> topkfirst_center = 
                 findTopKNeighbors(query2first_distance, m_conf.m_build_index_search_first_center_num);
-            Int topk = 8;
+            Int topk = m_conf.m_build_search_topk;
             std::vector<LimitedMaxHeap<FeatureAssign>>
                 heap_vecs(curr_batch_size, LimitedMaxHeap<FeatureAssign>(topk));
             Int ret = findTopkSecondCenters(batch_features, topkfirst_center, heap_vecs);
@@ -566,7 +571,7 @@ namespace disk_hivf {
                 std::vector<Int> first_id_vec(sorted_assign.size(), -1);
                 for (size_t rank_id = 0; rank_id < sorted_assign.size(); rank_id++) {
                     FeatureId features_assign_id = 0;
-                    sorted_assign[rank_id].print();
+                    // sorted_assign[rank_id].print();
                     if (rank_id == 0) {
                         features_assign_id = idx;
                         first_id_vec[rank_id] = sorted_assign[rank_id].m_first_center_id;
@@ -575,12 +580,19 @@ namespace disk_hivf {
                         if (first_id_vec[rank_id-1] == -1 && 
                             diff > 10) {
                             first_id_vec[rank_id] = sorted_assign[rank_id].m_first_center_id;
-                            #pragma omp atomic
-                            features_assign_num++;
-                            std::cout << " diff = " << diff << std::endl;
-                            std::cout << " idx = " << idx << " features_assign_num = " << features_assign_num << std::endl;
+                            #pragma omp critical
+                            {
+                                features_assign_num++;
+                                features_assign_id = features_assign_num;
+                            }
+                            if (features_assign_id >= features_assign.size()) {
+                                continue;
+                            }
+                            //std::cout << " diff = " << diff << std::endl;
+                            //std::cout << " idx = " << idx << " features_assign_num = " << features_assign_num << std::endl;
+                        } else {
+                            continue;
                         }
-                        continue;
                     }
                     features_assign[features_assign_id] = sorted_assign[rank_id];
                     features_assign[features_assign_id].m_feature_id = idx;
@@ -611,7 +623,7 @@ namespace disk_hivf {
                 }
             }
         }
-        loss /= vecs_num;
+        loss /= features_assign_num;
         std::cerr << "build index loss = " << loss << " features_assign_num = " << features_assign_num << std::endl;
         m_build_index_loss = loss;
         for (size_t i = 1; i < m_file_tot_offset.size(); i++) {
@@ -929,6 +941,8 @@ namespace disk_hivf {
         }
         std::vector<SearchingCell> search_cells;
         LimitedMaxHeap<Result> result_heap(topk);
+        std::set<FeatureId> result_set;
+
         Int searched_num = 0;
         Int searched_block_num = 0;
         for (size_t idx = 0; idx < batch_cell_ids[0].size(); idx++) {
@@ -959,9 +973,15 @@ namespace disk_hivf {
                     Eigen::VectorXf query2cell_features_dist = 
                         (cell_features.rowwise() - feature).rowwise().squaredNorm();
                     for (size_t i = 0; i < cell_iter->second.m_ids.size(); i++) {
-                        result_heap.push(
-                            Result(cell_iter->second.m_ids[i],
-                                query2cell_features_dist(i), 0 ,0));
+                        if (result_set.find(cell_iter->second.m_ids[i]) != result_set.end()) {
+                            // 无事发生
+                        }
+                        else {
+                            result_heap.push(
+                                Result(cell_iter->second.m_ids[i],
+                                    query2cell_features_dist(i), 0 ,0));
+                            result_set.insert(cell_iter->second.m_ids[i]);
+                        }
                     }
                 } else {
                     search_cells.emplace_back(file_id, cell_id, dist, offset, len, radius);
@@ -1096,7 +1116,12 @@ namespace disk_hivf {
             m_time_stat[11] += ts2.TimeCost();
             searched_block_num++;
             for (Int i = 0; i < item_num; i++) {
-                result_heap.push(Result(block_item_ids[i], query2block_features_dist[i], searched_block_num, searched_num + i));
+                if (result_set.find(block_item_ids[i]) != result_set.end()) {
+                    // 无事发生
+                } else {
+                    result_heap.push(Result(block_item_ids[i], query2block_features_dist[i], searched_block_num, searched_num + i));
+                    result_set.insert(block_item_ids[i]);
+                }
             }
             searched_num += item_num;
             if (m_conf.m_dynamic_prune_switch) {

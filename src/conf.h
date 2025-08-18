@@ -46,5 +46,6 @@ namespace disk_hivf {
             Int m_use_cache;
             Int m_cache_capacity;
             Int m_cache_segment;
+            Int m_build_search_topk;
     };
 }
