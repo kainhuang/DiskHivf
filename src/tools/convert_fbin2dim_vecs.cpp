@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
         }
         if (i==0) {
             Eigen::Map<RMatrixXf> buff_mat(reinterpret_cast<float *>(buff.data()), currentBatchSize, dim);
-            std::cout << "buff_mat " << buff_mat << std::endl;
+            // std::cout << "buff_mat " << buff_mat << std::endl;
         }
         outputFile.write(buff.data(), read_size);
         if (!outputFile) {

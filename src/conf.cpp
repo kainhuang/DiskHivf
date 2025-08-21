@@ -42,6 +42,7 @@ namespace disk_hivf {
         m_cache_capacity = 0;
         m_cache_segment = 0;
         m_build_search_topk = 1;
+        m_build_search_first_center_id_diff = 10;
     }
 
     int Conf::Init(const char * configFile) {
@@ -106,6 +107,9 @@ namespace disk_hivf {
             }
             if (pool.find("build_search_topk") != pool.end()) {
                 m_build_search_topk = str2num<Int>(pool["build_search_topk"]);
+            }
+            if (pool.find("build_search_first_center_id_diff") != pool.end()) {
+                m_build_search_first_center_id_diff = str2num<Int>(pool["build_search_first_center_id_diff"]);
             }
         } catch (...) {
             fprintf(stderr, "Init conf fail!!!!!!!!");

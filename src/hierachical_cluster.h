@@ -35,12 +35,12 @@ namespace disk_hivf {
     };
 
     struct FeatureAssign {
-        FeatureAssign(): m_feature_id(0), m_first_center_id(0), m_second_center_id(0) {
+        FeatureAssign(): m_first_center_id(0), m_second_center_id(0), m_feature_id(0){
             m_distance = std::numeric_limits<float>::max();
         }
         FeatureAssign(FeatureId feature_id, Uint first_center_id, Uint second_center_id, float distance):
-            m_feature_id(feature_id), m_first_center_id(first_center_id),
-            m_second_center_id(second_center_id), m_distance(distance) {}
+            m_first_center_id(first_center_id), m_second_center_id(second_center_id),
+            m_distance(distance), m_feature_id(feature_id) {}
         bool operator < (const FeatureAssign & other) const {
             return m_distance < other.m_distance;
         }
@@ -52,10 +52,10 @@ namespace disk_hivf {
             << std::endl;
         }
         
-        FeatureId m_feature_id;
-        Uint m_first_center_id;
-        Uint m_second_center_id;
+        uint32_t m_first_center_id;
+        uint32_t m_second_center_id;
         float m_distance;
+        FeatureId m_feature_id;
     };
 
     struct DiskOrderRankMember {

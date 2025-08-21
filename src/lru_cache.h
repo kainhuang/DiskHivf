@@ -25,7 +25,11 @@ namespace disk_hivf {
             m_searched_num = 0;
         }
         inline bool operator < (const Result & other) const {
-            return m_distance < other.m_distance;
+            if (m_distance != other.m_distance) {
+                return m_distance < other.m_distance;
+            } else {
+                return m_vec_id < other.m_vec_id;
+            }
         }
         Int m_vec_id;
         float m_distance;

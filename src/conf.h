@@ -47,5 +47,6 @@ namespace disk_hivf {
             Int m_cache_capacity;
             Int m_cache_segment;
             Int m_build_search_topk;
+            Int m_build_search_first_center_id_diff;
     };
 }
