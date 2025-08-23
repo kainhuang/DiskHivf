@@ -1,4 +1,4 @@
-//#define WARMUP
+#define WARMUP
 #include "common.h"
 #include "hierachical_cluster.h"
 #include "file_read_write.h"
@@ -42,8 +42,9 @@ void run_test_set(HierachicalCluster & hc, Eigen::Map<RMatrixDf> & querys,
     #pragma omp parallel for num_threads(thread_num) schedule(dynamic)
         for (Int i = 0; i < querys.rows(); i++) {
             //TimeStat ts("searching " + num2str<Int>(i));
-            std::vector<std::pair<FeatureId, float>> result;;
+            std::vector<std::pair<FeatureId, float>> result;
             hc.search(querys.row(i), at_num, result, use_cache);
+            //std::cout << querys.row(i) << std::endl;
             results[i] = std::move(result);
         }
         long long tim = ts.TimeMark("search end");
@@ -66,8 +67,10 @@ void run_test_set(HierachicalCluster & hc, Eigen::Map<RMatrixDf> & querys,
 
     for (Int row = 0; row < groundtruth.rows(); row++) {
         for (Int col = 0; col < groundtruth.cols() && col < recall_topk; col++) {
+            // if (dist(row, col) > 96237) continue;
             tot++;
             if (use_dist) {
+                // std::cout << results[row][col].first << " " << results[row][col].second << " " << groundtruth(row, col) << " " << dist(row, col) << std::endl;
                 if (isInVector(results[row], groundtruth(row, col), dist(row, col), use_dist)) {
                     recall++;
                 }
@@ -80,7 +83,7 @@ void run_test_set(HierachicalCluster & hc, Eigen::Map<RMatrixDf> & querys,
         }
     }
     float recall_rate = recall * 1.0 / tot * 100;
-    printf("%ld-recall@%ld = %f\n", recall_topk, at_num, recall_rate);
+    printf("%ld-recall@%ld = %f tot=%ld\n", recall_topk, at_num, recall_rate, tot);
 }
 
 

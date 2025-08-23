@@ -101,6 +101,7 @@ int main(int argc, char* argv[]) {
 
     std::vector<float> query_data;
     Eigen::Map<RMatrixDf> querys = readMatrixFromDimVecs(query_file, query_data);
+    #pragma omp parallel for
     for (Int i = 0; i < querys.rows(); i++) {
         //TimeStat ts("searching " + num2str<Int>(i));
         std::vector<FeatureId> result;

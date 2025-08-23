@@ -2,14 +2,18 @@
 using namespace disk_hivf;
 
 int main(int argc, char* argv[]) {
-    if (argc != 4) {
-        std::cerr << "Usage: " << argv[0] << " <input_filename> <output_filename> <batch_size>" 
+    if (argc <= 4) {
+        std::cerr << "Usage: " << argv[0] << " <input_filename> <output_filename> <batch_size> <is_bbin>" 
         << std::endl;
         return 1;
     }
     std::string inputFilename = argv[1];
     std::string outputFilename = argv[2];
     Int batchSize = std::stoi(argv[3]);
+    Int is_bbin = 0;
+    if (argc > 4) {
+        is_bbin = std::stoi(argv[4]);
+    }
     std::ifstream file(inputFilename, std::ios::binary);
     if (!file) {
         std::cerr << "open read file fail filename=" << inputFilename << std::endl;
@@ -36,19 +40,20 @@ int main(int argc, char* argv[]) {
         std::cerr << "write file fail filename=" << outputFilename << std::endl;
         return -1;
     }
-    std::vector<char> buff(batchSize * dim * sizeof(float));
+    size_t type_size = sizeof(float);
+    if (is_bbin) {
+        type_size = sizeof(uint8_t);
+    }
+    std::vector<char> buff(batchSize * dim * type_size);
     for (Int i = 0; i < num; i += batchSize) {
         Int currentBatchSize = std::min(batchSize, num - i);
-        size_t read_size = currentBatchSize * (dim * sizeof(float));
+        size_t read_size = currentBatchSize * (dim * type_size);
         file.read(buff.data(), read_size);
         if (!file) {
             std::cerr << "batch read file fail filename=" << inputFilename << std::endl;
             return -1;
         }
-        if (i==0) {
-            Eigen::Map<RMatrixXf> buff_mat(reinterpret_cast<float *>(buff.data()), currentBatchSize, dim);
-            // std::cout << "buff_mat " << buff_mat << std::endl;
-        }
+
         outputFile.write(buff.data(), read_size);
         if (!outputFile) {
             std::cerr << "batch write file fail filename=" << outputFilename << std::endl;

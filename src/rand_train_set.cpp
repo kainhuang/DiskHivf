@@ -3,8 +3,8 @@
 using namespace disk_hivf;
 
 int main(int argc, char* argv[]) {
-    if (argc != 5) {
-        std::cerr << "Usage: " << argv[0] << " <input_filename> <output_filename> <rand_num> <is_bvec>" 
+    if (argc < 5) {
+        std::cerr << "Usage: " << argv[0] << " <input_filename> <output_filename> <rand_num> <is_bvec> <dim.vecs|bin>" 
         << std::endl;
         return 1;
     }
@@ -12,6 +12,10 @@ int main(int argc, char* argv[]) {
     std::string outputFilename = argv[2];
     Int rand_num = std::stoi(argv[3]);
     Int is_bvec = std::stoi(argv[4]);
+    std::string format = "dim.vecs";
+    if (argc > 5) {
+        format = "bin";
+    }
     std::ifstream file(inputFilename, std::ios::binary);
     if (!file) {
         std::cerr << "open read file fail filename=" << inputFilename << std::endl;
@@ -23,17 +27,38 @@ int main(int argc, char* argv[]) {
         return -1;
     }
     int dim;
-    file.read(reinterpret_cast<char*>(&dim), sizeof(int));
     Int num;
-    file.read(reinterpret_cast<char*>(&num), sizeof(Int));
+    if (format == "bin") {
+        int tmp_dim;
+        int tmp_num;
+        file.read(reinterpret_cast<char*>(&tmp_num), sizeof(int));
+        file.read(reinterpret_cast<char*>(&tmp_dim), sizeof(int));
+        dim = tmp_dim;
+        num = tmp_num;
+    } else {
+        int tmp_dim;
+        Int tmp_num;
+        file.read(reinterpret_cast<char*>(&tmp_dim), sizeof(int));
+        file.read(reinterpret_cast<char*>(&tmp_num), sizeof(Int));
+        dim = tmp_dim;
+        num = tmp_num;
+    }
 
     if (!file) {
         std::cerr << "read file fail filename=" << inputFilename << std::endl;
         return -1;
     }
     std::cout << "dim=" <<dim << " num=" << num << std::endl;
-    outputFile.write(reinterpret_cast<const char*>(&dim), sizeof(int));
-    outputFile.write(reinterpret_cast<const char*>(&rand_num), sizeof(Int));
+    if (format == "bin") {
+        int tmp_dim = dim;
+        int tmp_num = rand_num;
+        outputFile.write(reinterpret_cast<const char*>(&tmp_num), sizeof(int));
+        outputFile.write(reinterpret_cast<const char*>(&tmp_dim), sizeof(int));
+
+    } else {
+        outputFile.write(reinterpret_cast<const char*>(&dim), sizeof(int));
+        outputFile.write(reinterpret_cast<const char*>(&rand_num), sizeof(Int));
+    }
     if (!outputFile) {
         std::cerr << "write file fail filename=" << outputFilename << std::endl;
         return -1;

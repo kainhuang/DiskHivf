@@ -13,6 +13,7 @@
 #include <omp.h>
 #include <set>
 #include <unordered_set>
+#include <cstdio>
 
 namespace disk_hivf {
     HierachicalCluster::HierachicalCluster(Conf & conf): m_time_stat(20, 0), m_conf(conf),
@@ -1129,7 +1130,8 @@ namespace disk_hivf {
         //std::cout << "CUT\t" << cut << "\tsearched_num\t" << searched_num << std::endl;
         if (m_conf.m_debug_log) {
             Result pre_result = result_heap.get_pre();
-            std::cout << "NOTICE\t" 
+            std::ostringstream oss;
+            oss << "NOTICE\t" 
                 << pre_result.m_rank_id
                 << "\t" << result_heap.top().m_rank_id
                 << "\t" << pre_result.m_searched_num
@@ -1140,6 +1142,7 @@ namespace disk_hivf {
                 << "\t" << search_blocks[search_blocks.size()-1].m_min_distance
                 << "\t" << ts.TimeCost()
                 << std::endl;
+            printf("%s", oss.str().c_str());
         }
         if (result_heap.size() <= 0) {
             std::cerr << "feature = " << feature << std::endl;
