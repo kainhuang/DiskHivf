@@ -1,0 +1,1424 @@
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 1 1 1 20 200 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 442us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 7503us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 17us
+run_test_set  search end TimeCost : 6489085us
+avg_time 6489.07 us
+0 247.564
+1 344.681
+2 364.874
+3 441.352
+4 19295.7
+5 19296.3
+6 13.124
+7 44.875
+8 14921.9
+9 16730.2
+10 16730.1
+11 18726.3
+12 18797.6
+13 0
+14 16167.1
+15 242.976
+run_test_set   TimeCost : 6489212us
+1-recall@1 = 83.900002 tot=1000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 1 1 1 20 300 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 422us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2029us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 19us
+run_test_set  search end TimeCost : 9385462us
+avg_time 9385.44 us
+0 265.887
+1 369.918
+2 400.177
+3 499.153
+4 27374.8
+5 27375.4
+6 20.815
+7 64.359
+8 20734.8
+9 23577.8
+10 23558.9
+11 26694.6
+12 26791.5
+13 0
+14 23772.3
+15 332.172
+run_test_set   TimeCost : 9385601us
+1-recall@1 = 88.199997 tot=1000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 1 1 1 40 500 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 385us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2080us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 105us
+run_test_set  search end TimeCost : 15680786us
+avg_time 15680.7 us
+0 282.156
+1 445.523
+2 490.125
+3 658.532
+4 45560.1
+5 45560.8
+6 32.385
+7 107.454
+8 34428.2
+9 39318
+10 39296
+11 44614.8
+12 44769
+13 0
+14 39896.2
+15 544.768
+run_test_set   TimeCost : 15680921us
+1-recall@1 = 93.300003 tot=1000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 1 1 1 60 700 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 406us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2058us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 36us
+run_test_set  search end TimeCost : 22129845us
+avg_time 22129.8 us
+0 316.875
+1 544.489
+2 604.713
+3 831.093
+4 64929.9
+5 64930.6
+6 42.581
+7 152.132
+8 49056.3
+9 56103.4
+10 56129.5
+11 63664.7
+12 63900.2
+13 0
+14 55731.2
+15 742.844
+run_test_set   TimeCost : 22129989us
+1-recall@1 = 95.400002 tot=1000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 1 1 1 60 1000 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 418us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2080us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 88us
+run_test_set  search end TimeCost : 30826309us
+avg_time 30826.2 us
+0 339.088
+1 577.678
+2 651.873
+3 969.562
+4 92005.7
+5 92006.4
+6 62.923
+7 208.012
+8 69154.9
+9 79509.1
+10 79561.9
+11 90409.4
+12 90715.4
+13 0
+14 78218.7
+15 975.458
+run_test_set   TimeCost : 30826450us
+1-recall@1 = 97.199997 tot=1000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 1 1 1 60 1500 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 396us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2110us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 90us
+run_test_set  search end TimeCost : 45878770us
+avg_time 45878.7 us
+0 390.991
+1 658.434
+2 773.582
+3 1242.23
+4 137759
+5 137760
+6 83.631
+7 282.985
+8 102544
+9 118970
+10 118978
+11 135791
+12 136223
+13 0
+14 114500
+15 1298.73
+run_test_set   TimeCost : 45878906us
+1-recall@1 = 98.599998 tot=1000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 1 1 1 60 2000 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 392us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2082us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 41us
+run_test_set  search end TimeCost : 59237262us
+avg_time 59237.2 us
+0 415.612
+1 695.533
+2 826.034
+3 1434.9
+4 183243
+5 183243
+6 112.763
+7 380.261
+8 135111
+9 157916
+10 157906
+11 180845
+12 181373
+13 0
+14 149036
+15 1544.18
+run_test_set   TimeCost : 59237387us
+1-recall@1 = 98.699997 tot=1000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 1 1 1 60 2500 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 393us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2124us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 483us
+run_test_set  search end TimeCost : 72970138us
+avg_time 72969.7 us
+0 457.869
+1 754.354
+2 944.896
+3 1688.83
+4 227863
+5 227864
+6 129.026
+7 400.902
+8 166196
+9 195980
+10 195936
+11 225077
+12 225697
+13 0
+14 178319
+15 1655.28
+run_test_set   TimeCost : 72970263us
+1-recall@1 = 99.000000 tot=1000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 10 10 1 20 200 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 391us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2075us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 83us
+run_test_set  search end TimeCost : 6364550us
+avg_time 6364.47 us
+0 252.291
+1 349.723
+2 369.882
+3 440.85
+4 18430.6
+5 18434.1
+6 14.295
+7 45.415
+8 13878.9
+9 15743.2
+10 15747.7
+11 17805.1
+12 17910.7
+13 0
+14 16167.1
+15 242.976
+run_test_set   TimeCost : 6364772us
+10-recall@10 = 78.110001 tot=10000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 10 10 1 20 300 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 421us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2069us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 17us
+run_test_set  search end TimeCost : 9272659us
+avg_time 9272.64 us
+0 255.024
+1 357.156
+2 386.981
+3 486.652
+4 27162.3
+5 27165.9
+6 19.867
+7 62.498
+8 20537
+9 23371.7
+10 23377.3
+11 26463.1
+12 26595.7
+13 0
+14 23772.3
+15 332.172
+run_test_set   TimeCost : 9272885us
+10-recall@10 = 83.650002 tot=10000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 10 10 1 40 500 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 394us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2081us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 43us
+run_test_set  search end TimeCost : 15812831us
+avg_time 15812.8 us
+0 287.538
+1 448.663
+2 493.448
+3 665.945
+4 45610.5
+5 45614
+6 32.765
+7 109.674
+8 34408.2
+9 39310.4
+10 39308.1
+11 44623.7
+12 44819.2
+13 0
+14 39896.2
+15 544.768
+run_test_set   TimeCost : 15813039us
+10-recall@10 = 90.919998 tot=10000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 10 10 1 60 700 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 415us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2064us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 8us
+run_test_set  search end TimeCost : 21917074us
+avg_time 21917.1 us
+0 308.751
+1 535.499
+2 593.521
+3 813.018
+4 64152.7
+5 64156.3
+6 46.451
+7 166.725
+8 48426
+9 55402.5
+10 55391.7
+11 62893.7
+12 63154.4
+13 0
+14 55731.2
+15 742.844
+run_test_set   TimeCost : 21917272us
+10-recall@10 = 94.349998 tot=10000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 10 10 1 60 1000 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 421us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2035us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 8us
+run_test_set  search end TimeCost : 31250859us
+avg_time 31250.9 us
+0 332.739
+1 572.386
+2 648.671
+3 977.646
+4 91651.2
+5 91654.9
+6 60.561
+7 211.747
+8 68815.9
+9 79171.2
+10 79165.3
+11 90103.3
+12 90439
+13 0
+14 78218.7
+15 975.458
+run_test_set   TimeCost : 31251115us
+10-recall@10 = 96.589996 tot=10000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 10 10 1 60 1500 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 428us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2076us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 36us
+run_test_set  search end TimeCost : 45803178us
+avg_time 45803.1 us
+0 383.1
+1 644.567
+2 757.909
+3 1222.42
+4 137309
+5 137313
+6 86.716
+7 284.444
+8 101970
+9 118366
+10 118416
+11 135179
+12 135702
+13 0
+14 114500
+15 1298.73
+run_test_set   TimeCost : 45803398us
+10-recall@10 = 97.919998 tot=10000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 10 10 1 60 2000 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 445us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2051us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 125us
+run_test_set  search end TimeCost : 59744580us
+avg_time 59744.5 us
+0 419.488
+1 700.446
+2 832.935
+3 1447.93
+4 183734
+5 183737
+6 112.972
+7 413.46
+8 135367
+9 158335
+10 158357
+11 181261
+12 181870
+13 0
+14 148916
+15 1543.79
+run_test_set   TimeCost : 59744781us
+10-recall@10 = 98.480003 tot=10000
++ ./bin/run_test_set conf/gist.conf data/gist/gist_query.dim.fvecs data/gist/gist_query_base_gt100.dim.ivecs 10 10 1 60 2500 0 0 0 1
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[960]
+dynamic_prune_a=[16.8]
+dynamic_prune_b=[128.4]
+dynamic_prune_c=[2.1]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/gist/gist_base.dim.fvecs]
+index_dir=[.//output/gist_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/gist_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[40000]
+search_first_center_num=[100]
+search_neighbors=[120000]
+search_second_center_num=[4900]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/gist/gist_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+102499
+333500
+709757
+1197592
+1948573
+NOTICE	m_build_index_loss	0.985177
+load_index   TimeCost : 385us
+readDimVecs data/gist/gist_query.dim.fvecs begin
+d = 960  num = 1000
+readDimVecs data/gist/gist_query.dim.fvecs  TimeCost : 2102us
+querys num = 1000 dim=960
+groundtruth numVecs=1000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 410us
+run_test_set  search end TimeCost : 75145314us
+avg_time 75144.9 us
+0 482.329
+1 783.515
+2 978.051
+3 1729.54
+4 229670
+5 229674
+6 119.421
+7 395.012
+8 167435
+9 197490
+10 197483
+11 226779
+12 227485
+13 0
+14 178319
+15 1655.28
+run_test_set   TimeCost : 75145517us
+10-recall@10 = 98.790001 tot=10000

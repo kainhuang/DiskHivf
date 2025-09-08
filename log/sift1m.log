@@ -1,0 +1,1700 @@
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 1 1 1 20 100 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 459us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2929us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 74us
+run_test_set  search end TimeCost : 4224783us
+avg_time 422.471 us
+0 36.1067
+1 84.3126
+2 90.3049
+3 113.458
+4 1216.08
+5 1217.45
+6 4.4217
+7 13.5541
+8 849.447
+9 910.204
+10 912.081
+11 1042.91
+12 1067.52
+13 0
+14 4689.36
+15 101.313
+run_test_set   TimeCost : 4225292us
+1-recall@1 = 89.849998 tot=10000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 1 1 1 20 200 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 434us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2734us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 91us
+run_test_set  search end TimeCost : 7496084us
+avg_time 749.599 us
+0 42.9709
+1 95.6124
+2 106.158
+3 149.778
+4 2089.22
+5 2089.93
+6 7.1332
+7 23.3519
+8 1481.96
+9 1597.33
+10 1597.28
+11 1847.72
+12 1890.4
+13 0
+14 8850.29
+15 170.146
+run_test_set   TimeCost : 7496597us
+1-recall@1 = 94.790001 tot=10000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 1 1 1 20 300 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 456us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2662us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 88us
+run_test_set  search end TimeCost : 10538721us
+avg_time 1053.86 us
+0 43.83
+1 98.7554
+2 114.287
+3 175.626
+4 2930.89
+5 2931.44
+6 9.4878
+7 32.0249
+8 2104.85
+9 2274.81
+10 2272.49
+11 2635.31
+12 2691.49
+13 0
+14 12863.1
+15 229.66
+run_test_set   TimeCost : 10539235us
+1-recall@1 = 96.449997 tot=10000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 1 1 1 20 400 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 432us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2758us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 77us
+run_test_set  search end TimeCost : 13513377us
+avg_time 1351.33 us
+0 44.6738
+1 101.902
+2 121.438
+3 198.878
+4 3690.94
+5 3692.53
+6 12.0077
+7 38.1455
+8 2652.98
+9 2874.11
+10 2874.74
+11 3336.73
+12 3407.71
+13 0
+14 16771.2
+15 283
+run_test_set   TimeCost : 13513935us
+1-recall@1 = 97.480003 tot=10000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 1 1 1 25 625 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 465us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2737us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 84us
+run_test_set  search end TimeCost : 20426475us
+avg_time 2042.64 us
+0 48.6298
+1 125.661
+2 157.354
+3 272.204
+4 5557.91
+5 5559.52
+6 17.7991
+7 57.5989
+8 4016.31
+9 4365.44
+10 4370.15
+11 5076.6
+12 5178.69
+13 0
+14 25608.1
+15 402.554
+run_test_set   TimeCost : 20426982us
+1-recall@1 = 98.709999 tot=10000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 1 1 1 30 900 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 421us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2731us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 77us
+run_test_set  search end TimeCost : 28327962us
+avg_time 2832.79 us
+0 50.4738
+1 137.908
+2 178.482
+3 336.47
+4 7597.01
+5 7597.56
+6 22.2567
+7 74.2066
+8 5470.03
+9 5972.44
+10 5967.92
+11 6977.7
+12 7114.87
+13 0
+14 36158.5
+15 534.229
+run_test_set   TimeCost : 28328504us
+1-recall@1 = 99.239998 tot=10000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 1 1 1 35 1200 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 460us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2713us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 82us
+run_test_set  search end TimeCost : 37332689us
+avg_time 3733.26 us
+0 54.4341
+1 166.167
+2 223.617
+3 437.531
+4 9969.52
+5 9970.08
+6 27.8531
+7 91.0325
+8 7174.51
+9 7850.86
+10 7843.03
+11 9183.53
+12 9359.06
+13 0
+14 47520.8
+15 666.148
+run_test_set   TimeCost : 37333248us
+1-recall@1 = 99.550003 tot=10000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 1 1 1 40 1600 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 448us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2787us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 94us
+run_test_set  search end TimeCost : 48615569us
+avg_time 4861.55 us
+0 57.0445
+1 179.407
+2 250.235
+3 533.513
+4 12937.2
+5 12937.7
+6 34.9899
+7 118.796
+8 9264.04
+9 10175.4
+10 10168.3
+11 11951.5
+12 12184.1
+13 0
+14 62371.8
+15 821.402
+run_test_set   TimeCost : 48616118us
+1-recall@1 = 99.760002 tot=10000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 1 1 1 45 2000 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 438us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2754us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 85us
+run_test_set  search end TimeCost : 58717680us
+avg_time 5871.76 us
+0 57.4467
+1 203.159
+2 283.988
+3 641.565
+4 15774.3
+5 15776
+6 38.683
+7 139.975
+8 11314.4
+9 12460.4
+10 12453.8
+11 14663.4
+12 14945.9
+13 0
+14 77109.6
+15 964.237
+run_test_set   TimeCost : 58718241us
+1-recall@1 = 99.820000 tot=10000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 1 1 1 50 2500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 445us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2774us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 82us
+run_test_set  search end TimeCost : 73553588us
+avg_time 7355.35 us
+0 63.7332
+1 223.785
+2 350.466
+3 813.703
+4 19725.9
+5 19726.4
+6 48.1128
+7 173.39
+8 14025.6
+9 15493.7
+10 15481.7
+11 18255.6
+12 18603.1
+13 0
+14 95279.1
+15 1119.4
+run_test_set   TimeCost : 73554203us
+1-recall@1 = 99.879997 tot=10000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 10 10 1 20 100 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 424us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2757us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 71us
+run_test_set  search end TimeCost : 4345858us
+avg_time 434.579 us
+0 36.5204
+1 84.2853
+2 90.2124
+3 113.451
+4 1227.97
+5 1231.19
+6 4.3374
+7 13.6149
+8 850.938
+9 910.457
+10 911.604
+11 1042.85
+12 1081.86
+13 0
+14 4689.27
+15 101.328
+run_test_set   TimeCost : 4347236us
+10-recall@10 = 83.361000 tot=100000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 10 10 1 20 200 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 463us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2695us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 77us
+run_test_set  search end TimeCost : 7558017us
+avg_time 755.794 us
+0 41.8592
+1 94.0381
+2 104.571
+3 148.59
+4 2110.44
+5 2114.17
+6 6.7726
+7 22.316
+8 1494.7
+9 1611.14
+10 1614.76
+11 1862.22
+12 1924
+13 0
+14 8850.06
+15 170.138
+run_test_set   TimeCost : 7559267us
+10-recall@10 = 90.950996 tot=100000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 10 10 1 20 300 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 451us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2733us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 78us
+run_test_set  search end TimeCost : 10641080us
+avg_time 1064.1 us
+0 43.6137
+1 98.1572
+2 113.767
+3 175.426
+4 2972.59
+5 2975.78
+6 9.8237
+7 30.9744
+8 2138.87
+9 2302.86
+10 2306.03
+11 2658.08
+12 2732.05
+13 0
+14 12861.6
+15 229.614
+run_test_set   TimeCost : 10642314us
+10-recall@10 = 93.950996 tot=100000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 10 10 1 20 400 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 446us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2721us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 79us
+run_test_set  search end TimeCost : 13811081us
+avg_time 1381.1 us
+0 46.0227
+1 103.454
+2 122.684
+3 200.979
+4 3725.27
+5 3728.86
+6 11.7195
+7 39.0236
+8 2665.46
+9 2889.86
+10 2886.56
+11 3357.25
+12 3449.94
+13 0
+14 16771.2
+15 282.972
+run_test_set   TimeCost : 13812305us
+10-recall@10 = 95.436996 tot=100000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 10 10 1 25 625 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 454us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2753us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 80us
+run_test_set  search end TimeCost : 20430899us
+avg_time 2043.08 us
+0 47.0596
+1 123.201
+2 154.166
+3 267.7
+4 5566.66
+5 5569.57
+6 17.6448
+7 57.0341
+8 4010.78
+9 4358.09
+10 4359.66
+11 5066.93
+12 5191.78
+13 0
+14 25602.5
+15 402.437
+run_test_set   TimeCost : 20432112us
+10-recall@10 = 97.447998 tot=100000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 10 10 1 30 900 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 449us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2739us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 86us
+run_test_set  search end TimeCost : 28796490us
+avg_time 2879.64 us
+0 52.0362
+1 139.824
+2 180.782
+3 338.924
+4 7688.27
+5 7692.42
+6 21.7823
+7 74.9164
+8 5544.33
+9 6053.6
+10 6057.05
+11 7070.81
+12 7242.65
+13 0
+14 36155.1
+15 534.186
+run_test_set   TimeCost : 28797685us
+10-recall@10 = 98.439003 tot=100000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 10 10 1 35 1200 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 468us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2751us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 84us
+run_test_set  search end TimeCost : 37119677us
+avg_time 3711.96 us
+0 54.2135
+1 165.162
+2 222.169
+3 436.536
+4 9979.69
+5 9983.01
+6 26.9885
+7 93.3624
+8 7169.06
+9 7848.86
+10 7850.28
+11 9197.55
+12 9410.81
+13 0
+14 47520.8
+15 666.148
+run_test_set   TimeCost : 37120886us
+10-recall@10 = 99.033997 tot=100000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 10 10 1 40 1600 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 432us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2770us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 82us
+run_test_set  search end TimeCost : 48100040us
+avg_time 4810 us
+0 55.4249
+1 176.212
+2 246.739
+3 528.595
+4 12917.7
+5 12921.9
+6 33.8956
+7 119.684
+8 9251.91
+9 10166.2
+10 10145.8
+11 11937.6
+12 12199.3
+13 0
+14 62374.2
+15 821.455
+run_test_set   TimeCost : 48101261us
+10-recall@10 = 99.375999 tot=100000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 10 10 1 45 2000 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 429us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2720us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 85us
+run_test_set  search end TimeCost : 59242372us
+avg_time 5924.23 us
+0 57.9266
+1 203.705
+2 284.833
+3 644.388
+4 15872.6
+5 15876.2
+6 40.9791
+7 143.025
+8 11346.1
+9 12486.4
+10 12479.5
+11 14678.1
+12 14990.4
+13 0
+14 77103.4
+15 964.123
+run_test_set   TimeCost : 59243624us
+10-recall@10 = 99.570000 tot=100000
++ ./bin/run_test_set conf/sift1m.conf data/sift/sift_query.dim.fvecs data/sift/sift_query_base_gt100.dim.ivecs 10 10 1 50 2500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[165.4]
+dynamic_prune_b=[-30.9]
+dynamic_prune_c=[2.4]
+dynamic_prune_switch=[0]
+first_cluster_num=[800]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/sift/sift_base.dim.fvecs]
+index_dir=[./output/sift1m_index]
+index_file_num=[1]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/sift1m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[5]
+search_block_num=[20000]
+search_first_center_num=[20]
+search_neighbors=[100000]
+search_second_center_num=[400]
+search_top_cut=[7]
+second_cluster_num=[125]
+thread_num=[32]
+train_data_file=[./data/sift/sift_learn.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1692528
+NOTICE	m_build_index_loss	45042.4
+load_index   TimeCost : 453us
+readDimVecs data/sift/sift_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/sift/sift_query.dim.fvecs  TimeCost : 2705us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 85us
+run_test_set  search end TimeCost : 73621130us
+avg_time 7362.1 us
+0 63.828
+1 222.997
+2 348.697
+3 808.511
+4 19800.7
+5 19804.1
+6 49.0275
+7 171.667
+8 14164.6
+9 15622
+10 15620.6
+11 18377.8
+12 18747
+13 0
+14 95279.1
+15 1119.4
+run_test_set   TimeCost : 73622358us
+10-recall@10 = 99.709999 tot=100000

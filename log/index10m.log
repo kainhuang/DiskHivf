@@ -1,0 +1,4094 @@
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 100 100 0 0 0 1 4000 50
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4048us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 19927us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 35us
+run_test_set  search end TimeCost : 31803914us
+avg_time 1952 us
+0 489.242
+1 1064.61
+2 1079.09
+3 1109.52
+4 6609.21
+5 6609.73
+6 4.18008
+7 15.2829
+8 3925.89
+9 4670.04
+10 4666.36
+11 5451.79
+12 5473.64
+13 0
+14 5730.21
+15 68.462
+run_test_set   TimeCost : 31804710us
+1-recall@1 = 89.369667 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 100 100 0 0 0 1 6000 70
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4018us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18068us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 120us
+run_test_set  search end TimeCost : 37569282us
+avg_time 2305.85 us
+0 485.916
+1 1070.54
+2 1085.73
+3 1118.91
+4 7839.29
+5 7840.11
+6 4.91812
+7 19.8487
+8 4792.22
+9 5712.96
+10 5717.48
+11 6657.89
+12 6692.27
+13 0
+14 7063.59
+15 83.069
+run_test_set   TimeCost : 37570086us
+1-recall@1 = 90.198242 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 100 200 0 0 0 1 6000 80
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3999us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18227us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 36us
+run_test_set  search end TimeCost : 44307282us
+avg_time 2719.4 us
+0 484.845
+1 1080.35
+2 1106.08
+3 1171.6
+4 9199.4
+5 9199.65
+6 6.00988
+7 24.9317
+8 5757.99
+9 6841.74
+10 6837.97
+11 7961.37
+12 7992.28
+13 0
+14 8688.37
+15 106.307
+run_test_set   TimeCost : 44308107us
+1-recall@1 = 91.597618 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 100 300 0 0 0 1 6000 80
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4026us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18144us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 28us
+run_test_set  search end TimeCost : 47736629us
+avg_time 2929.88 us
+0 488.922
+1 1093.07
+2 1132.38
+3 1235.28
+4 9895.35
+5 9896.11
+6 6.73228
+7 26.4969
+8 6195.17
+9 7364.27
+10 7357.65
+11 8565.11
+12 8626.03
+13 0
+14 9623.94
+15 110.167
+run_test_set   TimeCost : 47737409us
+1-recall@1 = 92.334129 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 100 400 0 0 0 1 6000 90
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4038us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18149us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 66us
+run_test_set  search end TimeCost : 51848846us
+avg_time 3182.27 us
+0 488.319
+1 1096.05
+2 1144.37
+3 1274.52
+4 10643.5
+5 10644.2
+6 6.98349
+7 29.19
+8 6732.09
+9 7975.33
+10 7979.6
+11 9283.55
+12 9331.76
+13 0
+14 10651.8
+15 117.581
+run_test_set   TimeCost : 51849653us
+1-recall@1 = 92.757629 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 100 500 0 0 0 1 8000 90
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4011us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18147us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 67us
+run_test_set  search end TimeCost : 62222483us
+avg_time 3818.97 us
+0 493.929
+1 1116.82
+2 1175.5
+3 1341.05
+4 12753.4
+5 12754.3
+6 7.77856
+7 32.9992
+8 8185.14
+9 9722.8
+10 9727.17
+11 11305.4
+12 11366
+13 0
+14 13055.2
+15 130.227
+run_test_set   TimeCost : 62223276us
+1-recall@1 = 93.420486 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 100 600 0 0 0 1 8000 90
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4007us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17985us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 48us
+run_test_set  search end TimeCost : 65879045us
+avg_time 4043.39 us
+0 507.632
+1 1140.18
+2 1213.45
+3 1410.22
+4 13385.4
+5 13386.2
+6 8.11674
+7 36.5806
+8 8588.48
+9 10188.8
+10 10190.9
+11 11851.8
+12 11915.9
+13 0
+14 13699
+15 128.599
+run_test_set   TimeCost : 65879862us
+1-recall@1 = 93.420486 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 100 700 0 0 0 1 10000 100
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3992us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18057us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 36us
+run_test_set  search end TimeCost : 75499671us
+avg_time 4633.87 us
+0 496.966
+1 1136.02
+2 1218.74
+3 1443.96
+4 15469.1
+5 15468.9
+6 9.08096
+7 38.8796
+8 10042.1
+9 11950.1
+10 11938.4
+11 13900.2
+12 13964
+13 0
+14 16336.5
+15 145.5
+run_test_set   TimeCost : 75500497us
+1-recall@1 = 93.874672 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 100 800 0 0 0 1 10000 100
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3884us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18038us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 64us
+run_test_set  search end TimeCost : 78342880us
+avg_time 4808.37 us
+0 499.188
+1 1144.42
+2 1236.14
+3 1486.8
+4 16101.6
+5 16101.9
+6 8.59332
+7 40.6129
+8 10457.9
+9 12447.2
+10 12441.7
+11 14473.5
+12 14546.1
+13 0
+14 16992
+15 142.397
+run_test_set   TimeCost : 78343692us
+1-recall@1 = 93.917633 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 200 1000 0 0 0 1 12000 110
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4020us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17999us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 32us
+run_test_set  search end TimeCost : 97534714us
+avg_time 5986.29 us
+0 580.434
+1 1810.29
+2 1897.71
+3 2133.5
+4 19217
+5 19219.5
+6 10.9133
+7 41.3311
+8 12323.2
+9 14620
+10 14622
+11 16964.5
+12 17042.1
+13 0
+14 19537.3
+15 164.672
+run_test_set   TimeCost : 97535548us
+1-recall@1 = 94.285889 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 200 1200 0 0 0 1 15000 120
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4038us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18038us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 69us
+run_test_set  search end TimeCost : 109788509us
+avg_time 6738.38 us
+0 562.551
+1 1779.95
+2 1887.95
+3 2181.91
+4 22315.3
+5 22320.9
+6 11.5051
+7 45.2345
+8 14421.5
+9 17212.2
+10 17220.4
+11 19992.8
+12 20083.4
+13 0
+14 23439.5
+15 183.881
+run_test_set   TimeCost : 109789342us
+1-recall@1 = 94.715523 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 200 1500 0 0 0 1 15000 150
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3999us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18052us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 35us
+run_test_set  search end TimeCost : 120574261us
+avg_time 7400.37 us
+0 553.809
+1 1771.82
+2 1900.71
+3 2267.39
+4 24522.7
+5 24524.3
+6 13.4812
+7 50.5843
+8 15970.2
+9 19047.7
+10 19052.9
+11 22105
+12 22206.8
+13 0
+14 26265.4
+15 209.604
+run_test_set   TimeCost : 120575165us
+1-recall@1 = 94.825996 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 200 1800 0 0 0 1 18000 180
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3894us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17768us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 74us
+run_test_set  search end TimeCost : 143467759us
+avg_time 8805.48 us
+0 565.898
+1 1805.29
+2 1954.23
+3 2417.11
+4 29270.6
+5 29272.5
+6 15.9916
+7 61.367
+8 19234.9
+9 22985.6
+10 22993.8
+11 26673.6
+12 26795.2
+13 0
+14 31661.4
+15 248.189
+run_test_set   TimeCost : 143468606us
+1-recall@1 = 95.145157 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 200 2000 0 0 0 1 20000 200
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4027us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18065us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 37us
+run_test_set  search end TimeCost : 157831392us
+avg_time 9687.07 us
+0 574.337
+1 1827.29
+2 1988.87
+3 2510.85
+4 32283.4
+5 32284.2
+6 17.7903
+7 68.655
+8 21291.1
+9 25463.8
+10 25459.4
+11 29570.9
+12 29696
+13 0
+14 35306
+15 272.981
+run_test_set   TimeCost : 157832224us
+1-recall@1 = 95.347694 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 200 2500 0 0 0 1 25000 300
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4009us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18073us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 31us
+run_test_set  search end TimeCost : 207018340us
+avg_time 12706 us
+0 610.335
+1 1904.17
+2 2121.36
+3 2835.42
+4 42205.6
+5 42206.4
+6 21.9284
+7 90.2446
+8 28129.9
+9 33627.2
+10 33642
+11 39071.2
+12 39233.8
+13 0
+14 46434.8
+15 371.546
+run_test_set   TimeCost : 207019140us
+1-recall@1 = 95.850983 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 200 2500 0 0 0 1 30000 300
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4003us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18095us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 36us
+run_test_set  search end TimeCost : 228091345us
+avg_time 13999.3 us
+0 622.626
+1 1916.28
+2 2135.97
+3 2856.73
+4 47098.6
+5 47099.4
+6 26.2158
+7 100.941
+8 31585.1
+9 37808.6
+10 37816
+11 43949.9
+12 44135.2
+13 0
+14 52191
+15 409.915
+run_test_set   TimeCost : 228092120us
+1-recall@1 = 96.065796 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 250 3500 0 0 0 1 35000 350
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4056us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18151us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 154us
+run_test_set  search end TimeCost : 278044221us
+avg_time 17065.2 us
+0 687.573
+1 2329.94
+2 2638.31
+3 3652.88
+4 58018.2
+5 58019
+6 30.7668
+7 120.608
+8 38477.9
+9 46337.6
+10 46336.4
+11 53965.7
+12 54198
+13 0
+14 63245.4
+15 458.796
+run_test_set   TimeCost : 278045026us
+1-recall@1 = 96.206963 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 250 4000 0 0 0 1 40000 400
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4041us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17317us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 131us
+run_test_set  search end TimeCost : 320134793us
+avg_time 19648.6 us
+0 727.992
+1 2393.32
+2 2743.2
+3 3916.34
+4 66962.4
+5 66963.2
+6 31.4683
+7 131.107
+8 44414.5
+9 53600.1
+10 53579
+11 62569.4
+12 62842.3
+13 0
+14 72820.2
+15 514.404
+run_test_set   TimeCost : 320135566us
+1-recall@1 = 96.329712 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 250 5000 0 0 0 1 50000 500
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4003us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17937us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 67us
+run_test_set  search end TimeCost : 397326850us
+avg_time 24386.3 us
+0 776.522
+1 2499.25
+2 3045.03
+3 4581.55
+4 84774.4
+5 84771.9
+6 39.3156
+7 172.778
+8 56166.1
+9 68050.6
+10 68059.3
+11 79589.3
+12 79894.2
+13 0
+14 92112.2
+15 621.157
+run_test_set   TimeCost : 397327683us
+1-recall@1 = 96.532249 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 250 5000 0 0 0 1 70000 600
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3985us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18094us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 38us
+run_test_set  search end TimeCost : 518537840us
+avg_time 31825.8 us
+0 841.183
+1 2581.33
+2 3133.89
+3 4695.07
+4 108928
+5 108929
+6 57.26
+7 239.511
+8 73045.9
+9 88431.4
+10 88431.3
+11 103467
+12 103897
+13 0
+14 118647
+15 824.929
+run_test_set   TimeCost : 518538694us
+1-recall@1 = 96.869820 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 250 5000 0 0 0 1 80000 800
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3977us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17731us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 75us
+run_test_set  search end TimeCost : 577935821us
+avg_time 35471.4 us
+0 859.018
+1 2602.45
+2 3153.03
+3 4715.1
+4 121734
+5 121735
+6 65.5523
+7 278.378
+8 82326.6
+9 99313.5
+10 99322.2
+11 116131
+12 116612
+13 0
+14 134990
+15 1032.19
+run_test_set   TimeCost : 577936609us
+1-recall@1 = 96.961884 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 300 5000 0 0 0 1 80000 800
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3979us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17696us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 39us
+run_test_set  search end TimeCost : 577730686us
+avg_time 35458.8 us
+0 880.961
+1 2939.42
+2 3511.01
+3 5110.9
+4 121236
+5 121237
+6 62.7205
+7 275.45
+8 81835.5
+9 98638.3
+10 98648.2
+11 115227
+12 115720
+13 0
+14 133811
+15 1060.33
+run_test_set   TimeCost : 577731586us
+1-recall@1 = 96.980301 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 1 1 1 300 5000 0 0 0 1 90000 900
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4015us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18058us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 38us
+run_test_set  search end TimeCost : 623839496us
+avg_time 38288.8 us
+0 890.63
+1 2964.76
+2 3533.1
+3 5134.31
+4 131899
+5 131900
+6 76.0248
+7 299.924
+8 89359
+9 107731
+10 107728
+11 125814
+12 126314
+13 0
+14 146666
+15 1184.64
+run_test_set   TimeCost : 623840291us
+1-recall@1 = 97.017120 tot=16293
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 100 100 0 0 0 1 4000 50
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4018us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18054us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 137us
+run_test_set  search end TimeCost : 31953207us
+avg_time 1961.15 us
+0 486.154
+1 1061.37
+2 1075.65
+3 1107.74
+4 6616.16
+5 6614.83
+6 4.02793
+7 14.6297
+8 3924.5
+9 4674.79
+10 4678.25
+11 5446.15
+12 5484.8
+13 0
+14 5727.81
+15 68.4638
+run_test_set   TimeCost : 31955436us
+10-recall@10 = 85.855278 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 100 100 0 0 0 1 6000 70
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3628us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17752us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 163us
+run_test_set  search end TimeCost : 40379542us
+avg_time 2478.33 us
+0 524.201
+1 1121.63
+2 1136.69
+3 1169.35
+4 8040.71
+5 8044.27
+6 5.13423
+7 18.9387
+8 4885.07
+9 5813.17
+10 5823.53
+11 6797.98
+12 6841.05
+13 0
+14 7063.89
+15 83.0802
+run_test_set   TimeCost : 40381780us
+10-recall@10 = 86.945312 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 100 200 0 0 0 1 6000 80
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4052us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18180us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 38us
+run_test_set  search end TimeCost : 45111173us
+avg_time 2768.74 us
+0 492.354
+1 1089.06
+2 1115.06
+3 1181.98
+4 9231.68
+5 9235.32
+6 5.89904
+7 24.9677
+8 5767.48
+9 6841.26
+10 6851.03
+11 7966.43
+12 8021.92
+13 0
+14 8688.26
+15 106.306
+run_test_set   TimeCost : 45113520us
+10-recall@10 = 89.297859 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 100 300 0 0 0 1 6000 80
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3881us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17866us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 68us
+run_test_set  search end TimeCost : 48506864us
+avg_time 2977.16 us
+0 491.329
+1 1095.16
+2 1138.88
+3 1242.25
+4 9965.82
+5 9969.56
+6 6.42368
+7 30.4348
+8 6257.11
+9 7411.29
+10 7410.49
+11 8622.33
+12 8680.92
+13 0
+14 9624.31
+15 110.17
+run_test_set   TimeCost : 48509033us
+10-recall@10 = 90.335114 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 100 400 0 0 0 1 6000 90
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4019us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18076us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 37us
+run_test_set  search end TimeCost : 55382455us
+avg_time 3399.15 us
+0 524.818
+1 1142.94
+2 1193.06
+3 1323.33
+4 10883.5
+5 10888.6
+6 6.76597
+7 28.0782
+8 6873.3
+9 8130.92
+10 8132.1
+11 9447.81
+12 9512.91
+13 0
+14 10651.9
+15 117.57
+run_test_set   TimeCost : 55384627us
+10-recall@10 = 91.007797 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 100 500 0 0 0 1 8000 90
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3812us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 15998us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 67us
+run_test_set  search end TimeCost : 63623276us
+avg_time 3904.94 us
+0 509.986
+1 1141.38
+2 1202.09
+3 1367.4
+4 12918.7
+5 12922.4
+6 7.68134
+7 40.8881
+8 8281.38
+9 9802.47
+10 9802.57
+11 11409.1
+12 11488.2
+13 0
+14 13055.4
+15 130.233
+run_test_set   TimeCost : 63625397us
+10-recall@10 = 91.889771 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 100 600 0 0 0 1 8000 90
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4022us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18085us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 61us
+run_test_set  search end TimeCost : 64462524us
+avg_time 3956.45 us
+0 497.893
+1 1126.65
+2 1199.27
+3 1397.32
+4 13317.3
+5 13322.1
+6 7.59056
+7 33.5259
+8 8534.72
+9 10135
+10 10133.9
+11 11782.3
+12 11861.5
+13 0
+14 13698.5
+15 128.599
+run_test_set   TimeCost : 64464651us
+10-recall@10 = 91.938866 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 100 700 0 0 0 1 10000 100
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4004us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18306us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 39us
+run_test_set  search end TimeCost : 76131890us
+avg_time 4672.67 us
+0 511.606
+1 1151.75
+2 1233.08
+3 1456.86
+4 15558
+5 15563.4
+6 9.38139
+7 39.1241
+8 10097.7
+9 11998.6
+10 11999
+11 13948
+12 14036.3
+13 0
+14 16336.8
+15 145.509
+run_test_set   TimeCost : 76134065us
+10-recall@10 = 92.685204 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 100 800 0 0 0 1 10000 100
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3984us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18097us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 72us
+run_test_set  search end TimeCost : 78354459us
+avg_time 4809.08 us
+0 501.349
+1 1145.4
+2 1236.92
+3 1490.18
+4 16180.6
+5 16185.1
+6 9.23556
+7 41.8645
+8 10493.2
+9 12477.1
+10 12475.7
+11 14519.8
+12 14614.9
+13 0
+14 16992.6
+15 142.399
+run_test_set   TimeCost : 78356542us
+10-recall@10 = 92.709755 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 200 1000 0 0 0 1 12000 110
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4041us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18063us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 38us
+run_test_set  search end TimeCost : 92717134us
+avg_time 5690.61 us
+0 548.428
+1 1755.84
+2 1841.72
+3 2076.79
+4 18741.9
+5 18745
+6 10.7496
+7 41.4625
+8 11977.7
+9 14223.1
+10 14234.9
+11 16501.7
+12 16610.9
+13 0
+14 19536.1
+15 164.662
+run_test_set   TimeCost : 92719238us
+10-recall@10 = 93.277481 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 200 1200 0 0 0 1 15000 120
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3997us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18096us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 64us
+run_test_set  search end TimeCost : 109494075us
+avg_time 6720.31 us
+0 551.918
+1 1766.54
+2 1874.01
+3 2165.55
+4 22265.7
+5 22268.5
+6 11.6143
+7 45.1358
+8 14371.9
+9 17154.1
+10 17163.7
+11 19939
+12 20048.7
+13 0
+14 23438.6
+15 183.874
+run_test_set   TimeCost : 109496158us
+10-recall@10 = 93.806541 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 200 1500 0 0 0 1 15000 150
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3929us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17903us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 37us
+run_test_set  search end TimeCost : 120394566us
+avg_time 7389.34 us
+0 555.306
+1 1778.46
+2 1907.3
+3 2279.41
+4 24606.9
+5 24610.8
+6 13.8299
+7 51.7907
+8 15987
+9 19074.1
+10 19080.9
+11 22132.2
+12 22258.8
+13 0
+14 26265
+15 209.608
+run_test_set   TimeCost : 120396753us
+10-recall@10 = 94.068008 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 200 1800 0 0 0 1 18000 180
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3483us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 16320us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 71us
+run_test_set  search end TimeCost : 143377392us
+avg_time 8799.93 us
+0 564.01
+1 1814.42
+2 1963.32
+3 2424.23
+4 29267.9
+5 29271.8
+6 16.4445
+7 62.7459
+8 19220.2
+9 22951.3
+10 22947.1
+11 26639.8
+12 26779.4
+13 0
+14 31662.5
+15 248.195
+run_test_set   TimeCost : 143379554us
+10-recall@10 = 94.536301 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 200 2000 0 0 0 1 20000 200
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3973us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17814us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 72us
+run_test_set  search end TimeCost : 159393017us
+avg_time 9782.91 us
+0 573.862
+1 1832.13
+2 1994.14
+3 2518.77
+4 32495.2
+5 32500.4
+6 16.7498
+7 70.5151
+8 21438.4
+9 25626
+10 25626.2
+11 29754.5
+12 29906.7
+13 0
+14 35305.2
+15 272.969
+run_test_set   TimeCost : 159395181us
+10-recall@10 = 94.756027 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 200 2500 0 0 0 1 25000 300
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4030us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18094us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 40us
+run_test_set  search end TimeCost : 204349161us
+avg_time 12542.1 us
+0 600.928
+1 1877.79
+2 2095.56
+3 2805.1
+4 41977.8
+5 41981.8
+6 23.2656
+7 91.0465
+8 27991.8
+9 33475.1
+10 33470.4
+11 38884.9
+12 39072.5
+13 0
+14 46434.8
+15 371.546
+run_test_set   TimeCost : 204351316us
+10-recall@10 = 95.351990 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 200 2500 0 0 0 1 30000 300
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3997us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18110us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 69us
+run_test_set  search end TimeCost : 227912265us
+avg_time 13988.4 us
+0 620.074
+1 1919.66
+2 2140.82
+3 2857.66
+4 47201.4
+5 47205.4
+6 26.2295
+7 106.998
+8 31628.1
+9 37864.4
+10 37871.1
+11 44001.3
+12 44200
+13 0
+14 52192.8
+15 409.925
+run_test_set   TimeCost : 227914522us
+10-recall@10 = 95.672371 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 250 3500 0 0 0 1 35000 350
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4011us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18108us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 128us
+run_test_set  search end TimeCost : 276463256us
+avg_time 16968.2 us
+0 683.861
+1 2326.18
+2 2632.54
+3 3653.22
+4 58124.1
+5 58128.3
+6 28.4057
+7 115.024
+8 38486.5
+9 46402.2
+10 46401.3
+11 54062.5
+12 54321.4
+13 0
+14 63245.4
+15 458.796
+run_test_set   TimeCost : 276465456us
+10-recall@10 = 95.866325 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 250 4000 0 0 0 1 40000 400
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3841us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17242us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 156us
+run_test_set  search end TimeCost : 318804297us
+avg_time 19566.9 us
+0 720.891
+1 2380.6
+2 2728.52
+3 3898.75
+4 66843.8
+5 66845.1
+6 35.9723
+7 144.245
+8 44406.4
+9 53570.3
+10 53581.3
+11 62449.6
+12 62757
+13 0
+14 72819
+15 514.379
+run_test_set   TimeCost : 318806556us
+10-recall@10 = 96.060272 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 250 5000 0 0 0 1 50000 500
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3990us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 17997us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 69us
+run_test_set  search end TimeCost : 402020980us
+avg_time 24674.5 us
+0 790.027
+1 2507.51
+2 3051.59
+3 4587.58
+4 85117.9
+5 85123
+6 39.1234
+7 167.996
+8 56378.9
+9 68356.3
+10 68379.2
+11 79889.3
+12 80253.6
+13 0
+14 92115
+15 621.188
+run_test_set   TimeCost : 402023359us
+10-recall@10 = 96.352425 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 250 5000 0 0 0 1 70000 600
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4048us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18163us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 39us
+run_test_set  search end TimeCost : 513837121us
+avg_time 31537.3 us
+0 852.525
+1 2595.54
+2 3146.02
+3 4714.05
+4 108852
+5 108857
+6 51.417
+7 218.648
+8 72893.8
+9 88326.9
+10 88354.8
+11 103381
+12 103820
+13 0
+14 118647
+15 824.929
+run_test_set   TimeCost : 513839491us
+10-recall@10 = 96.805992 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 250 5000 0 0 0 1 80000 800
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3986us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18024us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 39us
+run_test_set  search end TimeCost : 580052540us
+avg_time 35601.3 us
+0 855.879
+1 2600.3
+2 3147.4
+3 4712.83
+4 121695
+5 121700
+6 64.6336
+7 265.498
+8 82323.4
+9 99340.5
+10 99363.1
+11 116081
+12 116594
+13 0
+14 134990
+15 1032.19
+run_test_set   TimeCost : 580054863us
+10-recall@10 = 96.968025 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 300 5000 0 0 0 1 80000 800
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 4005us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18139us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 40us
+run_test_set  search end TimeCost : 572915717us
+avg_time 35163.3 us
+0 881.668
+1 2952
+2 3519.82
+3 5114.15
+4 120962
+5 120967
+6 61.9756
+7 272.226
+8 81714.5
+9 98475.9
+10 98503.2
+11 114975
+12 115471
+13 0
+14 133811
+15 1060.33
+run_test_set   TimeCost : 572918110us
+10-recall@10 = 96.976616 tot=162930
++ ./bin/run_test_set conf/index10m.conf ./data/index10m/new_query.dim.fvecs ./data/index10m/new_index_query_learn_gt100.dim.ivecs 10 10 1 300 5000 0 0 0 1 90000 900
+Conf:
+batch_size=[64]
+build_index_num=[-1]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[0]
+cache_segment=[0]
+dim=[512]
+dynamic_prune_a=[-7.6]
+dynamic_prune_b=[92.7]
+dynamic_prune_c=[21.7]
+dynamic_prune_switch=[0]
+first_cluster_num=[2500]
+hierachical_cluster_epoch=[5]
+hs_mode=[0]
+index_data_file=[./data/index10m/index10m.dim.fvecs]
+index_dir=[./output/index10m_index]
+index_file_num=[5]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[1]
+model_file=[./output/index10m_model]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[7000]
+search_first_center_num=[100]
+search_neighbors=[200000]
+search_second_center_num=[4900]
+search_top_cut=[7000]
+second_cluster_num=[400]
+thread_num=[32]
+train_data_file=[./data/index10m/learn2m.dim.fvecs]
+train_data_num=[-1]
+use_cache=[0]
+use_uint8_data=[0]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+1140679
+3592383
+6953473
+11327213
+20746112
+NOTICE	m_build_index_loss	0.0177296
+load_index   TimeCost : 3974us
+readDimVecs ./data/index10m/new_query.dim.fvecs begin
+d = 512  num = 16293
+readDimVecs ./data/index10m/new_query.dim.fvecs  TimeCost : 18166us
+querys num = 16293 dim=512
+groundtruth numVecs=16293 dim=100
+WARMUP BEGIN
+WARMUP END
+run_test_set  begin
+run_test_set  search begin TimeCost : 127us
+run_test_set  search end TimeCost : 624803134us
+avg_time 38347.9 us
+0 891.379
+1 2953.93
+2 3520.13
+3 5119.8
+4 132144
+5 132149
+6 74.3455
+7 304.104
+8 89539.3
+9 107927
+10 107967
+11 126030
+12 126582
+13 0
+14 146666
+15 1184.64
+run_test_set   TimeCost : 624805497us
+10-recall@10 = 97.095688 tot=162930

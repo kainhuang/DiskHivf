@@ -1,0 +1,2415 @@
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 1 1 1 200 500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x56272f960000 @  0x5626b96a043f 0x5626b964e7fc 0x5626b963ae5c 0x5626b962cef4 0x7fe7321ac083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3571453us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2579us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 287us
+run_test_set  search end TimeCost : 58908423us
+avg_time 5890.81 us
+0 1454.96
+1 7260.57
+2 7362.56
+3 7602.83
+4 19798.5
+5 19799.3
+6 27.2172
+7 97.9582
+8 4499.42
+9 4772.93
+10 8996.42
+11 11598.8
+12 11782.2
+13 0
+14 69036.3
+15 559.196
+run_test_set   TimeCost : 58909050us
+1-recall@1 = 92.900002
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 1 1 1 200 1000 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x55b9e7772000 @  0x55b99b2cf43f 0x55b99b27d7fc 0x55b99b269e5c 0x55b99b25bef4 0x7f061491a083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3580305us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2565us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 55us
+run_test_set  search end TimeCost : 74428473us
+avg_time 7442.84 us
+0 1423.99
+1 7146.97
+2 7304.04
+3 7728.47
+4 25127.8
+5 25132
+6 38.1346
+7 137.644
+8 6492.58
+9 6904.93
+10 12861
+11 16621.7
+12 16892.1
+13 0
+14 102843
+15 871.855
+run_test_set   TimeCost : 74429001us
+1-recall@1 = 95.730003
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 1 1 1 200 1500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x556fa145a000 @  0x556f2138443f 0x556f213327fc 0x556f2131ee5c 0x556f21310ef4 0x7f979caf2083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3588289us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2586us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 58us
+run_test_set  search end TimeCost : 84609037us
+avg_time 8460.9 us
+0 1428.55
+1 7096.83
+2 7312.26
+3 7905.23
+4 28804.7
+5 28805.4
+6 46.701
+7 162.975
+8 7783.53
+9 8259.45
+10 15325.4
+11 19801.8
+12 20124.6
+13 0
+14 126079
+15 1027.39
+run_test_set   TimeCost : 84609613us
+1-recall@1 = 96.830002
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 1 1 1 200 2000 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x56341f622000 @  0x5633a47cb43f 0x5633a47797fc 0x5633a4765e5c 0x5633a4757ef4 0x7fc5f6118083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3590816us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2595us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 313us
+run_test_set  search end TimeCost : 93271375us
+avg_time 9327.11 us
+0 1453.19
+1 7163.17
+2 7418.59
+3 8198.98
+4 31422.6
+5 31423.3
+6 47.0274
+7 174.793
+8 8375.11
+9 8895.33
+10 17065.9
+11 22176.7
+12 22530.4
+13 0
+14 143437
+15 1083.94
+run_test_set   TimeCost : 93271977us
+1-recall@1 = 97.269997
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 1 1 1 200 2500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x564ba736a000 @  0x564b3a0ed43f 0x564b3a09b7fc 0x564b3a087e5c 0x564b3a079ef4 0x7fbdb014f083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3583340us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2592us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 272us
+run_test_set  search end TimeCost : 99019197us
+avg_time 9901.89 us
+0 1459.52
+1 7186.42
+2 7522.39
+3 8472.41
+4 33502.8
+5 33502.8
+6 47.8709
+7 175.513
+8 8757.5
+9 9301.57
+10 18315.1
+11 23917.7
+12 24295.9
+13 0
+14 157765
+15 1098.47
+run_test_set   TimeCost : 99019854us
+1-recall@1 = 97.410004
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 1 1 1 200 3000 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x558c2c3a2000 @  0x558bc8a4243f 0x558bc89f07fc 0x558bc89dce5c 0x558bc89ceef4 0x7fae79139083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3579696us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2582us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 59us
+run_test_set  search end TimeCost : 112835052us
+avg_time 11283.5 us
+0 1469.73
+1 7165.69
+2 7537.13
+3 8642.26
+4 38368
+5 38368.8
+6 59.8267
+7 210.535
+8 10405.9
+9 11031.4
+10 21579.2
+11 28157.6
+12 28632.8
+13 0
+14 188647
+15 1313.91
+run_test_set   TimeCost : 112835695us
+1-recall@1 = 97.940002
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 1 1 1 200 3500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x561560118000 @  0x5614ee08843f 0x5614ee0367fc 0x5614ee022e5c 0x5614ee014ef4 0x7fb8515a7083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3583987us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2557us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 57us
+run_test_set  search end TimeCost : 126815641us
+avg_time 12681.6 us
+0 1489.18
+1 7174.35
+2 7584.74
+3 8854.19
+4 43015.1
+5 43015.8
+6 71.2466
+7 242.061
+8 11872.6
+9 12600.7
+10 24765
+11 32387.8
+12 32928.6
+13 0
+14 219075
+15 1528.74
+run_test_set   TimeCost : 126816176us
+1-recall@1 = 98.250000
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 1 1 1 200 4500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x556ebc430000 @  0x556e588d843f 0x556e588867fc 0x556e58872e5c 0x556e58864ef4 0x7f70aba39083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3592979us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2604us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 58us
+run_test_set  search end TimeCost : 153551635us
+avg_time 15355.2 us
+0 1510.08
+1 7168.81
+2 7752.96
+3 9318.44
+4 52684
+5 52688.3
+6 83.7509
+7 299.823
+8 15018.9
+9 15965.1
+10 31418.3
+11 41186.5
+12 41904.1
+13 0
+14 279713
+15 1957.01
+run_test_set   TimeCost : 153552193us
+1-recall@1 = 98.739998
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 1 1 1 200 5000 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x5652d3d9c000 @  0x5652889aa43f 0x5652889587fc 0x565288944e5c 0x565288936ef4 0x7f59a32fa083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3588789us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2581us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 48us
+run_test_set  search end TimeCost : 164030966us
+avg_time 16403.1 us
+0 1522.28
+1 7187.92
+2 7814.32
+3 9539.03
+4 57059.2
+5 57060
+6 88.9822
+7 330.991
+8 16310.9
+9 17351
+10 34368.6
+11 45188.4
+12 45973.6
+13 0
+14 309408
+15 2169.2
+run_test_set   TimeCost : 164031596us
+1-recall@1 = 98.919998
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 1 1 1 200 5500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x5589db626000 @  0x55897fd2c43f 0x55897fcda7fc 0x55897fcc6e5c 0x55897fcb8ef4 0x7fe66fd78083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3605665us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2582us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 291us
+run_test_set  search end TimeCost : 177426170us
+avg_time 17742.6 us
+0 1507.93
+1 7109.85
+2 7754.7
+3 9595.62
+4 63531.6
+5 63532.3
+6 103.8
+7 354.803
+8 20549.3
+9 21665.8
+10 39679.6
+11 51162.8
+12 52007.9
+13 0
+14 338617
+15 2375.13
+run_test_set   TimeCost : 177426753us
+1-recall@1 = 99.089996
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 1 1 1 200 6000 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x5582a26ce000 @  0x55821d9f443f 0x55821d9a27fc 0x55821d98ee5c 0x55821d980ef4 0x7f0f92f0f083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3578133us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2590us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 46us
+run_test_set  search end TimeCost : 189240255us
+avg_time 18924 us
+0 1534.22
+1 7107.08
+2 7784.33
+3 9757.79
+4 68515.1
+5 68516
+6 113.587
+7 389.872
+8 22915.3
+9 24121.4
+10 43460.8
+11 55785.4
+12 56702.8
+13 0
+14 366973
+15 2571.57
+run_test_set   TimeCost : 189240807us
+1-recall@1 = 99.239998
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 10 10 1 200 1000 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x565217718000 @  0x56519183a43f 0x5651917e87fc 0x5651917d4e5c 0x5651917c6ef4 0x7fde2c1e9083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3581464us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2595us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 60us
+run_test_set  search end TimeCost : 79229042us
+avg_time 7922.9 us
+0 1435.93
+1 7104.72
+2 7268.18
+3 7691.98
+4 26635.7
+5 26639.9
+6 41.2247
+7 152.236
+8 7101.33
+9 7563.72
+10 13980.8
+11 18057.2
+12 18399.3
+13 0
+14 112560
+15 979.163
+run_test_set   TimeCost : 79230296us
+10-recall@10 = 93.032997
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 10 10 1 200 1500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x55cfd560a000 @  0x55cf82a5043f 0x55cf829fe7fc 0x55cf829eae5c 0x55cf829dcef4 0x7f54a919c083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3587804us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2578us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 60us
+run_test_set  search end TimeCost : 94170488us
+avg_time 9417.04 us
+0 1422.62
+1 7054.22
+2 7278.18
+3 7877.71
+4 31663.9
+5 31668.5
+6 52.5646
+7 189.841
+8 8971.56
+9 9545.23
+10 17511.8
+11 22621.7
+12 23034.5
+13 0
+14 142738
+15 1244.04
+run_test_set   TimeCost : 94171864us
+10-recall@10 = 94.824997
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 10 10 1 200 2000 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x555e90ee4000 @  0x555e20ac243f 0x555e20a707fc 0x555e20a5ce5c 0x555e20a4eef4 0x7fcdca8b4083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3597168us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2593us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 155us
+run_test_set  search end TimeCost : 104571998us
+avg_time 10457.2 us
+0 1441.41
+1 7082.18
+2 7350.06
+3 8130.85
+4 35246.7
+5 35256.7
+6 58.1472
+7 212.113
+8 9959.27
+9 10611.3
+10 19848.5
+11 25769.6
+12 26245.2
+13 0
+14 166203
+15 1397.68
+run_test_set   TimeCost : 104573388us
+10-recall@10 = 95.678001
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 10 10 1 200 2500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x558ea5100000 @  0x558e525a843f 0x558e525567fc 0x558e52542e5c 0x558e52534ef4 0x7f64509b6083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3594219us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2576us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 173us
+run_test_set  search end TimeCost : 112369935us
+avg_time 11237 us
+0 1450.35
+1 7073.34
+2 7411.5
+3 8353.26
+4 37877.1
+5 37884.4
+6 62.6296
+7 224.401
+8 10595.3
+9 11294.6
+10 21510.5
+11 28066.5
+12 28584.8
+13 0
+14 184945
+15 1468.44
+run_test_set   TimeCost : 112371242us
+10-recall@10 = 96.107002
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 10 10 1 200 3000 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x55d899462000 @  0x55d82bca743f 0x55d82bc557fc 0x55d82bc41e5c 0x55d82bc33ef4 0x7fe513206083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3582590us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2555us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 57us
+run_test_set  search end TimeCost : 126424031us
+avg_time 12642.4 us
+0 1455
+1 7060.68
+2 7437.26
+3 8530.83
+4 43647.3
+5 43657
+6 72.7341
+7 263.546
+8 12643.1
+9 13456.4
+10 25590.1
+11 33338.2
+12 33954.4
+13 0
+14 220353
+15 1750.84
+run_test_set   TimeCost : 126425396us
+10-recall@10 = 96.782997
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 10 10 1 200 3500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x5594402b6000 @  0x5593d144743f 0x5593d13f57fc 0x5593d13e1e5c 0x5593d13d3ef4 0x7f0b116dd083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3584664us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2557us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 53us
+run_test_set  search end TimeCost : 142682995us
+avg_time 14268.3 us
+0 1474.02
+1 7078.36
+2 7493.75
+3 8756.74
+4 49572.8
+5 49580.2
+6 83.8928
+7 297.131
+8 14655.8
+9 15604.8
+10 29724.9
+11 38730.2
+12 39441.2
+13 0
+14 255340
+15 2031.55
+run_test_set   TimeCost : 142684334us
+10-recall@10 = 97.311996
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 10 10 1 200 4500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x55edf14e6000 @  0x55ed8622143f 0x55ed861cf7fc 0x55ed861bbe5c 0x55ed861adef4 0x7fb424eae083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3589835us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2541us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 44us
+run_test_set  search end TimeCost : 173627103us
+avg_time 17362.7 us
+0 1497.5
+1 7093.06
+2 7682.53
+3 9233.82
+4 61017.2
+5 61025.1
+6 113.24
+7 393.843
+8 18333.5
+9 19508.4
+10 37292.8
+11 48693.6
+12 49636.5
+13 0
+14 324091
+15 2587.37
+run_test_set   TimeCost : 173628445us
+10-recall@10 = 98.019997
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 10 10 1 200 5000 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x55f0f140e000 @  0x55f08967c43f 0x55f08962a7fc 0x55f089616e5c 0x55f089608ef4 0x7fdca093e083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3603188us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2574us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 50us
+run_test_set  search end TimeCost : 189916781us
+avg_time 18991.7 us
+0 1514.3
+1 7066.38
+2 7691.46
+3 9386.81
+4 67226.3
+5 67235
+6 117.971
+7 408.456
+8 21986.7
+9 23309
+10 42519
+11 54902.7
+12 55836.9
+13 0
+14 357348
+15 2857.89
+run_test_set   TimeCost : 189918250us
+10-recall@10 = 98.250000
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 10 10 1 200 5500 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x5645250f4000 @  0x5644afcfa43f 0x5644afca87fc 0x5644afc94e5c 0x5644afc86ef4 0x7f6b711e5083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3593588us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2568us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 43us
+run_test_set  search end TimeCost : 204923424us
+avg_time 20492.3 us
+0 1534.61
+1 7043.36
+2 7699.39
+3 9523.79
+4 73485.1
+5 73494.7
+6 132.645
+7 444.385
+8 25687.6
+9 27071.7
+10 47417.6
+11 60569.8
+12 61587
+13 0
+14 389375
+15 3105.03
+run_test_set   TimeCost : 204924762us
+10-recall@10 = 98.415001
++ ./bin/run_test_set conf/bigann1b_vec.conf data/bigann/bigann_query.dim.fvecs data/bigann/bigann_query_base_gt100.dim.ivecs 10 10 1 200 6000 0 0 0 1
+Conf:
+batch_size=[128]
+build_index_num=[1000000000]
+build_index_search_first_center_num=[200]
+build_search_first_center_id_diff=[10]
+build_search_topk=[5]
+cache_capacity=[50000000]
+cache_segment=[0]
+dim=[128]
+dynamic_prune_a=[531.9]
+dynamic_prune_b=[-13.7]
+dynamic_prune_c=[56.6]
+dynamic_prune_switch=[1]
+first_cluster_num=[25000]
+hierachical_cluster_epoch=[5]
+hs_mode=[1]
+index_data_file=[./data/bigann/bigann_base.dim.bvecs]
+index_dir=[./output/bigann_index1b_bvec]
+index_file_num=[32]
+io_thread_num=[0]
+is_async_read=[0]
+is_disk=[1]
+kmeans_centers_select_type=[3]
+kmeans_epoch=[20]
+kmeans_sample_rete=[0.1]
+model_file=[./output/bigann_model1b_bvec]
+read_file_batch_size=[128]
+read_index_file_thread_num=[4]
+search_block_num=[3000]
+search_first_center_num=[200]
+search_neighbors=[300000]
+search_second_center_num=[2000]
+search_top_cut=[7]
+second_cluster_num=[2000]
+thread_num=[32]
+train_data_file=[./data/bigann/bigann_learn.dim.bvecs]
+train_data_num=[100000000]
+use_cache=[0]
+use_uint8_data=[1]
+Eigen version: 3.4.0
+Vectorization is enabled.
+SSE vectorization is enabled.
+AVX vectorization is enabled.
+Parallelization is enabled.
+OpenMP support is enabled.
+Debugging is enabled.
+Unrolling limit is set to 110.
+Max static align bytes is set to 64.
+MKL support is not enabled.
+SIMD instruction sets in use: AVX512, FMA, AVX2, AVX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2
+load_index  begin
+0
+49471733
+99508463
+150713892
+201961906
+250018569
+300755916
+351177198
+403400754
+457215064
+508656160
+561835063
+616437879
+670571826
+726325464
+781177362
+837828110
+891767852
+945921250
+1003312975
+1061817729
+1119878888
+1179920952
+1240531284
+1303800363
+1367603870
+1432718095
+1498250003
+1571088537
+1640367954
+1716935229
+1805955592
+1908252087
+tcmalloc: large alloc 7633010688 bytes == 0x563bf422c000 @  0x563ba518f43f 0x563ba513d7fc 0x563ba5129e5c 0x563ba511bef4 0x7f47c77aa083
+NOTICE	m_build_index_loss	37472.8
+load_index   TimeCost : 3589912us
+readDimVecs data/bigann/bigann_query.dim.fvecs begin
+d = 128  num = 10000
+readDimVecs data/bigann/bigann_query.dim.fvecs  TimeCost : 2567us
+querys num = 10000 dim=128
+groundtruth numVecs=10000 dim=100
+run_test_set  begin
+run_test_set  search begin TimeCost : 285us
+run_test_set  search end TimeCost : 222270830us
+avg_time 22227.1 us
+0 1569.18
+1 7113.9
+2 7809.42
+3 9793.06
+4 79089.4
+5 79106.3
+6 136.075
+7 481.945
+8 27604.1
+9 29135.9
+10 51510.7
+11 65902.9
+12 67008.7
+13 0
+14 419631
+15 3321.38
+run_test_set   TimeCost : 222272280us
+10-recall@10 = 98.545998
