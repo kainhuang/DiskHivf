@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     Int is_bvec = std::stoi(argv[4]);
     std::string format = "dim.vecs";
     if (argc > 5) {
-        format = "bin";
+        format = argv[5];
     }
     std::ifstream file(inputFilename, std::ios::binary);
     if (!file) {

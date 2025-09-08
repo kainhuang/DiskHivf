@@ -48,6 +48,7 @@ template <typename T>
         size_t capacity() const {
             return capacity_;
         }
+
     private:
         size_t capacity_;
         std::priority_queue<T> heap_;

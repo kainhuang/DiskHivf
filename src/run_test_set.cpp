@@ -66,13 +66,16 @@ void run_test_set(HierachicalCluster & hc, Eigen::Map<RMatrixDf> & querys,
     Int recall = 0;
 
     for (Int row = 0; row < groundtruth.rows(); row++) {
+        // std::cout << "row = " << row << std::endl;
         for (Int col = 0; col < groundtruth.cols() && col < recall_topk; col++) {
             // if (dist(row, col) > 96237) continue;
             tot++;
             if (use_dist) {
-                // std::cout << results[row][col].first << " " << results[row][col].second << " " << groundtruth(row, col) << " " << dist(row, col) << std::endl;
                 if (isInVector(results[row], groundtruth(row, col), dist(row, col), use_dist)) {
                     recall++;
+                    // std::cout << "recall " << results[row][col].first << " " << results[row][col].second << " " << groundtruth(row, col) << " " << dist(row, col) << std::endl;
+                } else {
+                    // std::cout << "loss " << results[row][col].first << " " << results[row][col].second << " " << groundtruth(row, col) << " " << dist(row, col) << std::endl;
                 }
             } else {
                 if (isInVector(results[row], groundtruth(row, col), 0, use_dist)) {
@@ -172,11 +175,13 @@ int main(int argc, char* argv[]) {
 
     // warmup
     #ifdef WARMUP
+    std::cout << "WARMUP BEGIN" << std::endl;
     #pragma omp parallel for num_threads(32) schedule(dynamic)
     for (Int i = 0; i < querys.rows(); i++) {
         std::vector<std::pair<FeatureId, float>> result;
         hc.search(querys.row(i), at_num, result, 0);
     }
+    std::cout << "WARMUP END" << std::endl;
     #endif
     
 

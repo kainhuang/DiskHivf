@@ -204,7 +204,7 @@ plt.plot(diskhivf_lacency_100x100, diskhivf_recall_100x100, marker='o', label='D
 plt.plot(diskhivf_lacency_300x300, diskhivf_recall_300x300, marker='o', label='DiskHivf-300x300-centers')
 #plt.plot(diskhivf_lacency_333x333, diskhivf_recall_333x333, marker='o', label='DiskHivf-333x333-centers')
 plt.plot(diskhivf_lacency_500x200, diskhivf_recall_500x200, marker='o', label='DiskHivf-500x200-centers')
-#plt.plot(diskhivf_lacency_800x125, diskhivf_recall_800x125, marker='o', label='DiskHivf-800x125-centers')
+plt.plot(diskhivf_lacency_800x125, diskhivf_recall_800x125, marker='o', label='DiskHivf-800x125-centers')
 plt.plot(diskhivf_lacency_500x500, diskhivf_recall_500x500, marker='o', label='DiskHivf-500x500-centers')
 plt.plot(diskhivf_lacency_1000x1000, diskhivf_recall_1000x1000, marker='o', label='DiskHivf-1000x1000-centers')
 

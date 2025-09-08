@@ -2,28 +2,30 @@ import matplotlib.pyplot as plt
 
 # DiskHivf 数据
 diskhivf_lacency3 = [
-    4672.43,
-    5624.28,
-    7281.38,
-    9387.6,
-    11245.9,
-    13182.6,
-    14024.9,
-    16224.8,
-    18707.2,
-    23654.8,
+    4147.02,
+    4691.09,
+    5577.99,
+    7548.45,
+    8715.49,
+    9791.35,
+    11170.9,
+    13754.1,
+    16754.8,
+    19134,
+    21936,
 ]
 diskhivf_recall3 = [
-    83.789001,
-    87.514999,
-    91.324997,
-    94.759003,
-    95.978996,
-    96.510002,
-    96.772003,
-    97.408997,
-    97.870003,
-    98.400002,
+    68.711998,
+    73.757004,
+    79.547997,
+    86.028999,
+    88.848999,
+    90.338997,
+    91.196999,
+    92.550003,
+    93.549004,
+    94.982002,
+    95.498001,
 ]
 
 # DiskHivf 数据
@@ -80,25 +82,31 @@ diskhivf_recall = [
 
 # Diskann 数据
 diskann_lacency = [
-    6894.59,
-    8172.07,
-    9257.69,
-    11625.14,
-    13174.63,
-    13945.41,
-    17161,
-    20750.29,
+    4227.89,
+    5305.72,
+    6421.65,
+    7332.24,
+    8899.6,
+    11089.17,
+    13042.74,
+    15745.73,
+    20490.54,
+    22453.62,
+    25390.27,
 
 ]
 diskann_recall = [
-    80.67,
-    83.96,
-    86.33,
-    88.99,
-    90.79,
-    91.74,
-    93.41,
-    94.53,
+    62.61,
+    70.37,
+    75.27,
+    78.76,
+    81.44,
+    85.02,
+    87.55,
+    89.73,
+    91.21,
+    92.3,
+    93.19,
 ]
 
 
@@ -136,7 +144,7 @@ plt.plot(diskhivf_lacency3, diskhivf_recall3, marker='o', label='DiskHivf')
 #plt.plot(diskhivf_lacency2, diskhivf_recall2, marker='o', label='DiskHivf2')
 #plt.plot(diskhivf_lacency, diskhivf_recall, marker='o', label='DiskHivf')
 plt.plot(diskann_lacency, diskann_recall, marker='o', label='Diskann')
-plt.plot(starling_lacency, starling_recall, marker='o', label='starling', color='red')
+# plt.plot(starling_lacency, starling_recall, marker='o', label='starling', color='red')
 
 # 添加标题和标签
 plt.title('bigann1B 10-recall@10 vs. Lacency')

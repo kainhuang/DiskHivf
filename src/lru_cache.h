@@ -20,7 +20,7 @@ namespace disk_hivf {
             m_rank_id(rank_id), m_searched_num(searched_num) {}
         Result() {
             m_vec_id = -1;
-            m_distance = -1;
+            m_distance = std::numeric_limits<float>::max();
             m_rank_id = 0;
             m_searched_num = 0;
         }

@@ -1120,6 +1120,7 @@ namespace disk_hivf {
                 float prune_block_num = dynamic_prune_func(result_heap.top().m_distance / m_build_index_loss);
                 prune_block_num = std::max(prune_block_num, (float)10);
                 float up = std::max(m_conf.m_search_second_center_num * 1.0 / 2500, 1.0);
+                // float up = 1.0;
                 if (searched_block_num > prune_block_num * up) {
                     break;
                 }

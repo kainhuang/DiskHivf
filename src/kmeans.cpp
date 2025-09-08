@@ -265,8 +265,8 @@ namespace disk_hivf {
             avg_center_size = std::sqrt(avg_center_size);
             training_centers = tmp_centers;
             loss /= numVecs;
-            //std::cout << "kmeans epoch=" << _ << " loss=" << loss 
-            //    << " avg_center_size = " << avg_center_size << std::endl;
+            std::cout << "kmeans epoch=" << _ << " loss=" << loss 
+                << " avg_center_size = " << avg_center_size << std::endl;
             if (loss < ret_loss) {
                 centers = training_centers;
                 ret_loss = loss;

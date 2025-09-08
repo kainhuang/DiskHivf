@@ -1,6 +1,30 @@
 import matplotlib.pyplot as plt
 
 # DiskHivf 数据
+diskhivf_lacency2 = [
+    434.579,
+    755.794,
+    1064.1,
+    1381.1,
+    2043.08,
+    2879.64,
+    3711.96,
+    4810,
+    5924.23,
+]
+diskhivf_recall2 = [
+    83.361000,
+    90.950996,
+    93.950996,
+    95.436996,
+    97.447998,
+    98.439003,
+    99.033997,
+    99.375999,
+    99.570000,
+]
+
+# DiskHivf 数据
 diskhivf_lacency = [
     871.322,
     1177.65,
@@ -126,8 +150,8 @@ starling_recall = [
 
 # 创建折线图
 plt.figure(figsize=(10, 6))
-
-plt.plot(diskhivf_lacency, diskhivf_recall, marker='o', label='DiskHivf')
+plt.plot(diskhivf_lacency2, diskhivf_recall2, marker='o', label='DiskHivf')
+#plt.plot(diskhivf_lacency, diskhivf_recall, marker='o', label='DiskHivf')
 plt.plot(diskann_lacency, diskann_recall, marker='o', label='Diskann')
 plt.plot(spann_lacency, spann_recall, marker='o', label='spann')
 plt.plot(starling_lacency, starling_recall, marker='o', label='starling')

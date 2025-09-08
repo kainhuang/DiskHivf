@@ -2,31 +2,33 @@ import matplotlib.pyplot as plt
 
 # DiskHivf 数据
 diskhivf_lacency3 = [
-    4576.65,
-    5452.09,
-    6297.79,
-    8353.75,
-    9748.64,
-    10905.3,
-    11918.1,
-    13857.8,
-    15679.2,
-    19742.2,
-    21790.1,
+    4008.31,
+    4463.6,
+    5361.76,
+    6291.57,
+    7182.71,
+    7916.75,
+    8566.72,
+    9726.5,
+    11179.7,
+    13460.5,
+    15319.7,
+    17539.7,
 
 ]
 diskhivf_recall3 = [
-    88.589996,
-    91.599998,
-    94.269997,
-    96.379997,
-    97.070000,
-    97.349998,
-    97.540001,
-    98.050003,
-    98.519997,
-    98.989998,
-    99.050003,
+    77.349998,
+    81.320000,
+    85.769997,
+    89.980003,
+    91.720001,
+    92.589996,
+    93.040001,
+    94.190002,
+    94.980003,
+    96.269997,
+    96.779999,
+    97.129997,
 ]
 
 # DiskHivf 数据
@@ -87,34 +89,34 @@ diskhivf_recall = [
 
 # Diskann 数据
 diskann_lacency = [
-    4871.71,
-    5458.75,
-    6149.85,
-    6725.55,
-    7495.07,
-    7938.95,
-    9488.26,
-    10605.2,
-    12050.32,
-    13206.36,
-    14479.85,
-    17580.26,
-    20753.64,
+    5520.25,
+    6383.45,
+    7095.14,
+    7548.9,
+    8134.14,
+    8680.18,
+    9524.64,
+    9875.52,
+    10954.63,
+    13794.41,
+    17471.39,
+    21609.21,
+    23832.64,
 ]
 diskann_recall = [
-    82.11,
-    84.57,
-    86.45,
-    88,
-    89.04,
-    90.08,
-    91.75,
-    92.76,
-    93.7,
-    94.52,
-    95.2,
-    96.29,
-    96.99,
+    79,
+    81.04,
+    82.68,
+    84.03,
+    85.24,
+    86.29,
+    87.34,
+    88.17,
+    89.26,
+    91.46,
+    93.14,
+    94.22,
+    94.78,
 ]
 
 
@@ -162,10 +164,10 @@ plt.plot(diskhivf_lacency3, diskhivf_recall3, marker='o', label='DiskHivf')
 #plt.plot(diskhivf_lacency2, diskhivf_recall2, marker='o', label='DiskHivf2')
 #plt.plot(diskhivf_lacency, diskhivf_recall, marker='o', label='DiskHivf')
 plt.plot(diskann_lacency, diskann_recall, marker='o', label='Diskann')
-plt.plot(starling_lacency, starling_recall, marker='o', label='starling', color='red')
+#plt.plot(starling_lacency, starling_recall, marker='o', label='starling', color='red')
 
 # 添加标题和标签
-plt.title('bigann1B 1-recall@1 vs. Lacency')
+plt.title('deep1b 1-recall@1 vs. Lacency')
 plt.xlabel('Lacency')
 plt.ylabel('1-recall@1')
 
