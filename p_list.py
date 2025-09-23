@@ -18,7 +18,7 @@ if __name__ == "__main__":
     percent = args.percent
     '''
     percent = 99
-    up = 5
+    up = 20
     rank = []
     dis = []
     rank99 = []

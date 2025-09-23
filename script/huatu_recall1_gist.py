@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 # DiskHivf 数据
-diskhivf_lacency2 = [
+diskhivf_lacency = [
     7215.78,
     10498.4,
     17337.4,
@@ -11,7 +11,7 @@ diskhivf_lacency2 = [
     65369.5,
     77807,
 ]
-diskhivf_recall2 = [
+diskhivf_recall = [
     84.500000,
     90.199997,
     93.900002,
@@ -22,62 +22,40 @@ diskhivf_recall2 = [
     99.400002,
 ]
 
-# DiskHivf 数据
-diskhivf_lacency = [
-    6799.07,
-    11183.3,
-    14797,
-    18065.5,
-    21652.1,
-    26830.8,
-    32489.9,
-    37548.2,
-    42773.1,
-    49330.1,
-]
-diskhivf_recall = [
-    88.7000,
-    93.5000,
-    94.5000,
-    94.9000,
-    95.3000,
-    95.9000,
-    96.7000,
-    97.8000,
-    98.0000,
-    98.3000,
-]
+
 
 # Diskann 数据
 diskann_lacency = [
-    6245.67,
-    6941.42,
-    10004.59,
-    13170.83,
-    16166.05,
-    19304.59,
-    22848.32,
-    25366.12,
-    31543.04,
-    37355.37,
-    44434.18,
-    49618.37,
-    62587.83,
+    9109.42,
+    11246.08,
+    13373.37,
+    15537.45,
+    17653.65,
+    19812.22,
+    21918.56,
+    24126.96,
+    35064.65,
+    46217.3,
+    57408.82,
+    68670.06,
+    80037.94,
+    91199.13,
 ]
 diskann_recall = [
     80.6,
-    82.3,
-    87.5,
-    90,
-    92.3,
-    93.6,
+    83.9,
+    87.4,
+    89.4,
+    91.7,
+    92.6,
+    93.7,
     94.5,
-    95.1,
-    96.4,
-    97.6,
-    98.2,
+    96.8,
+    97.4,
+    97.8,
+    98.4,
     98.9,
-    99.5,
+    99.2,
 ]
 
 # spann 数据
@@ -105,9 +83,10 @@ spann_recall = [
 
 # 创建折线图
 plt.figure(figsize=(10, 6))
-plt.plot(diskhivf_lacency2, diskhivf_recall2, marker='o', label='DiskHivf')
+plt.plot(diskhivf_lacency, diskhivf_recall, marker='o', label='DiskHivf')
 #plt.plot(diskhivf_lacency, diskhivf_recall, marker='o', label='DiskHivf')
 plt.plot(diskann_lacency, diskann_recall, marker='o', label='Diskann')
+# plt.plot(diskann_lacency2, diskann_recall2, marker='o', label='Diskann2')
 plt.plot(spann_lacency, spann_recall, marker='o', label='spann')
 
 # 添加标题和标签

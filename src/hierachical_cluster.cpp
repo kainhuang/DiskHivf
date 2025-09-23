@@ -677,7 +677,9 @@ namespace disk_hivf {
                         m_first2second_cells.size() * sizeof(DataIndex));
         if (!outputFile) {
             std::cerr << "Error writing m_first2second_cells to file: " 
-                << index_file_name << std::endl;
+                << index_file_name 
+                << "sizeof(DataIndex)"
+                << sizeof(DataIndex) << std::endl;
             return -1;
         }
 

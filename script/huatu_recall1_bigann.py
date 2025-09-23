@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 # DiskHivf 数据
-diskhivf_lacency3 = [
+diskhivf_lacency = [
     4576.65,
     5452.09,
     6297.79,
@@ -15,7 +15,7 @@ diskhivf_lacency3 = [
     21790.1,
 
 ]
-diskhivf_recall3 = [
+diskhivf_recall = [
     88.589996,
     91.599998,
     94.269997,
@@ -27,62 +27,6 @@ diskhivf_recall3 = [
     98.519997,
     98.989998,
     99.050003,
-]
-
-# DiskHivf 数据
-diskhivf_lacency2 = [
-    5890.81,
-    7442.84,
-    8460.9,
-    9327.11,
-    9901.89,
-    11283.5,
-    12681.6,
-    15355.2,
-    16403.1,
-    17742.6,
-    18924,
-]
-diskhivf_recall2 = [
-    92.900002,
-    95.730003,
-    96.830002,
-    97.269997,
-    97.410004,
-    97.940002,
-    98.250000,
-    98.739998,
-    98.919998,
-    99.089996,
-    99.239998,
-]
-
-# DiskHivf 数据
-diskhivf_lacency = [
-    4009.9,
-    5514.38,
-    6411.43,
-    7125.62,
-    7766.27,
-    9087.5,
-    10437.3,
-    13314.3,
-    14640,
-    15867.6,
-    17396.2,
-]
-diskhivf_recall = [
-    88.1900,
-    92.5700,
-    93.9600,
-    94.5300,
-    94.8600,
-    95.6600,
-    96.4000,
-    97.2000,
-    97.5400,
-    97.7800,
-    98.0100,
 ]
 
 # Diskann 数据
@@ -156,13 +100,43 @@ starling_recall = [
     98.91,
 ]
 
+
+# spann 数据
+spann_lacency = [
+    2993,
+    3493,
+    3991,
+    4989,
+    5986,
+    7981,
+    9976,
+    11970,
+    13964,
+    19945,
+]
+
+spann_recall = [
+    83.12,
+    84.8,
+    86.26,
+    88.3,
+    89.86,
+    92.23,
+    93.76,
+    94.71,
+    95.47,
+    96.96,
+]
+
+
 # 创建折线图
 plt.figure(figsize=(10, 6))
-plt.plot(diskhivf_lacency3, diskhivf_recall3, marker='o', label='DiskHivf')
+plt.plot(diskhivf_lacency, diskhivf_recall, marker='o', label='DiskHivf')
 #plt.plot(diskhivf_lacency2, diskhivf_recall2, marker='o', label='DiskHivf2')
 #plt.plot(diskhivf_lacency, diskhivf_recall, marker='o', label='DiskHivf')
 plt.plot(diskann_lacency, diskann_recall, marker='o', label='Diskann')
 plt.plot(starling_lacency, starling_recall, marker='o', label='starling', color='red')
+plt.plot(spann_lacency, spann_recall, marker='o', label='SPANN')
 
 # 添加标题和标签
 plt.title('bigann1B 1-recall@1 vs. Lacency')
