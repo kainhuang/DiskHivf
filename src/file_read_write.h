@@ -13,6 +13,9 @@
 #include <omp.h>
 #include <thread>
 #include <unordered_map>
+#include <unistd.h>
+#include <fcntl.h>
+#include <cerrno>
 
 namespace disk_hivf {
     enum class FileType {
@@ -244,7 +247,8 @@ namespace disk_hivf {
             file_dir:文件目录,如果不存在则创建目录
             file_num:文件个数
             */
-            FileReadWriter(const std::string & file_dir, Int file_num, Int is_disk = 1);
+            FileReadWriter(const std::string & file_dir, Int file_num, Int is_disk = 1,
+                           bool use_pread = true, bool use_direct_io = false);
 
             ~FileReadWriter();
 
@@ -317,6 +321,52 @@ namespace disk_hivf {
                 }
             }
 
+            // pread方式读取数据，线程安全，无需加锁
+            template<typename T>
+            Int pread_data(Int file_id, Int offset, Uint len, T* data) {
+                if (file_id < 0 || file_id >= file_num_) {
+                    std::cerr << "pread_data err file_id=" << file_id
+                        << " offset=" << offset << " len=" << len << std::endl;
+                    return -1;
+                }
+                if (file_id >= (Int)fds_.size() || fds_[file_id] < 0) {
+                    std::cerr << "pread_data err: fd not available for file_id=" << file_id << std::endl;
+                    return -1;
+                }
+                int fd = fds_[file_id];
+                size_t total_bytes = len * sizeof(T);
+                size_t bytes_read = 0;
+                char* buf = reinterpret_cast<char*>(data);
+                off_t cur_offset = static_cast<off_t>(offset);
+
+                while (bytes_read < total_bytes) {
+                    ssize_t ret = ::pread(fd, buf + bytes_read, total_bytes - bytes_read, cur_offset + bytes_read);
+                    if (ret < 0) {
+                        if (errno == EINTR) {
+                            continue; // 被信号中断，重试
+                        }
+                        std::cerr << "pread_data fail file_id=" << file_id
+                            << " offset=" << offset << " len=" << len
+                            << " errno=" << errno << std::endl;
+                        return -1;
+                    }
+                    if (ret == 0) {
+                        // EOF
+                        break;
+                    }
+                    bytes_read += static_cast<size_t>(ret);
+                }
+                return static_cast<Int>(bytes_read);
+            }
+
+            // 获取文件描述符（用于后续io_uring等扩展）
+            int get_fd(Int file_id) const {
+                if (file_id < 0 || file_id >= (Int)fds_.size()) {
+                    return -1;
+                }
+                return fds_[file_id];
+            }
+
             template<typename T>
             Int read(Int file_id, Int offset, Uint len, T* data) {
                 if (file_id < 0 || file_id >= file_num_) {
@@ -324,6 +374,13 @@ namespace disk_hivf {
                         << " offset=" << offset << " len=" << len << std::endl;
                     return -1; // Invalid file_id
                 }
+
+                // 如果启用pread且fd可用，走pread路径（无锁）
+                if (use_pread_ && file_id < (Int)fds_.size() && fds_[file_id] >= 0) {
+                    return pread_data(file_id, offset, len, data);
+                }
+
+                // 回退到原有fstream + 锁路径
                 std::thread::id main_id = std::this_thread::get_id();
                 //std::cout << "Main Thread ID: " << main_id << " file id" << file_id << std::endl;
                 std::string key = num2str(main_id) + "_" + num2str(file_id);
@@ -385,6 +442,9 @@ namespace disk_hivf {
             std::unordered_map<std::string, std::shared_ptr<std::fstream>> fs_cache_;
             std::mutex fs_cache_mutex_;
             std::vector<Int> offsets_;
+            std::vector<int> fds_;          // pread使用的文件描述符数组
+            bool use_pread_;                // 是否使用pread替代fstream
+            bool use_direct_io_;            // 是否使用O_DIRECT
     };
 
 }

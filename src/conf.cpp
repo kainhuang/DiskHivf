@@ -29,10 +29,10 @@ namespace disk_hivf {
         m_thread_num = 1;
         m_read_index_file_thread_num = 5;
         m_is_async_read = 1;
+        m_io_thread_num = 8;
         m_build_index_num = -1;
         m_train_data_num = -1;
         m_use_uint8_data = 0;
-        m_io_thread_num = 0;
         m_debug_log = 0;
         m_dynamic_prune_switch = 0;
         m_dynamic_prune_a = 0;
@@ -43,6 +43,11 @@ namespace disk_hivf {
         m_cache_segment = 0;
         m_build_search_topk = 1;
         m_build_search_first_center_id_diff = 10;
+        m_use_pread = 1;
+        m_use_direct_io = 0;
+        m_prefetch_bytes_limit = 524288;
+        m_block_split_threshold = 262144;
+        m_min_sub_task_size = 65536;
     }
 
     int Conf::Init(const char * configFile) {
@@ -110,6 +115,21 @@ namespace disk_hivf {
             }
             if (pool.find("build_search_first_center_id_diff") != pool.end()) {
                 m_build_search_first_center_id_diff = str2num<Int>(pool["build_search_first_center_id_diff"]);
+            }
+            if (pool.find("use_pread") != pool.end()) {
+                m_use_pread = str2num<Int>(pool["use_pread"]);
+            }
+            if (pool.find("use_direct_io") != pool.end()) {
+                m_use_direct_io = str2num<Int>(pool["use_direct_io"]);
+            }
+            if (pool.find("prefetch_bytes_limit") != pool.end()) {
+                m_prefetch_bytes_limit = str2num<Int>(pool["prefetch_bytes_limit"]);
+            }
+            if (pool.find("block_split_threshold") != pool.end()) {
+                m_block_split_threshold = str2num<Int>(pool["block_split_threshold"]);
+            }
+            if (pool.find("min_sub_task_size") != pool.end()) {
+                m_min_sub_task_size = str2num<Int>(pool["min_sub_task_size"]);
             }
         } catch (...) {
             fprintf(stderr, "Init conf fail!!!!!!!!");

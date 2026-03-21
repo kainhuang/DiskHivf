@@ -18,6 +18,31 @@
 #include "lru_cache.h"
 
 namespace disk_hivf {
+
+    // 异步IO子任务结构体
+    struct IOSubTask {
+        Int file_id;
+        Int offset;
+        Int len;       // 字节数
+        char* buffer;
+
+        IOSubTask(Int fid, Int off, Int l, char* buf)
+            : file_id(fid), offset(off), len(l), buffer(buf) {}
+    };
+
+    // 预读窗口配置
+    struct PrefetchConfig {
+        Int bytes_limit;   // 预读字节数上限
+        Int min_blocks;    // 最小窗口block数
+        Int max_blocks;    // 最大窗口block数
+
+        PrefetchConfig(Int bl, Int minb, Int maxb)
+            : bytes_limit(bl), min_blocks(minb), max_blocks(maxb) {}
+
+        PrefetchConfig()
+            : bytes_limit(524288), min_blocks(2), max_blocks(8) {}
+    };
+
     struct DataIndex{
         DataIndex() {
             m_offset = std::numeric_limits<Int>::max();
@@ -202,6 +227,22 @@ namespace disk_hivf {
             }
 
             std::future<std::vector<char>> read_file_async(Int file_id, Int offset, Int len);
+
+            // 新版异步读取接口：传入预分配buffer，返回读取字节数
+            std::future<Int> read_file_async_v2(Int file_id, Int offset, Int len, char* buffer);
+
+            // 新版异步读取接口（带大block拆分）：返回多个子任务的future
+            std::vector<std::future<Int>> read_file_async_v2_split(
+                Int file_id, Int offset, Int total_len, char* buffer);
+
+            // 拆分大block为多个IO子任务
+            std::vector<IOSubTask> split_block_io(
+                Int file_id, Int offset, Int total_len, char* buffer, Int available_workers);
+
+            // 计算自适应预读窗口大小
+            Int calc_prefetch_window(
+                const std::vector<SearchingBlock>& search_blocks,
+                Int start_idx, const PrefetchConfig& config);
 
             Int init_edge_info();
             
@@ -391,6 +432,9 @@ namespace disk_hivf {
             Int m_data_unit_size;
 
             ThreadPool m_io_thread_pool;
+
+            Int m_block_split_threshold;    // 大block拆分阈值
+            Int m_min_sub_task_size;        // 子任务最小大小
 
             float m_build_index_loss;
 

@@ -10,11 +10,21 @@
 #include <unistd.h>
 
 namespace disk_hivf {
-    FileReadWriter::FileReadWriter(const std::string & file_dir, Int file_num, Int is_disk):
-        file_dir_(file_dir), file_num_(file_num), is_disk_(is_disk), offsets_(file_num, 0) {
+    FileReadWriter::FileReadWriter(const std::string & file_dir, Int file_num, Int is_disk,
+                                   bool use_pread, bool use_direct_io):
+        file_dir_(file_dir), file_num_(file_num), is_disk_(is_disk), offsets_(file_num, 0),
+        use_pread_(use_pread), use_direct_io_(use_direct_io) {
     }
 
     FileReadWriter::~FileReadWriter() {
+        // 关闭pread使用的文件描述符
+        for (size_t i = 0; i < fds_.size(); ++i) {
+            if (fds_[i] >= 0) {
+                ::close(fds_[i]);
+                fds_[i] = -1;
+            }
+        }
+        // 关闭fstream
         for (auto & file_stream : file_streams_) {
             if (file_stream && file_stream->is_open()) {
                 file_stream->close();
@@ -66,6 +76,28 @@ namespace disk_hivf {
                     }
                 }
             }
+
+            // 使用pread时，通过open()系统调用打开文件描述符
+            if (is_disk_ && use_pread_) {
+                fds_.resize(file_num_, -1);
+                for (Int i = 0; i < file_num_; ++i) {
+                    std::string file_path = file_dir_ + "/file_" + std::to_string(i) + ".dat";
+                    int flags = O_RDONLY;
+                    if (use_direct_io_) {
+                        flags |= O_DIRECT;
+                    }
+                    int fd = ::open(file_path.c_str(), flags);
+                    if (fd < 0) {
+                        std::cerr << "FileReadWriter::Init open() fail file_path=" << file_path
+                            << " errno=" << errno << std::endl;
+                        return -1;
+                    }
+                    fds_[i] = fd;
+                }
+                std::cerr << "FileReadWriter::Init pread mode enabled, opened "
+                    << file_num_ << " fds" << std::endl;
+            }
+
             return 0; // Success
         } catch (const std::exception & e) {
             std::cerr << "Exception: " << e.what() << std::endl;

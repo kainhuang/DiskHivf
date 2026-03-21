@@ -44,6 +44,8 @@ testrand:./test/testrand.cpp unity.o Log.o random.o common.h
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/testrand ./test/testrand.cpp unity.o random.o
 test_thread_pool: ./test/test_thread_pool.cpp thread_pool.o
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/test_thread_pool ./test/test_thread_pool.cpp thread_pool.o $(FFLAGS)
+test_async_io: ./test/test_async_io.cpp file_read_write.h aligned_buffer.h hierachical_cluster.h common.h file_read_write.o conf.o thread_pool.o unity.o lru_cache.o hierachical_cluster.o kmeans.o matrix.o random.o
+	$(CXX) $(CFLAGS) $(INCLUDE) -o $(OUT_PATH)/test_async_io ./test/test_async_io.cpp hierachical_cluster.o kmeans.o matrix.o random.o unity.o file_read_write.o conf.o thread_pool.o lru_cache.o $(FFLAGS)
 hierachical_cluster.o: hierachical_cluster.cpp hierachical_cluster.h matrix.o kmeans.o random.o unity.o file_read_write.o conf.o lru_cache.o
 	$(CXX) $(CFLAGS) $(INCLUDE) -c hierachical_cluster.cpp kmeans.o matrix.o random.o unity.o file_read_write.o conf.o lru_cache.o $(FFLAGS)
 file_read_write.o: file_read_write.cpp file_read_write.h unity.o common.h

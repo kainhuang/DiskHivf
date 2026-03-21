@@ -30,11 +30,20 @@ namespace disk_hivf {
         m_alpha(m_alpha_data.data(), conf.m_first_cluster_num, conf.m_second_cluster_num),
         // m_first_min_stationary_dist(conf.m_first_cluster_num),
         m_first2second_cells(conf.m_first_cluster_num * conf.m_second_cluster_num),
-        m_file_read_writer(conf.m_index_dir, conf.m_index_file_num, conf.m_is_disk),
+        m_file_read_writer(conf.m_index_dir, conf.m_index_file_num, conf.m_is_disk,
+                          conf.m_use_pread != 0, conf.m_use_direct_io != 0),
         m_file_tot_offset(m_conf.m_index_file_num + 1, 0),
         m_file_mutexs(m_conf.m_index_file_num),
-        m_io_thread_pool(m_conf.m_io_thread_num),
+        m_io_thread_pool(m_conf.m_is_async_read ? std::max(m_conf.m_io_thread_num, (Int)1) : 0),
+        m_block_split_threshold(conf.m_block_split_threshold),
+        m_min_sub_task_size(conf.m_min_sub_task_size),
         m_build_index_loss(0.0) {
+        
+        // 参数校验：异步模式开启但线程数<=0时输出WARNING
+        if (m_conf.m_is_async_read && m_conf.m_io_thread_num <= 0) {
+            std::cerr << "WARNING: is_async_read=1 but io_thread_num=" << m_conf.m_io_thread_num
+                << ", auto corrected to 1" << std::endl;
+        }
         
         if (m_conf.m_use_uint8_data) {
             m_data_unit_size = sizeof(uint8_t);
@@ -912,6 +921,102 @@ namespace disk_hivf {
         
     }
 
+    // 新版异步读取：传入预分配buffer，返回读取字节数
+    std::future<Int> HierachicalCluster::read_file_async_v2(
+            Int file_id, Int offset, Int len, char* buffer) {
+        return m_io_thread_pool.enqueue(
+            [this, file_id, offset, len, buffer]() -> Int {
+                Int ret = m_file_read_writer.pread_data(file_id, offset, (Uint)len, buffer);
+                if (ret < 0) {
+                    std::cerr << "read_file_async_v2 pread fail file_id=" << file_id
+                        << " offset=" << offset << " len=" << len << std::endl;
+                }
+                return ret;
+            });
+    }
+
+    // 拆分大block为多个IO子任务
+    std::vector<IOSubTask> HierachicalCluster::split_block_io(
+            Int file_id, Int offset, Int total_len, char* buffer, Int available_workers) {
+        std::vector<IOSubTask> tasks;
+        // 条件判断：总大小 > 拆分阈值 && 可用Worker > 1 && 拆分后子任务 >= 最小大小
+        if (total_len > m_block_split_threshold
+            && available_workers > 1
+            && total_len / available_workers >= m_min_sub_task_size) {
+            
+            Int num_splits = std::min((Int)available_workers, total_len / m_min_sub_task_size);
+            num_splits = std::max(num_splits, (Int)1);
+            Int sub_len = total_len / num_splits;
+            Int remainder = total_len % num_splits;
+            
+            Int cur_offset = offset;
+            char* cur_buf = buffer;
+            for (Int i = 0; i < num_splits; ++i) {
+                Int cur_len = sub_len + (i < remainder ? 1 : 0);
+                tasks.push_back(IOSubTask(file_id, cur_offset, cur_len, cur_buf));
+                cur_offset += cur_len;
+                cur_buf += cur_len;
+            }
+        } else {
+            // 不拆分，返回单任务
+            tasks.push_back(IOSubTask(file_id, offset, total_len, buffer));
+        }
+        return tasks;
+    }
+
+    // 带拆分的异步读取
+    std::vector<std::future<Int>> HierachicalCluster::read_file_async_v2_split(
+            Int file_id, Int offset, Int total_len, char* buffer) {
+        // 获取线程池中的可用worker数（简单估算为线程池大小）
+        Int available_workers = std::max(m_conf.m_io_thread_num, (Int)1);
+        std::vector<IOSubTask> sub_tasks = split_block_io(
+            file_id, offset, total_len, buffer, available_workers);
+        
+        std::vector<std::future<Int>> futures;
+        futures.reserve(sub_tasks.size());
+        for (size_t i = 0; i < sub_tasks.size(); ++i) {
+            Int sub_file_id = sub_tasks[i].file_id;
+            Int sub_offset = sub_tasks[i].offset;
+            Int sub_len = sub_tasks[i].len;
+            char* sub_buffer = sub_tasks[i].buffer;
+            futures.push_back(m_io_thread_pool.enqueue(
+                [this, sub_file_id, sub_offset, sub_len, sub_buffer]() -> Int {
+                    Int ret = m_file_read_writer.pread_data(
+                        sub_file_id, sub_offset, (Uint)sub_len, sub_buffer);
+                    if (ret < 0) {
+                        std::cerr << "read_file_async_v2_split pread fail file_id="
+                            << sub_file_id << " offset=" << sub_offset
+                            << " len=" << sub_len << std::endl;
+                    }
+                    return ret;
+                }));
+        }
+        return futures;
+    }
+
+    // 计算自适应预读窗口大小
+    Int HierachicalCluster::calc_prefetch_window(
+            const std::vector<SearchingBlock>& search_blocks,
+            Int start_idx, const PrefetchConfig& config) {
+        Int window = 0;
+        Int total_bytes = 0;
+        Int block_count = (Int)search_blocks.size();
+
+        for (Int i = start_idx; i < block_count && window < config.max_blocks; ++i) {
+            Int block_bytes = search_blocks[i].m_max_offset - search_blocks[i].m_offset;
+            total_bytes += block_bytes;
+            window++;
+            // 满足字节数上限且达到最小block数后停止
+            if (total_bytes >= config.bytes_limit && window >= config.min_blocks) {
+                break;
+            }
+        }
+        // 确保至少min_blocks（但不超过实际可用block数）
+        window = std::max(window, std::min(config.min_blocks, block_count - start_idx));
+        window = std::min(window, block_count - start_idx);
+        return std::max(window, (Int)1);
+    }
+
     Int HierachicalCluster::search(const Eigen::Ref<const Eigen::RowVectorXf> & feature, Int topk,
         std::vector<std::pair<FeatureId, float>> & result, Int use_cache) {
         Eigen::setNbThreads(1);
@@ -1008,24 +1113,41 @@ namespace disk_hivf {
         block_features_data.reserve(200 * (m_conf.m_dim * sizeof(float) + sizeof(FeatureId)));
         std::vector<FeatureId> block_item_ids;
 
+        // === 滑动窗口预读模式 ===
+        // 为异步模式预分配 buffer pool 和 future 数组
+        PrefetchConfig prefetch_config(
+            m_conf.m_prefetch_bytes_limit, 2, 8);
+        Int prefetch_window = 0;
+        std::vector<std::vector<char>> async_buffers;
+        // 每个slot的sub_futures列表
+        std::vector<std::vector<std::future<Int>>> slot_futures;
+        // 每个slot对应的read_len
+        std::vector<Int> slot_read_lens;
+        Int next_submit_id = 0;  // 下一个要提交的block_id
 
-        std::vector<std::future<std::vector<char>>> future_ptrs;
-        if (m_conf.m_is_async_read) {
-            for (size_t block_id = 0; block_id < search_blocks.size(); block_id++) {
-                auto & block = search_blocks[block_id];
-                if (searched_num >= m_conf.m_search_neighbors) {
-                    break;
-                }
-                if (searched_block_num >= m_conf.m_search_block_num) {
-                    break;
-                }
+        if (m_conf.m_is_async_read && m_conf.m_is_disk && !search_blocks.empty()) {
+            prefetch_window = calc_prefetch_window(search_blocks, 0, prefetch_config);
+            async_buffers.resize(prefetch_window);
+            slot_futures.resize(prefetch_window);
+            slot_read_lens.resize(prefetch_window, 0);
+
+            // 初始预提交前 prefetch_window 个 block
+            for (Int i = 0; i < prefetch_window && i < (Int)search_blocks.size(); ++i) {
+                auto & block = search_blocks[i];
+                if (searched_num >= m_conf.m_search_neighbors) break;
+                if (searched_block_num >= m_conf.m_search_block_num) break;
                 Int len = block.m_max_offset - block.m_offset;
-                future_ptrs.push_back(read_file_async(block.m_file_id, block.m_offset, len));
+                Int slot = i % prefetch_window;
+                async_buffers[slot].resize(len);
+                slot_read_lens[slot] = len;
+                slot_futures[slot] = read_file_async_v2_split(
+                    block.m_file_id, block.m_offset, len, async_buffers[slot].data());
                 searched_num += len / item_size;
                 searched_block_num++;
+                next_submit_id = i + 1;
             }
         }
-        //std::cout << "aadsdfdfdfd" << std::endl;
+
         searched_num = 0;
         searched_block_num = 0;
         std::vector<char> uint8_tmp_data;
@@ -1050,10 +1172,31 @@ namespace disk_hivf {
             block_item_ids.resize(item_num);
             m_time_stat[7] += ts2.TimeCost();
             if (m_conf.m_is_disk) {
-                if (m_conf.m_is_async_read) {
-                    //std::cout << "block_features_data_shared_ptr" << std::endl;
-                    block_features_data = future_ptrs[block_id].get();
-                    block_features_data_ptr = block_features_data.data();
+                if (m_conf.m_is_async_read && prefetch_window > 0) {
+                    // 滑动窗口消费：等待当前slot的所有子任务完成
+                    Int slot = (Int)block_id % prefetch_window;
+                    for (size_t fi = 0; fi < slot_futures[slot].size(); ++fi) {
+                        Int bytes = slot_futures[slot][fi].get();
+                        if (bytes < 0) {
+                            std::cerr << "async read sub-task failed block_id=" << block_id << std::endl;
+                        }
+                    }
+                    slot_futures[slot].clear();
+                    block_features_data_ptr = async_buffers[slot].data();
+
+                    // 预提交下一个block（如果还有的话）
+                    if (next_submit_id < (Int)search_blocks.size()) {
+                        auto & next_block = search_blocks[next_submit_id];
+                        Int next_len = next_block.m_max_offset - next_block.m_offset;
+                        Int next_slot = next_submit_id % prefetch_window;
+                        // 复用buffer（resize利用capacity只增不减）
+                        async_buffers[next_slot].resize(next_len);
+                        slot_read_lens[next_slot] = next_len;
+                        slot_futures[next_slot] = read_file_async_v2_split(
+                            next_block.m_file_id, next_block.m_offset, next_len,
+                            async_buffers[next_slot].data());
+                        next_submit_id++;
+                    }
                 } else {
                     ret = m_file_read_writer.read(block.m_file_id, block.m_offset, read_len, block_features_data);
                     block_features_data_ptr = block_features_data.data();
@@ -1070,6 +1213,13 @@ namespace disk_hivf {
                     m_feature_ids.data() + tot_offset,
                     item_num * sizeof(FeatureId));
             } else {
+                // 异步模式下数据在async_buffers中，需要拷贝到block_features_data用于后续处理
+                if (m_conf.m_is_async_read && m_conf.m_is_disk && prefetch_window > 0) {
+                    // 先将数据从async_buffer拷贝到block_features_data以支持后续memmove
+                    block_features_data.resize(read_len);
+                    memcpy(block_features_data.data(), block_features_data_ptr, read_len);
+                    block_features_data_ptr = block_features_data.data();
+                }
                 for (Int i = 0; i < item_num; i++) {
                     FeatureId item_id = 
                         *(reinterpret_cast<FeatureId*>(block_features_data_ptr + (i * item_size)));
@@ -1128,6 +1278,18 @@ namespace disk_hivf {
                 }
             }
             m_time_stat[12] += ts2.TimeCost();
+        }
+
+        // dynamic_prune后，等待已提交但未消费的future完成
+        if (m_conf.m_is_async_read && prefetch_window > 0) {
+            for (Int slot = 0; slot < prefetch_window; ++slot) {
+                for (size_t fi = 0; fi < slot_futures[slot].size(); ++fi) {
+                    if (slot_futures[slot][fi].valid()) {
+                        slot_futures[slot][fi].get();
+                    }
+                }
+                slot_futures[slot].clear();
+            }
         }
         m_time_stat[4] += ts.TimeCost();
         //std::cout << "CUT\t" << cut << "\tsearched_num\t" << searched_num << std::endl;

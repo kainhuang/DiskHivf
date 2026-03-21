@@ -48,5 +48,10 @@ namespace disk_hivf {
             Int m_cache_segment;
             Int m_build_search_topk;
             Int m_build_search_first_center_id_diff;
+            Int m_use_pread;               // 是否使用pread替代fstream读取，默认1
+            Int m_use_direct_io;           // 是否使用O_DIRECT模式，默认0
+            Int m_prefetch_bytes_limit;    // 预读窗口字节数上限，默认512KB
+            Int m_block_split_threshold;   // 大block拆分阈值，默认256KB
+            Int m_min_sub_task_size;       // 拆分后子任务最小大小，默认64KB
     };
 }
