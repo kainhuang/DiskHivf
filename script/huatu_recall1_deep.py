@@ -1,19 +1,19 @@
 import matplotlib.pyplot as plt
 
 # DiskHivf 数据
-diskhivf_lacency = [
-    4008.31,
-    4463.6,
-    5361.76,
-    6291.57,
-    7182.71,
-    7916.75,
-    8566.72,
-    9726.5,
-    11179.7,
-    13460.5,
-    15319.7,
-    17539.7,
+diskhivf_latency = [
+    4.00831,
+    4.4636,
+    5.36176,
+    6.29157,
+    7.18271,
+    7.91675,
+    8.56672,
+    9.7265,
+    11.1797,
+    13.4605,
+    15.3197,
+    17.5397,
 
 ]
 diskhivf_recall = [
@@ -32,20 +32,20 @@ diskhivf_recall = [
 ]
 
 # Diskann 数据
-diskann_lacency = [
-    5520.25,
-    6383.45,
-    7095.14,
-    7548.9,
-    8134.14,
-    8680.18,
-    9524.64,
-    9875.52,
-    10954.63,
-    13794.41,
-    17471.39,
-    21609.21,
-    23832.64,
+diskann_latency = [
+    5.52025,
+    6.38345,
+    7.09514,
+    7.5489,
+    8.13414,
+    8.68018,
+    9.52464,
+    9.87552,
+    10.95463,
+    13.79441,
+    17.47139,
+    21.60921,
+    23.83264,
 ]
 diskann_recall = [
     79,
@@ -65,20 +65,20 @@ diskann_recall = [
 
 
 # starling 数据
-starling_lacency = [
-    17898.19,
-    18049.3,
-    19606.59,
-    21137.15,
-    22667.96,
-    24187.18,
-    25711.63,
-    27259.09,
-    30329.35,
-    33427.43,
-    36538.6,
-    39651.5,
-    42788.34,
+starling_latency = [
+    17.89819,
+    18.0493,
+    19.60659,
+    21.13715,
+    22.66796,
+    24.18718,
+    25.71163,
+    27.25909,
+    30.32935,
+    33.42743,
+    36.5386,
+    39.6515,
+    42.78834,
 ]
 starling_recall = [
     74.21,
@@ -98,15 +98,15 @@ starling_recall = [
 
 # 创建折线图
 plt.figure(figsize=(10, 6))
-plt.plot(diskhivf_lacency, diskhivf_recall, marker='o', label='DiskHivf')
-#plt.plot(diskhivf_lacency2, diskhivf_recall2, marker='o', label='DiskHivf2')
-#plt.plot(diskhivf_lacency, diskhivf_recall, marker='o', label='DiskHivf')
-plt.plot(diskann_lacency, diskann_recall, marker='o', label='Diskann')
-plt.plot(starling_lacency, starling_recall, marker='o', label='starling', color='red')
+plt.plot(diskhivf_latency, diskhivf_recall, marker='o', label='DiskHivf')
+#plt.plot(diskhivf_latency2, diskhivf_recall2, marker='o', label='DiskHivf2')
+#plt.plot(diskhivf_latency, diskhivf_recall, marker='o', label='DiskHivf')
+plt.plot(diskann_latency, diskann_recall, marker='o', label='Diskann')
+plt.plot(starling_latency, starling_recall, marker='o', label='starling', color='red')
 
 # 添加标题和标签
-plt.title('deep1b 1-recall@1 vs. Lacency')
-plt.xlabel('Lacency')
+plt.title('deep1b 1-recall@1 vs. Latency')
+plt.xlabel('Latency (ms)')
 plt.ylabel('1-recall@1')
 
 # 显示图例

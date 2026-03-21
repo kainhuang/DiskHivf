@@ -171,6 +171,10 @@ int main(int argc, char* argv[]) {
     //std::cout << groundtruth << std::endl;
     std::cout << "groundtruth numVecs=" << numVecs << " dim=" << dim << std::endl;
 
+    // 当 use_dist=0 时，gt_dist 为空，需要 resize 后才能安全构造 Eigen::Map
+    if (gt_dist.empty() && numVecs > 0 && dim > 0) {
+        gt_dist.resize(numVecs * dim, 0.0f);
+    }
     Eigen::Map<RMatrixDf> dist(gt_dist.data(), numVecs, dim);
 
     // warmup

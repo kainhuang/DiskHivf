@@ -2,17 +2,17 @@ import matplotlib.pyplot as plt
 
 # DiskHivf 数据
 diskhivf_lacency = [
-    4147.02,
-    4691.09,
-    5577.99,
-    7548.45,
-    8715.49,
-    9791.35,
-    11170.9,
-    13754.1,
-    16754.8,
-    19134,
-    21936,
+    4.14702,
+    4.69109,
+    5.57799,
+    7.54845,
+    8.71549,
+    9.79135,
+    11.1709,
+    13.7541,
+    16.7548,
+    19.134,
+    21.936,
 ]
 diskhivf_recall = [
     68.711998,
@@ -30,17 +30,17 @@ diskhivf_recall = [
 
 # Diskann 数据
 diskann_lacency = [
-    4227.89,
-    5305.72,
-    6421.65,
-    7332.24,
-    8899.6,
-    11089.17,
-    13042.74,
-    15745.73,
-    20490.54,
-    22453.62,
-    25390.27,
+    4.22789,
+    5.30572,
+    6.42165,
+    7.33224,
+    8.8996,
+    11.08917,
+    13.04274,
+    15.74573,
+    20.49054,
+    22.45362,
+    25.39027,
 
 ]
 diskann_recall = [
@@ -60,16 +60,16 @@ diskann_recall = [
 
 # starling 数据
 starling_lacency = [
-    18810.18,
-    21131.59,
-    22656.48,
-    24180.94,
-    25704.04,
-    27252.42,
-    30323.36,
-    33422.99,
-    36531.91,
-    39651.74,
+    18.81018,
+    21.13159,
+    22.65648,
+    24.18094,
+    25.70404,
+    27.25242,
+    30.32336,
+    33.42299,
+    36.53191,
+    39.65174,
 ]
 starling_recall = [
     72.65,
@@ -93,8 +93,8 @@ plt.plot(diskann_lacency, diskann_recall, marker='o', label='Diskann')
 plt.plot(starling_lacency, starling_recall, marker='o', label='starling', color='red')
 
 # 添加标题和标签
-plt.title('bigann1B 10-recall@10 vs. Lacency')
-plt.xlabel('Lacency')
+plt.title('deep1B 10-recall@10 vs. Latency')
+plt.xlabel('Latency (ms)')
 plt.ylabel('10-recall@10')
 
 # 显示图例

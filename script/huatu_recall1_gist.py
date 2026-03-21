@@ -1,15 +1,15 @@
 import matplotlib.pyplot as plt
 
-# DiskHivf 数据
+# DiskHivf 数据 (单位: 毫秒)
 diskhivf_lacency = [
-    7215.78,
-    10498.4,
-    17337.4,
-    23822.2,
-    33856.3,
-    49276.6,
-    65369.5,
-    77807,
+    7.21578,
+    10.4984,
+    17.3374,
+    23.8222,
+    33.8563,
+    49.2766,
+    65.3695,
+    77.807,
 ]
 diskhivf_recall = [
     84.500000,
@@ -24,22 +24,22 @@ diskhivf_recall = [
 
 
 
-# Diskann 数据
+# Diskann 数据 (单位: 毫秒)
 diskann_lacency = [
-    9109.42,
-    11246.08,
-    13373.37,
-    15537.45,
-    17653.65,
-    19812.22,
-    21918.56,
-    24126.96,
-    35064.65,
-    46217.3,
-    57408.82,
-    68670.06,
-    80037.94,
-    91199.13,
+    9.10942,
+    11.24608,
+    13.37337,
+    15.53745,
+    17.65365,
+    19.81222,
+    21.91856,
+    24.12696,
+    35.06465,
+    46.2173,
+    57.40882,
+    68.67006,
+    80.03794,
+    91.19913,
 ]
 diskann_recall = [
     80.6,
@@ -58,16 +58,16 @@ diskann_recall = [
     99.2,
 ]
 
-# spann 数据
+# spann 数据 (单位: 毫秒)
 spann_lacency = [
-    10686,
-    14076,
-    17445,
-    25697,
-    33794,
-    49362,
-    64547,
-    79477,
+    10.686,
+    14.076,
+    17.445,
+    25.697,
+    33.794,
+    49.362,
+    64.547,
+    79.477,
 ]
 spann_recall = [
     80.6,
@@ -90,8 +90,8 @@ plt.plot(diskann_lacency, diskann_recall, marker='o', label='Diskann')
 plt.plot(spann_lacency, spann_recall, marker='o', label='spann')
 
 # 添加标题和标签
-plt.title('gist 1-recall@1 vs. Lacency')
-plt.xlabel('Lacency')
+plt.title('gist 1-recall@1 vs. Latency')
+plt.xlabel('Latency (ms)')
 plt.ylabel('1-recall@1')
 
 # 显示图例

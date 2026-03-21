@@ -1,17 +1,17 @@
 import matplotlib.pyplot as plt
 
-# DiskHivf 数据
+# DiskHivf 数据 (单位: 毫秒)
 diskhivf_lacency = [
-    5994.58,
-    7198.37,
-    8215.36,
-    9031.53,
-    10568.6,
-    12171.5,
-    15265.2,
-    17017.8,
-    18594.5,
-    19869,
+    5.99458,
+    7.19837,
+    8.21536,
+    9.03153,
+    10.5686,
+    12.1715,
+    15.2652,
+    17.0178,
+    18.5945,
+    19.869,
 ]
 diskhivf_recall = [
     89.3000,
@@ -26,17 +26,17 @@ diskhivf_recall = [
     97.2300,
 ]
 
-# DiskHivf 数据
+# DiskHivf 数据 (单位: 毫秒)
 diskhivf_wo_prune_lacency = [
-    7863.97, 
-    10220.3, 
-    12633.4, 
-    15243, 
-    17163.6, 
-    19033.3, 
-    25026, 
-    26820.4, 
-    28455.7, 
+    7.86397, 
+    10.2203, 
+    12.6334, 
+    15.243, 
+    17.1636, 
+    19.0333, 
+    25.026, 
+    26.8204, 
+    28.4557, 
 ]
 diskhivf_wo_prune_recall = [
     89.911,
@@ -58,8 +58,8 @@ plt.plot(diskhivf_wo_prune_lacency, diskhivf_wo_prune_recall, marker='o', label=
 
 
 # 添加标题和标签
-plt.title('bigann1B 10-recall@10 vs. Lacency')
-plt.xlabel('Lacency')
+plt.title('bigann1B 10-recall@10 vs. Latency')
+plt.xlabel('Latency (ms)')
 plt.ylabel('10-recall@10')
 
 # 显示图例
