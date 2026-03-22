@@ -78,10 +78,10 @@ namespace disk_hivf {
             m_search_neighbors = str2num<Int>(pool["search_neighbors"]);
             m_search_block_num = str2num<Int>(pool["search_block_num"]);
             m_search_top_cut = str2num<float>(pool["search_top_cut"]);
-            m_hs_mode = str2num<float>(pool["hs_mode"]);
-            m_thread_num = str2num<float>(pool["thread_num"]);
-            m_read_index_file_thread_num = str2num<float>(pool["read_index_file_thread_num"]);
-            m_is_async_read = str2num<float>(pool["is_async_read"]);
+            m_hs_mode = str2num<Int>(pool["hs_mode"]);
+            m_thread_num = str2num<Int>(pool["thread_num"]);
+            m_read_index_file_thread_num = str2num<Int>(pool["read_index_file_thread_num"]);
+            m_is_async_read = str2num<Int>(pool["is_async_read"]);
             m_build_index_num = str2num<Int>(pool["build_index_num"]);
             m_train_data_num = str2num<Int>(pool["train_data_num"]);
             m_use_uint8_data = str2num<Int>(pool["use_uint8_data"]);

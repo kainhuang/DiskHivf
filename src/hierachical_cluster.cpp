@@ -1132,18 +1132,16 @@ namespace disk_hivf {
             slot_read_lens.resize(prefetch_window, 0);
 
             // 初始预提交前 prefetch_window 个 block
+            // ⭐ 修复：预提交阶段不做searched_num/searched_block_num的检查和累加
+            // 因为后面会被重置为0，此处的检查没有意义
             for (Int i = 0; i < prefetch_window && i < (Int)search_blocks.size(); ++i) {
                 auto & block = search_blocks[i];
-                if (searched_num >= m_conf.m_search_neighbors) break;
-                if (searched_block_num >= m_conf.m_search_block_num) break;
                 Int len = block.m_max_offset - block.m_offset;
                 Int slot = i % prefetch_window;
                 async_buffers[slot].resize(len);
                 slot_read_lens[slot] = len;
                 slot_futures[slot] = read_file_async_v2_split(
                     block.m_file_id, block.m_offset, len, async_buffers[slot].data());
-                searched_num += len / item_size;
-                searched_block_num++;
                 next_submit_id = i + 1;
             }
         }
@@ -1184,6 +1182,13 @@ namespace disk_hivf {
                     slot_futures[slot].clear();
                     block_features_data_ptr = async_buffers[slot].data();
 
+                    // ⭐ 修复：先将数据从async_buffer拷贝出来，再预提交下一个block
+                    // 避免预提交时resize同一个slot的buffer导致悬垂指针
+                    // 注意：hs_mode和非hs_mode都需要保护，因为预提交可能覆盖同一slot的buffer
+                    block_features_data.resize(read_len);
+                    memcpy(block_features_data.data(), block_features_data_ptr, read_len);
+                    block_features_data_ptr = block_features_data.data();
+
                     // 预提交下一个block（如果还有的话）
                     if (next_submit_id < (Int)search_blocks.size()) {
                         auto & next_block = search_blocks[next_submit_id];
@@ -1213,13 +1218,6 @@ namespace disk_hivf {
                     m_feature_ids.data() + tot_offset,
                     item_num * sizeof(FeatureId));
             } else {
-                // 异步模式下数据在async_buffers中，需要拷贝到block_features_data用于后续处理
-                if (m_conf.m_is_async_read && m_conf.m_is_disk && prefetch_window > 0) {
-                    // 先将数据从async_buffer拷贝到block_features_data以支持后续memmove
-                    block_features_data.resize(read_len);
-                    memcpy(block_features_data.data(), block_features_data_ptr, read_len);
-                    block_features_data_ptr = block_features_data.data();
-                }
                 for (Int i = 0; i < item_num; i++) {
                     FeatureId item_id = 
                         *(reinterpret_cast<FeatureId*>(block_features_data_ptr + (i * item_size)));
