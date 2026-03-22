@@ -1110,12 +1110,12 @@ namespace disk_hivf {
                 all_futures[i] = read_file_async_v2_split(
                     block.m_file_id, block.m_offset, len, all_buffers[i].data());
             }
-            // 总预分配内存超过50MB时输出警告
-            if (total_buffer_bytes > 50 * 1024 * 1024) {
-                std::cerr << "WARNING: async full-submit total buffer=" 
-                    << total_buffer_bytes / 1024 / 1024 << "MB for " 
-                    << block_count << " blocks" << std::endl;
-            }
+            // 总预分配内存超过50MB时输出警告（暂时关闭，避免日志刷屏）
+            // if (total_buffer_bytes > 50 * 1024 * 1024) {
+            //     std::cerr << "WARNING: async full-submit total buffer=" 
+            //         << total_buffer_bytes / 1024 / 1024 << "MB for " 
+            //         << block_count << " blocks" << std::endl;
+            // }
         }
 
         searched_num = 0;
