@@ -1231,7 +1231,11 @@ namespace disk_hivf {
                             m_conf.m_dim * m_data_unit_size);        
                     }
                 }
-                block_features_data_ptr = block_features_data.data();
+                // 仅非磁盘模式（内存模式）需要重定向指针到block_features_data
+                // 异步磁盘模式下数据已在all_buffers的独立buffer中原地memmove压缩，无需重定向
+                if (!m_conf.m_is_disk) {
+                    block_features_data_ptr = block_features_data.data();
+                }
             }
             m_time_stat[9] += ts2.TimeCost();
 
