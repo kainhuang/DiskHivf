@@ -30,18 +30,7 @@ namespace disk_hivf {
             : file_id(fid), offset(off), len(l), buffer(buf) {}
     };
 
-    // 预读窗口配置
-    struct PrefetchConfig {
-        Int bytes_limit;   // 预读字节数上限
-        Int min_blocks;    // 最小窗口block数
-        Int max_blocks;    // 最大窗口block数
 
-        PrefetchConfig(Int bl, Int minb, Int maxb)
-            : bytes_limit(bl), min_blocks(minb), max_blocks(maxb) {}
-
-        PrefetchConfig()
-            : bytes_limit(524288), min_blocks(2), max_blocks(8) {}
-    };
 
     struct DataIndex{
         DataIndex() {
@@ -239,10 +228,7 @@ namespace disk_hivf {
             std::vector<IOSubTask> split_block_io(
                 Int file_id, Int offset, Int total_len, char* buffer, Int available_workers);
 
-            // 计算自适应预读窗口大小
-            Int calc_prefetch_window(
-                const std::vector<SearchingBlock>& search_blocks,
-                Int start_idx, const PrefetchConfig& config);
+
 
             Int init_edge_info();
             

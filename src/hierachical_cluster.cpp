@@ -994,28 +994,7 @@ namespace disk_hivf {
         return futures;
     }
 
-    // 计算自适应预读窗口大小
-    Int HierachicalCluster::calc_prefetch_window(
-            const std::vector<SearchingBlock>& search_blocks,
-            Int start_idx, const PrefetchConfig& config) {
-        Int window = 0;
-        Int total_bytes = 0;
-        Int block_count = (Int)search_blocks.size();
 
-        for (Int i = start_idx; i < block_count && window < config.max_blocks; ++i) {
-            Int block_bytes = search_blocks[i].m_max_offset - search_blocks[i].m_offset;
-            total_bytes += block_bytes;
-            window++;
-            // 满足字节数上限且达到最小block数后停止
-            if (total_bytes >= config.bytes_limit && window >= config.min_blocks) {
-                break;
-            }
-        }
-        // 确保至少min_blocks（但不超过实际可用block数）
-        window = std::max(window, std::min(config.min_blocks, block_count - start_idx));
-        window = std::min(window, block_count - start_idx);
-        return std::max(window, (Int)1);
-    }
 
     Int HierachicalCluster::search(const Eigen::Ref<const Eigen::RowVectorXf> & feature, Int topk,
         std::vector<std::pair<FeatureId, float>> & result, Int use_cache) {
@@ -1113,95 +1092,114 @@ namespace disk_hivf {
         block_features_data.reserve(200 * (m_conf.m_dim * sizeof(float) + sizeof(FeatureId)));
         std::vector<FeatureId> block_item_ids;
 
-        // === 滑动窗口预读模式 ===
-        // 为异步模式预分配 buffer pool 和 future 数组
-        PrefetchConfig prefetch_config(
-            m_conf.m_prefetch_bytes_limit, 2, 8);
-        Int prefetch_window = 0;
-        std::vector<std::vector<char>> async_buffers;
-        // 每个slot的sub_futures列表
-        std::vector<std::vector<std::future<Int>>> slot_futures;
-        // 每个slot对应的read_len
-        std::vector<Int> slot_read_lens;
-        Int next_submit_id = 0;  // 下一个要提交的block_id
+        // === 全量预提交模式 ===
+        // 为每个block独立分配buffer，一次性提交所有IO请求
+        Int block_count = (Int)search_blocks.size();
+        std::vector<std::vector<char>> all_buffers(block_count);
+        std::vector<std::vector<std::future<Int>>> all_futures(block_count);
+        std::vector<bool> block_consumed(block_count, false);
 
         if (m_conf.m_is_async_read && m_conf.m_is_disk && !search_blocks.empty()) {
-            prefetch_window = calc_prefetch_window(search_blocks, 0, prefetch_config);
-            async_buffers.resize(prefetch_window);
-            slot_futures.resize(prefetch_window);
-            slot_read_lens.resize(prefetch_window, 0);
-
-            // 初始预提交前 prefetch_window 个 block
-            // ⭐ 修复：预提交阶段不做searched_num/searched_block_num的检查和累加
-            // 因为后面会被重置为0，此处的检查没有意义
-            for (Int i = 0; i < prefetch_window && i < (Int)search_blocks.size(); ++i) {
+            // 一次性提交所有block的IO请求
+            Int total_buffer_bytes = 0;
+            for (Int i = 0; i < block_count; ++i) {
                 auto & block = search_blocks[i];
                 Int len = block.m_max_offset - block.m_offset;
-                Int slot = i % prefetch_window;
-                async_buffers[slot].resize(len);
-                slot_read_lens[slot] = len;
-                slot_futures[slot] = read_file_async_v2_split(
-                    block.m_file_id, block.m_offset, len, async_buffers[slot].data());
-                next_submit_id = i + 1;
+                all_buffers[i].resize(len);
+                total_buffer_bytes += len;
+                all_futures[i] = read_file_async_v2_split(
+                    block.m_file_id, block.m_offset, len, all_buffers[i].data());
+            }
+            // 总预分配内存超过50MB时输出警告
+            if (total_buffer_bytes > 50 * 1024 * 1024) {
+                std::cerr << "WARNING: async full-submit total buffer=" 
+                    << total_buffer_bytes / 1024 / 1024 << "MB for " 
+                    << block_count << " blocks" << std::endl;
             }
         }
 
         searched_num = 0;
         searched_block_num = 0;
         std::vector<char> uint8_tmp_data;
-        for (size_t block_id = 0; block_id < search_blocks.size(); block_id++) {
-            auto & block = search_blocks[block_id];
-            TimeStat ts2("block search", false);
+        // === 乱序消费循环 ===
+        Int consumed_count = 0;
+        while (consumed_count < block_count) {
+            // 提前退出条件
             if (searched_num >= m_conf.m_search_neighbors) {
                 break;
             }
             if (searched_block_num >= m_conf.m_search_block_num) {
                 break;
             }
+
+            // 选择要消费的block_id
+            Int selected_block_id = -1;
+
+            if (m_conf.m_is_async_read && m_conf.m_is_disk) {
+                // 乱序消费：扫描所有未消费block，找到已就绪的
+                for (Int i = 0; i < block_count; ++i) {
+                    if (block_consumed[i]) continue;
+                    // 检查该block的所有子任务是否都已就绪
+                    bool all_ready = true;
+                    for (size_t fi = 0; fi < all_futures[i].size(); ++fi) {
+                        if (all_futures[i][fi].wait_for(std::chrono::seconds(0))
+                            != std::future_status::ready) {
+                            all_ready = false;
+                            break;
+                        }
+                    }
+                    if (all_ready) {
+                        selected_block_id = i;
+                        break;
+                    }
+                }
+                // 没有就绪的block，回退到阻塞等待编号最小的未消费block
+                if (selected_block_id < 0) {
+                    for (Int i = 0; i < block_count; ++i) {
+                        if (!block_consumed[i]) {
+                            selected_block_id = i;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                // 同步模式或内存模式：按序消费
+                for (Int i = 0; i < block_count; ++i) {
+                    if (!block_consumed[i]) {
+                        selected_block_id = i;
+                        break;
+                    }
+                }
+            }
+
+            if (selected_block_id < 0) break;  // 理论上不会发生
+
+            auto & block = search_blocks[selected_block_id];
+            TimeStat ts2("block search", false);
             m_time_stat[6] += ts2.TimeCost();
             Int read_len = block.m_max_offset - block.m_offset;
             if (read_len <= 0 || read_len % item_size != 0) {
                 std::cerr << "read_len err read_len=" << read_len << std::endl;
+                block_consumed[selected_block_id] = true;
+                consumed_count++;
                 continue;
             }
-            //std::cout << "read_len " << read_len << std::endl;
             Int item_num = read_len / item_size;
             char * block_features_data_ptr = NULL;
             block_item_ids.resize(item_num);
             m_time_stat[7] += ts2.TimeCost();
             if (m_conf.m_is_disk) {
-                if (m_conf.m_is_async_read && prefetch_window > 0) {
-                    // 滑动窗口消费：等待当前slot的所有子任务完成
-                    Int slot = (Int)block_id % prefetch_window;
-                    for (size_t fi = 0; fi < slot_futures[slot].size(); ++fi) {
-                        Int bytes = slot_futures[slot][fi].get();
+                if (m_conf.m_is_async_read) {
+                    // 全量预提交模式：等待该block的所有子任务完成
+                    for (size_t fi = 0; fi < all_futures[selected_block_id].size(); ++fi) {
+                        Int bytes = all_futures[selected_block_id][fi].get();
                         if (bytes < 0) {
-                            std::cerr << "async read sub-task failed block_id=" << block_id << std::endl;
+                            std::cerr << "async read sub-task failed block_id=" << selected_block_id << std::endl;
                         }
                     }
-                    slot_futures[slot].clear();
-                    block_features_data_ptr = async_buffers[slot].data();
-
-                    // ⭐ 修复：先将数据从async_buffer拷贝出来，再预提交下一个block
-                    // 避免预提交时resize同一个slot的buffer导致悬垂指针
-                    // 注意：hs_mode和非hs_mode都需要保护，因为预提交可能覆盖同一slot的buffer
-                    block_features_data.resize(read_len);
-                    memcpy(block_features_data.data(), block_features_data_ptr, read_len);
-                    block_features_data_ptr = block_features_data.data();
-
-                    // 预提交下一个block（如果还有的话）
-                    if (next_submit_id < (Int)search_blocks.size()) {
-                        auto & next_block = search_blocks[next_submit_id];
-                        Int next_len = next_block.m_max_offset - next_block.m_offset;
-                        Int next_slot = next_submit_id % prefetch_window;
-                        // 复用buffer（resize利用capacity只增不减）
-                        async_buffers[next_slot].resize(next_len);
-                        slot_read_lens[next_slot] = next_len;
-                        slot_futures[next_slot] = read_file_async_v2_split(
-                            next_block.m_file_id, next_block.m_offset, next_len,
-                            async_buffers[next_slot].data());
-                        next_submit_id++;
-                    }
+                    all_futures[selected_block_id].clear();
+                    // 直接使用该block的独立buffer，无需额外memcpy
+                    block_features_data_ptr = all_buffers[selected_block_id].data();
                 } else {
                     ret = m_file_read_writer.read(block.m_file_id, block.m_offset, read_len, block_features_data);
                     block_features_data_ptr = block_features_data.data();
@@ -1243,13 +1241,7 @@ namespace disk_hivf {
                 convert_type<float, uint8_t>(tmp_ptr, 
                     reinterpret_cast<const uint8_t *> (block_features_data_ptr),
                     item_num * m_conf.m_dim);
-                //convert_uint8_to_float(tmp_ptr,
-                //    reinterpret_cast<const uint8_t *> (block_features_data_ptr),
-                //    item_num * m_conf.m_dim);
-                block_features_data = std::move(uint8_tmp_data);
-                block_features_data_ptr = block_features_data.data();
-            } else {
-
+                block_features_data_ptr = reinterpret_cast<char *>(tmp_ptr);
             }
 
             m_time_stat[10] += ts2.TimeCost();
@@ -1266,7 +1258,11 @@ namespace disk_hivf {
                 
             }
             searched_num += item_num;
-            if (m_conf.m_dynamic_prune_switch) {
+            // 异步IO模式下屏蔽dynamic_prune：
+            // 1. dynamic_prune依赖按距离排序的顺序消费，限制了乱序优化的空间
+            // 2. 提前break会导致已预提交的IO任务被浪费，反而增加延迟
+            // 3. 异步模式的目标是IO与计算重叠，prune打断流水线得不偿失
+            if (m_conf.m_dynamic_prune_switch && !m_conf.m_is_async_read) {
                 float prune_block_num = dynamic_prune_func(result_heap.top().m_distance / m_build_index_loss);
                 prune_block_num = std::max(prune_block_num, (float)10);
                 float up = std::max(m_conf.m_search_second_center_num * 1.0 / 2500, 1.0);
@@ -1276,17 +1272,21 @@ namespace disk_hivf {
                 }
             }
             m_time_stat[12] += ts2.TimeCost();
+            block_consumed[selected_block_id] = true;
+            consumed_count++;
         }
 
-        // dynamic_prune后，等待已提交但未消费的future完成
-        if (m_conf.m_is_async_read && prefetch_window > 0) {
-            for (Int slot = 0; slot < prefetch_window; ++slot) {
-                for (size_t fi = 0; fi < slot_futures[slot].size(); ++fi) {
-                    if (slot_futures[slot][fi].valid()) {
-                        slot_futures[slot][fi].get();
+        // 等待所有已提交但未消费的future完成，避免buffer析构时IO线程仍在写入
+        if (m_conf.m_is_async_read && m_conf.m_is_disk) {
+            for (Int i = 0; i < block_count; ++i) {
+                if (!block_consumed[i]) {
+                    for (size_t fi = 0; fi < all_futures[i].size(); ++fi) {
+                        if (all_futures[i][fi].valid()) {
+                            all_futures[i][fi].get();
+                        }
                     }
+                    all_futures[i].clear();
                 }
-                slot_futures[slot].clear();
             }
         }
         m_time_stat[4] += ts.TimeCost();
